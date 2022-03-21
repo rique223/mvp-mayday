@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Input } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ const HomeScreen = () => {
       h="100%"
       flexDir="column"
       alignItems="center"
-      paddingBlockStart="9.5rem"
+      paddingBlockStart="12rem"
     >
       <Heading
         as="h1"
