@@ -1,21 +1,44 @@
-import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
+import { Avatar, Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
 import { useEffect, useState } from "react";
 import fetchMunicipios from "../../Helpers/fetchMunicipios";
+import { CUIAutoComplete } from 'chakra-ui-autocomplete'
 
 const HomeScreen = () => {
   const [municipios, setMunicipios] = useState([]);
 
-  console.log(municipios);
+  const [pickerItems, setPickerItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
+
+  const handleCreateItem = (item) => {
+    console.log("item", item)
+    setPickerItems((curr) => [...curr, item]);
+    setSelectedItems((curr) => [...curr, item]);
+  };
+
+  const handleSelectedItemsChange = (selectedItems) => {
+    console.log(selectedItems)
+    if (selectedItems.length === 1) {
+      setSelectedItems(selectedItems);
+    }
+  };
 
   useEffect(() => {
     const getDistritos = async () => {
-      setMunicipios(await fetchMunicipios());
+      const respMunicipios = await fetchMunicipios();
+      setMunicipios(respMunicipios);
+      setPickerItems(respMunicipios);
     };
+    
+    const localizar = () => navigator.geolocation.getCurrentPosition((position) => {
+      console.log(position.coords.latitude, position.coords.longitude);
+    });
 
+    localizar();
     getDistritos();
   }, []);
+
 
   return (
     <Flex
@@ -36,7 +59,7 @@ const HomeScreen = () => {
         Mayday
       </Heading>
       <Flex maxW="584px" maxH="46px" height="100%" width="100%">
-        <Input
+        {/* <Input
           borderRadius="24px 0 0 24px"
           placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
           size="lg"
@@ -47,6 +70,17 @@ const HomeScreen = () => {
             boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
             borderColor: "rgba(223,225,229,0)",
           }}
+        /> */}
+        <CUIAutoComplete
+          items={municipios}
+          onCreateItem={handleCreateItem}
+          placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
+          // itemRenderer={customRender}
+          // createItemRenderer={customCreateItemRender}
+          onSelectedItemsChange={(changes) =>{
+            handleSelectedItemsChange(changes.selectedItems)}
+          }
+          disableCreateItem={true}
         />
         <Button
           bg="#95AE23"

@@ -3,7 +3,13 @@ import apiMunicipios from "../Utils/apiMunicipios";
 const fetchMunicipios = async () => {
   try {
     const { data } = await apiMunicipios.get();
-    return data;
+    const resp = data.map((a) => {
+      return {
+        value: a.id,
+        label: a.nome
+      }
+    })
+    return resp;
   } catch (error) {
     console.log(error);
   }
