@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Input } from "@chakra-ui/react";
+import { Button, Flex, Heading, Input } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
 import { useEffect, useState } from "react";
