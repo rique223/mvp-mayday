@@ -1,27 +1,36 @@
-import { Avatar, Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Heading,
+  Input,
+  Text,
+} from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import fetchMunicipios from "../../Helpers/fetchMunicipios";
-import { CUIAutoComplete } from 'chakra-ui-autocomplete'
+import { CUIAutoComplete } from "chakra-ui-autocomplete";
+import { Link } from "react-router-dom";
+import { CidadesContext } from "../../Context/CidadesContext";
 
 const HomeScreen = () => {
   const [municipios, setMunicipios] = useState([]);
 
   const [pickerItems, setPickerItems] = useState([]);
-  const [selectedItems, setSelectedItems] = useState([]);
+
+  const { cidades, setCidades } = useContext(CidadesContext);
 
   const handleCreateItem = (item) => {
-    console.log("item", item)
+    console.log("item", item);
     setPickerItems((curr) => [...curr, item]);
-    setSelectedItems((curr) => [...curr, item]);
+    setCidades((curr) => [...curr, item]);
   };
 
   const handleSelectedItemsChange = (selectedItems) => {
-    console.log(selectedItems)
-    if (selectedItems.length === 1) {
-      setSelectedItems(selectedItems);
-    }
+    console.log(selectedItems);
+    setCidades(selectedItems);
   };
 
   useEffect(() => {
@@ -30,15 +39,15 @@ const HomeScreen = () => {
       setMunicipios(respMunicipios);
       setPickerItems(respMunicipios);
     };
-    
-    const localizar = () => navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords.latitude, position.coords.longitude);
-    });
+
+    const localizar = () =>
+      navigator.geolocation.getCurrentPosition((position) => {
+        console.log(position.coords.latitude, position.coords.longitude);
+      });
 
     localizar();
     getDistritos();
   }, []);
-
 
   return (
     <Flex
@@ -77,23 +86,26 @@ const HomeScreen = () => {
           placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
           // itemRenderer={customRender}
           // createItemRenderer={customCreateItemRender}
-          onSelectedItemsChange={(changes) =>{
-            handleSelectedItemsChange(changes.selectedItems)}
-          }
+          onSelectedItemsChange={(changes) => {
+            handleSelectedItemsChange(changes.selectedItems);
+          }}
           disableCreateItem={true}
         />
-        <Button
-          bg="#95AE23"
-          height="48px"
-          borderRadius="0 50px 50px 0"
-          w="64px"
-          _hover={{
-            bg: "#007B2F",
-            boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
-          }}
-        >
-          <SearchIcon w="24px" h="24px" color="white" marginInlineEnd="4px" />
-        </Button>
+        <Link to="/modulos">
+          <Button
+            bg="#95AE23"
+            height="48px"
+            borderRadius="0 50px 50px 0"
+            w="64px"
+            _hover={{
+              bg: "#007B2F",
+              boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
+            }}
+            onClick={() => console.log("cidades", cidades)}
+          >
+            <SearchIcon w="24px" h="24px" color="white" marginInlineEnd="4px" />
+          </Button>
+        </Link>
       </Flex>
     </Flex>
   );
