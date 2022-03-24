@@ -1,12 +1,12 @@
 import { Td, Text, Tr } from "@chakra-ui/react";
-import AgenteTabela from "../Components/AgenteTabela";
+import Agente from "../Components/Agente";
 import BotoesAct from "../Components/BotoesAct";
 
 export const renderAgentesTableRows = (perfis) =>
   perfis.map((perfil) => (
     <Tr key={perfil.contato}>
       <Td display="flex" flexDirection="row" alignItems="center">
-        <AgenteTabela agente={perfil} />
+        <Agente dadosAgente={perfil} />
       </Td>
       <Td>
         <Text

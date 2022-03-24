@@ -17,6 +17,7 @@ import InputTabela from "../InputTabela";
 const TabelaRecursosContingencia = () => {
   const recursos = [
     {
+      id: 1,
       nome: "Moto Niveladora",
       responsavel: "Henrique Guimarães",
       cargo: "Desenvolvedor",
@@ -24,6 +25,7 @@ const TabelaRecursosContingencia = () => {
       qtd: 1,
     },
     {
+      id: 2,
       nome: "Retro escavadeira",
       responsavel: "Matheus Braz de Aquino",
       cargo: "Desenvolvedor",
@@ -31,6 +33,7 @@ const TabelaRecursosContingencia = () => {
       qtd: 1,
     },
     {
+      id: 3,
       nome: "Caminhão pipa",
       responsavel: "Matheus Diniz de Alencar",
       cargo: "Desenvolvedor",
@@ -38,6 +41,7 @@ const TabelaRecursosContingencia = () => {
       qtd: 1,
     },
     {
+      id: 4,
       nome: "Caminhão báscula",
       responsavel: "Capitão Ricardo",
       cargo: "Capitão",
@@ -54,7 +58,13 @@ const TabelaRecursosContingencia = () => {
   };
 
   return (
-    <Flex flexDirection="column" marginBlockEnd="4rem">
+    <Flex
+      flexDirection="column"
+      marginBlockEnd="4rem"
+      paddingInline="1rem"
+      maxW="101rem"
+      w="100%"
+    >
       <Heading
         fontWeight="400"
         fontSize="2.25rem"

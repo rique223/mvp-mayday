@@ -1,7 +1,12 @@
 import { Flex, Heading, Text } from "@chakra-ui/react";
 
 const DescContingencia = () => (
-  <Flex flexDir="column" marginBlockEnd="4rem">
+  <Flex
+    flexDir="column"
+    marginBlockEnd="4rem"
+    paddingInline="1rem"
+    maxW="101rem"
+  >
     <Heading
       fontWeight="400"
       fontSize="2.25rem"

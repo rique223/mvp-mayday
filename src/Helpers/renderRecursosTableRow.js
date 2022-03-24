@@ -1,9 +1,9 @@
 import { Td, Text, Tr } from "@chakra-ui/react";
-import AgenteTabela from "../Components/AgenteTabela";
+import Agente from "../Components/Agente";
 
 export const renderRecursosTableRows = (recursos) =>
   recursos.map((recurso) => (
-    <Tr key={recurso.contato}>
+    <Tr key={recurso.id}>
       <Td>
         <Text
           fontWeight="400"
@@ -15,8 +15,8 @@ export const renderRecursosTableRows = (recursos) =>
         </Text>
       </Td>
       <Td display="flex" flexDirection="row" alignItems="center">
-        <AgenteTabela
-          agente={{
+        <Agente
+          dadosAgente={{
             cargo: recurso.cargo,
             nome: recurso.responsavel,
             contato: recurso.contato,

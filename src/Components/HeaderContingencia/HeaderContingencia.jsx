@@ -2,7 +2,14 @@ import { Flex, Heading, Image, Text } from "@chakra-ui/react";
 import ProfilePic from "../../Media/ProfilePic.svg";
 
 const HeaderContingencia = () => (
-  <Flex flexDir="row" alignItems="center" marginBlockEnd="4rem">
+  <Flex
+    flexDir="row"
+    alignItems="center"
+    marginBlockEnd="4rem"
+    paddingInline="1rem"
+    maxW="101rem"
+    w="100%"
+  >
     <Image
       borderRadius="full"
       boxSize="190px"

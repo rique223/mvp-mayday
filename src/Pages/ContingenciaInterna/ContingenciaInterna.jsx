@@ -1,4 +1,6 @@
-import { Container, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
+import BotoesAct from "Components/BotoesAct";
+import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
 import MapaContingencia from "../../Components/MapaContingencia";
@@ -8,16 +10,24 @@ import TagsContingencia from "../../Components/TagsContingencia";
 
 const ContingenciaInterna = () => {
   return (
-    <Container maxW="101rem" display="flex" flexDir="column" marginBlock="5rem">
+    <Flex flexDir="column" alignItems="center" marginBlock="5rem" padding="0">
       <HeaderContingencia />
       <DescContingencia />
-      <Flex flexDir="row" marginBlockEnd="4rem">
+      <Flex
+        flexDir="row"
+        marginBlockEnd="4rem"
+        paddingInline="1rem"
+        maxW="101rem"
+        w="100%"
+      >
         <TabelaAgentesContingencia />
         <TagsContingencia />
       </Flex>
       <TabelaRecursosContingencia />
       <MapaContingencia />
-    </Container>
+      <AccordionsContingencia />
+      <BotoesAct isPortal={true} />
+    </Flex>
   );
 };
 
