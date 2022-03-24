@@ -1,6 +1,7 @@
 import { Container, Flex } from "@chakra-ui/react";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
+import MapaContingencia from "../../Components/MapaContingencia";
 import TabelaAgentesContingencia from "../../Components/TabelaAgentesContingencia";
 import TabelaRecursosContingencia from "../../Components/TabelaRecursosContingencia";
 import TagsContingencia from "../../Components/TagsContingencia";
@@ -15,6 +16,7 @@ const ContingenciaInterna = () => {
         <TagsContingencia />
       </Flex>
       <TabelaRecursosContingencia />
+      <MapaContingencia />
     </Container>
   );
 };

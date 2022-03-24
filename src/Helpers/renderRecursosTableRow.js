@@ -33,6 +33,8 @@ export const renderRecursosTableRows = (recursos) =>
           {recurso.contato}
         </Text>
       </Td>
-      <Td textAlign="center">{recurso.qtd}</Td>
+      <Td textAlign="center" fontWeight="400">
+        {recurso.qtd}
+      </Td>
     </Tr>
   ));

@@ -10,7 +10,7 @@ const DescContingencia = () => (
     >
       Descrição
     </Heading>
-    <Text fontWeight="400" fontSize="24px" lineHeight="33px" color="#000000">
+    <Text fontWeight="300" fontSize="24px" lineHeight="33px" color="#000000">
       - Ocorrência de fatos pontuais podendo acontecer isoladas ou ao mesmo
       tempo. - A retirada emergencial das pessoas que estiverem nas áreas de
       risco ou afetada, nas classificações de risco Alto e Muito Alto, conforme

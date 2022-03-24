@@ -1,5 +1,6 @@
 import {
   Box,
+  Center,
   Flex,
   Heading,
   Table,
@@ -53,7 +54,7 @@ const TabelaRecursosContingencia = () => {
   };
 
   return (
-    <Flex flexDirection="column" marginInlineEnd="40px">
+    <Flex flexDirection="column" marginBlockEnd="4rem">
       <Heading
         fontWeight="400"
         fontSize="2.25rem"
@@ -62,34 +63,37 @@ const TabelaRecursosContingencia = () => {
       >
         Recursos
       </Heading>
-      <Box
-        borderRadius="15px"
-        boxShadow="lg"
-        border="1px"
-        borderColor="gray.200"
-        padding={3}
-      >
-        <Table variant="simple">
-          <Thead>
-            <Tr>
-              <Th {...tableHeaderStyle}>Recurso</Th>
-              <Th {...tableHeaderStyle}>Responsável</Th>
-              <Th {...tableHeaderStyle}>Principal Contato</Th>
-              <Th {...tableHeaderStyle} textAlign="center">
-                Qtd.
-              </Th>
-            </Tr>
-          </Thead>
-          <Tbody>{renderRecursosTableRows(recursos)}</Tbody>
-          <Tfoot>
-            <Tr>
-              <Td colSpan={4}>
-                <InputTabela />
-              </Td>
-            </Tr>
-          </Tfoot>
-        </Table>
-      </Box>
+      <Center w="100%">
+        <Box
+          borderRadius="15px"
+          boxShadow="lg"
+          border="1px"
+          borderColor="gray.200"
+          padding={3}
+          w="100%"
+        >
+          <Table variant="simple">
+            <Thead>
+              <Tr>
+                <Th {...tableHeaderStyle}>Recurso</Th>
+                <Th {...tableHeaderStyle}>Responsável</Th>
+                <Th {...tableHeaderStyle}>Principal Contato</Th>
+                <Th {...tableHeaderStyle} textAlign="center">
+                  Qtd.
+                </Th>
+              </Tr>
+            </Thead>
+            <Tbody>{renderRecursosTableRows(recursos)}</Tbody>
+            <Tfoot>
+              <Tr>
+                <Td colSpan={4}>
+                  <InputTabela />
+                </Td>
+              </Tr>
+            </Tfoot>
+          </Table>
+        </Box>
+      </Center>
     </Flex>
   );
 };
