@@ -26,17 +26,30 @@ const ModulosScreen = () => {
     <Flex
       w="100%"
       h="100%"
-      flexDir="column"
+      flexDir="row"
       alignItems="center"
-      paddingBlockStart="12rem"
+      // paddingBlockStart="12rem"
     >
-      {cidades.map((c) => (
-        <>
-          <Box key={c.value} margin={"10"} bg="green" w="50%" p={12} color="white">
-            {c.label}
-          </Box>
-        </>
-      ))}
+      {cidades.map((c) => {
+        const link = "/contingencia/" + c.value;
+        return (
+          <>
+            <Link to={link} >
+              <Box
+                key={c.value}
+                h="50%"
+                margin={"100"}
+                bg="green"
+                w="100%"
+                p={10}
+                color="white"
+              >
+                {c.label}
+              </Box>
+            </Link>
+          </>
+        );
+      })}
     </Flex>
   );
 };
