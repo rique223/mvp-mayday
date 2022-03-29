@@ -31,7 +31,7 @@ const ModulosScreen = () => {
       // paddingBlockStart="12rem"
     >
       {cidades.map((c) => {
-        const link = "/contingencia/" + c.value;
+        const link = "/contingencias/" + c.value;
         return (
           <>
             <Link to={link} >
@@ -40,7 +40,7 @@ const ModulosScreen = () => {
                 h="50%"
                 margin={"100"}
                 bg="green"
-                w="100%"
+                w="50%"
                 p={10}
                 color="white"
               >

@@ -12,7 +12,9 @@ const App = () => {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="modulos" element={<ModulosScreen />} />
-          <Route path="contingencia/:idCidade" element={<ContingenciaScreen />} />
+          <Route path="contingencias/:idCidade" element={<ContingenciaScreen />} />
+          {/* <Route path="contingencia/:idCidade" render={(props) => <ContingenciaScreen props={props} />} /> */}
+          
         </Routes>
       </BrowserRouter>
     </CidadesContextProvider>
