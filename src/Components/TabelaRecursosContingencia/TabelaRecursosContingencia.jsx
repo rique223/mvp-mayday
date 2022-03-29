@@ -11,6 +11,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import { headingStyle } from "Utils/globalStyles";
 import { renderRecursosTableRows } from "../../Helpers/renderRecursosTableRow";
 import InputTabela from "../InputTabela";
 
@@ -65,14 +66,7 @@ const TabelaRecursosContingencia = () => {
       maxW="101rem"
       w="100%"
     >
-      <Heading
-        fontWeight="400"
-        fontSize="2.25rem"
-        lineHeight="2.625rem"
-        marginBlockEnd="1rem"
-      >
-        Recursos
-      </Heading>
+      <Heading {...headingStyle}>Recursos</Heading>
       <Center w="100%">
         <Box
           borderRadius="15px"

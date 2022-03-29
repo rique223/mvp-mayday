@@ -1,5 +1,7 @@
 import { Flex } from "@chakra-ui/react";
 import BotoesAct from "Components/BotoesAct";
+import ModalCadastroAgente from "Components/ModalCadastroAgente";
+import { useState } from "react";
 import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
@@ -9,6 +11,8 @@ import TabelaRecursosContingencia from "../../Components/TabelaRecursosContingen
 import TagsContingencia from "../../Components/TagsContingencia";
 
 const ContingenciaInterna = () => {
+  const [cadastraNovoAgente, setCadastraNovoAgente] = useState(false);
+
   return (
     <Flex flexDir="column" alignItems="center" marginBlock="5rem" padding="0">
       <HeaderContingencia />
@@ -26,7 +30,13 @@ const ContingenciaInterna = () => {
       <TabelaRecursosContingencia />
       <MapaContingencia />
       <AccordionsContingencia />
-      <BotoesAct isPortal={true} />
+      <BotoesAct
+        isPortal={true}
+        setCadastraNovoAgente={setCadastraNovoAgente}
+      />
+      {cadastraNovoAgente && (
+        <ModalCadastroAgente setCadastraNovoAgente={setCadastraNovoAgente} />
+      )}
     </Flex>
   );
 };

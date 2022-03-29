@@ -1,12 +1,27 @@
-import { IconButton, Stack, Button, Image, Icon } from "@chakra-ui/react";
+import { Stack, Button, Image } from "@chakra-ui/react";
 import React from "react";
 import ReactDOM from "react-dom";
 import Play from "../../Media/play.svg";
 import GreenPlus from "../../Media/green_plus.svg";
 import ThreeDots from "../../Media/three_dots.svg";
 
-const BotoesAct = ({ isPortal = false }) =>
-  isPortal ? (
+const BotoesAct = ({ isPortal = false, setCadastraNovoAgente }) => {
+  const bigButtonStyle = {
+    w: "114px",
+    h: "114px",
+    borderRadius: "57px",
+    boxShadow: "lg",
+  };
+
+  const smallButtonStyle = {
+    w: "50px",
+    h: "50px",
+    borderRadius: "50%",
+    padding: "0",
+    boxShadow: "md",
+  };
+
+  return isPortal ? (
     ReactDOM.createPortal(
       <Stack
         spacing="1.25rem"
@@ -16,32 +31,21 @@ const BotoesAct = ({ isPortal = false }) =>
         right="1%"
         bottom="2rem"
       >
-        <IconButton
-          w="114px"
-          h="114px"
-          borderRadius="57px"
+        <Button
+          {...bigButtonStyle}
           background="#007B2F"
-          boxShadow="lg"
           _hover={{ background: "#95AE23" }}
         >
           <Image src={Play} boxSize="57px" />
-        </IconButton>
+        </Button>
         <Button
-          w="114px"
-          h="114px"
-          borderRadius="57px"
+          {...bigButtonStyle}
           background="#FFFFFF"
-          boxShadow="lg"
+          onClick={() => setCadastraNovoAgente(true)}
         >
           <Image src={GreenPlus} boxSize="38px" />
         </Button>
-        <Button
-          w="114px"
-          h="114px"
-          borderRadius="57px"
-          background="#FFFFFF"
-          boxShadow="lg"
-        >
+        <Button {...bigButtonStyle} background="#FFFFFF">
           <Image src={ThreeDots} boxSize="38px" />
         </Button>
       </Stack>,
@@ -50,28 +54,17 @@ const BotoesAct = ({ isPortal = false }) =>
   ) : (
     <>
       <Button
-        marginInlineEnd="8px"
-        w="50px"
-        h="50px"
+        {...smallButtonStyle}
         background="#007B2F"
-        borderRadius="50%"
-        padding="0"
         _hover={{ background: "#95AE23" }}
-        boxShadow="md"
+        marginInlineEnd="8px"
       >
         <Image src={Play} boxSize="32px" />
       </Button>
-      <Button
-        w="50px"
-        h="50px"
-        background="#fff"
-        borderRadius="50%"
-        padding="0"
-        boxShadow="md"
-      >
+      <Button {...smallButtonStyle} background="#fff">
         <Image src={ThreeDots} boxSize="25px" />
       </Button>
     </>
   );
-
+};
 export default BotoesAct;

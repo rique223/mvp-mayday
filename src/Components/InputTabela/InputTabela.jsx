@@ -1,16 +1,10 @@
 import { SearchIcon } from "@chakra-ui/icons";
 import { Button, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { inputStyle } from "Utils/globalStyles";
 
 const InputTabela = () => (
   <InputGroup>
-    <Input
-      borderRadius="50px"
-      borderColor="#ccc"
-      shadow="lg"
-      _hover={{ borderColor: "#000" }}
-      transition="border-color .4s ease"
-      h="3.125rem"
-    />
+    <Input borderRadius="25px" {...inputStyle} h="3.125rem" />
     <InputRightElement
       top="10%"
       children={

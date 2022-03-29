@@ -1,19 +1,26 @@
 import { Center, Checkbox, Flex, Heading, Box } from "@chakra-ui/react";
 import React from "react";
+import { headingStyle } from "Utils/globalStyles";
 
 const MapaContingencia = () => {
   return (
-    <Flex flexDir="column" marginBlockEnd="4rem" w="100%">
+    <Flex flexDir="column" marginBlockEnd="4rem" w="100%" alignItems="center">
       <Heading
-        fontWeight="400"
-        fontSize="2.25rem"
-        lineHeight="2.625rem"
-        marginBlockEnd="1rem"
-        paddingInline="1rem"
+        {...headingStyle}
+        paddingInlineStart="1rem"
+        maxWidth="101rem"
+        w="100%"
       >
         Mapa
       </Heading>
-      <Center flexDir="row" justifyContent="space-around" paddingInline="1rem">
+      <Center
+        flexDir="row"
+        justifyContent="space-around"
+        paddingInline="1rem"
+        marginBlockEnd="1rem"
+        maxW="101rem"
+        w="100%"
+      >
         <Checkbox size="lg" defaultChecked>
           Tudo
         </Checkbox>

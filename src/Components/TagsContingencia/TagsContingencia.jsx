@@ -1,4 +1,5 @@
 import { Badge, Button, Flex, Heading, Image } from "@chakra-ui/react";
+import { headingStyle } from "Utils/globalStyles";
 import Plus from "../../Media/plus.svg";
 
 const TagsContingencia = () => {
@@ -25,14 +26,7 @@ const TagsContingencia = () => {
   return (
     <Flex flexDirection="column" maxW="42%">
       <Flex flexDirection="column">
-        <Heading
-          fontWeight="400"
-          fontSize="2.25rem"
-          lineHeight="2.625rem"
-          marginBlockEnd="1rem"
-        >
-          Tags
-        </Heading>
+        <Heading {...headingStyle}>Tags</Heading>
         <Flex flexDirection="row" flexWrap="wrap">
           <Badge colorScheme="green" {...BadgeStyle}>
             Fogo
