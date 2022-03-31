@@ -1,5 +1,4 @@
 import { Flex, Heading, Image, Text } from "@chakra-ui/react";
-import { headingStyle } from "Utils/globalStyles";
 import ProfilePic from "../../Media/ProfilePic.svg";
 
 const HeaderContingencia = () => (
@@ -17,10 +16,15 @@ const HeaderContingencia = () => (
       src={ProfilePic}
       alt="Foto de perfil da contingência"
       marginInlineEnd="28px"
-      fallbackSrc
     />
     <Flex flexDir="column">
-      <Heading as="h1" {...headingStyle}>
+      <Heading
+        as="h1"
+        fontWeight="400"
+        fontSize="4rem"
+        lineHeight="75px"
+        color="#000000"
+      >
         Incêndio/Bombeiros
       </Heading>
       <Text fontWeight="300" fontSize="36px" lineHeight="42px" color="#808080">

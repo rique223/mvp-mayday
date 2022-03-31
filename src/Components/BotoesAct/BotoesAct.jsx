@@ -1,9 +1,19 @@
-import { Stack, Button, Image } from "@chakra-ui/react";
+import {
+  Stack,
+  Button,
+  Image,
+  Portal,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  IconButton,
+} from "@chakra-ui/react";
 import React from "react";
-import ReactDOM from "react-dom";
 import Play from "../../Media/play.svg";
 import GreenPlus from "../../Media/green_plus.svg";
 import ThreeDots from "../../Media/three_dots.svg";
+import { AddIcon, ChevronDownIcon } from "@chakra-ui/icons";
 
 const BotoesAct = ({ isPortal = false, setCadastraNovoAgente }) => {
   const bigButtonStyle = {
@@ -22,7 +32,7 @@ const BotoesAct = ({ isPortal = false, setCadastraNovoAgente }) => {
   };
 
   return isPortal ? (
-    ReactDOM.createPortal(
+    <Portal>
       <Stack
         spacing="1.25rem"
         direction="row"
@@ -35,22 +45,34 @@ const BotoesAct = ({ isPortal = false, setCadastraNovoAgente }) => {
           {...bigButtonStyle}
           background="#007B2F"
           _hover={{ background: "#95AE23" }}
+          _active={{
+            filter: "brightness(120%)",
+          }}
+          transition="background .2s ease-in-out, filter .2s ease-in-out"
         >
           <Image src={Play} boxSize="57px" />
         </Button>
-        <Button
-          {...bigButtonStyle}
-          background="#FFFFFF"
-          onClick={() => setCadastraNovoAgente(true)}
-        >
-          <Image src={GreenPlus} boxSize="38px" />
-        </Button>
+        <Menu placement="top">
+          <MenuButton
+            as={IconButton}
+            background="#fff"
+            icon={<AddIcon w="2.375rem" h="2.375rem" color="#007B2F" />}
+            aria-label="Options"
+            variant="outline"
+            {...bigButtonStyle}
+          />
+          <MenuList minW="auto" fontSize="1.5rem" zIndex={3}>
+            <MenuItem onClick={() => setCadastraNovoAgente(true)}>
+              Novo Agente
+            </MenuItem>
+            <MenuItem>Novo Recurso</MenuItem>
+          </MenuList>
+        </Menu>
         <Button {...bigButtonStyle} background="#FFFFFF">
           <Image src={ThreeDots} boxSize="38px" />
         </Button>
-      </Stack>,
-      document.body
-    )
+      </Stack>
+    </Portal>
   ) : (
     <>
       <Button

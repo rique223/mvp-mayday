@@ -6,6 +6,7 @@ const InputTabela = () => (
   <InputGroup>
     <Input borderRadius="25px" {...inputStyle} h="3.125rem" />
     <InputRightElement
+      zIndex={0}
       top="10%"
       children={
         <Button
