@@ -23,17 +23,30 @@ const ContingenciaScreen = (props) => {
   const { cidades, setCidades, findCidadeById } = useContext(CidadesContext);
   let { idCidade } = useParams();
 
+  const infoPlano = {
+    titulo: "Incêndio",
+    subTitulo: "Bombeiros",
+    principaisAgentes: [
+      {
+        id: 1,
+        nome: "João Jordan",
+        telefone: "(62)98565-2412",
+      },
+      {
+        id: 2,
+        nome: "Cap. Abreu",
+        telefone: "(62)98565-2412",
+      },
+    ],
+    tags: ["Incêndio", "Fogo", "EmergÊncia", "Bombeiros"],
+  };
+
   useEffect(() => {
     console.log("props", cidades, idCidade);
   }, []);
 
   return (
-    <Flex
-      w="100%"
-      h="100%"
-      flexDir="column"
-      alignItems="center"
-    >
+    <Flex w="100%" h="100%" flexDir="column" alignItems="center">
       <Flex
         w="50%"
         h="50%"
@@ -55,24 +68,49 @@ const ContingenciaScreen = (props) => {
       <Flex
         w="100%"
         h="50%"
-        flexDir="column"
+        flexDir="row"
+        flexWrap={"wrap"}
+        justifyContent={"left"}
       >
-        <Box>
-          <Grid templateColumns="repeat(5, 1fr)" gap={1}>
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="green.500" />
-            <GridItem w="200" h="200" bg="red.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="red.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="red.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-            <GridItem w="200" h="200" bg="blue.500" />
-          </Grid>
-        </Box>
+        <Flex
+          h={"80%"}
+          w={"30%"}
+          marginRight={"1%"}
+          marginBottom={"0.5%"}
+          direction={"column"}
+          borderRadius={"25px"}
+          borderWidth={"2px"}
+          borderColor={"black"}
+          boxShadow={"10px"}
+          padding={"7px"}
+          justifyContent={"space-around"}
+        >
+          <Text fontSize={"36px"} fontWeight="bold">
+            {infoPlano.titulo}
+          </Text>
+          <Text fontSize={"18px"}>{infoPlano.subTitulo}</Text>
+          <hr></hr>
+          <Text fontSize={"24px"}>Principais Agentes</Text>
+          <Text>
+            <Flex direction={"row"} width={"100%"}>
+              {infoPlano.principaisAgentes.map((p) => (
+                <Flex direction={"column"} width={"100%"}>
+                  <Text fontSize={"18px"}>{p.nome}</Text>
+                  <Text fontSize={"12px"}>{p.telefone}</Text>
+                </Flex>
+              ))}
+            </Flex>
+            <hr></hr>
+            <Text> Tags </Text>
+            <Flex w={"100%"} justifyContent={"space-around"}>
+              {infoPlano.tags.map((t) => (
+                <Flex direction={"column"} width={"fit-content"}>
+                  <Text bg={"green.300"} padding="2px" borderRadius={"5px"} fontSize={"18px"}>{t}</Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Text>
+        </Flex>
       </Flex>
     </Flex>
   );

@@ -80,17 +80,19 @@ const HomeScreen = () => {
             borderColor: "rgba(223,225,229,0)",
           }}
         /> */}
-        <CUIAutoComplete
-          items={municipios}
-          onCreateItem={handleCreateItem}
-          placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
-          // itemRenderer={customRender}
-          // createItemRenderer={customCreateItemRender}
-          onSelectedItemsChange={(changes) => {
-            handleSelectedItemsChange(changes.selectedItems);
-          }}
-          disableCreateItem={true}
-        />
+        <Flex w={"100%"}>
+          <CUIAutoComplete
+            items={municipios}
+            onCreateItem={handleCreateItem}
+            placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
+            // itemRenderer={customRender}
+            // createItemRenderer={customCreateItemRender}
+            onSelectedItemsChange={(changes) => {
+              handleSelectedItemsChange(changes.selectedItems);
+            }}
+            disableCreateItem={true}
+          />
+        </Flex>
         <Link to="/modulos">
           <Button
             bg="#95AE23"

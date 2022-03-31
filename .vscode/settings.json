@@ -3,6 +3,7 @@
     "javascript": "javascriptreact"
   },
   "conventionalCommits.scopes": [
-    "Plano de Contingencia"
+    "Plano de Contingencia",
+    "Ajustes CSS"
   ],
 }
