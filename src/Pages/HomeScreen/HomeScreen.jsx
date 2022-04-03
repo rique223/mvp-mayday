@@ -80,7 +80,7 @@ const HomeScreen = () => {
             borderColor: "rgba(223,225,229,0)",
           }}
         /> */}
-        <Flex w={"100%"}>
+        <Box width={"100%"}>
           <CUIAutoComplete
             items={municipios}
             onCreateItem={handleCreateItem}
@@ -91,8 +91,13 @@ const HomeScreen = () => {
               handleSelectedItemsChange(changes.selectedItems);
             }}
             disableCreateItem={true}
+
+            // listItemStyleProps={{width: "100%", backgroundColor: "red"}}
+            // listStyleProps={{width: "100%", backgroundColor: "red"}}
+            // inputStyleProps={{width: "100%", backgroundColor: "red"}}
+            // tagStyleProps={{width: "100%", backgroundColor: "red"}}
           />
-        </Flex>
+        </Box>
         <Link to="/modulos">
           <Button
             bg="#95AE23"

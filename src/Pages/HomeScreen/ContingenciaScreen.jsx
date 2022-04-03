@@ -11,7 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
-import { SearchIcon } from "@chakra-ui/icons";
+import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
 import { useContext, useEffect, useState } from "react";
 import fetchMunicipios from "../../Helpers/fetchMunicipios";
@@ -80,7 +80,28 @@ const ContingenciaScreen = (props) => {
           direction={"column"}
           borderRadius={"25px"}
           borderWidth={"2px"}
-          borderColor={"black"}
+          borderColor={"gray.400"}
+          boxShadow={"10px"}
+          padding={"7px"}
+          justifyContent={"center"}
+          fontSize="300px"
+          alignItems={"center"}
+          textAlign={"center"}
+          color={"gray.700"}
+          backgroundColor={"gray.200"}
+        > 
+          <AddIcon w={58} h={58}/>
+        </Flex>
+
+        <Flex
+          h={"80%"}
+          w={"30%"}
+          marginRight={"1%"}
+          marginBottom={"0.5%"}
+          direction={"column"}
+          borderRadius={"25px"}
+          borderWidth={"2px"}
+          borderColor={"gray.400"}
           boxShadow={"10px"}
           padding={"7px"}
           justifyContent={"space-around"}
@@ -105,7 +126,152 @@ const ContingenciaScreen = (props) => {
             <Flex w={"100%"} justifyContent={"space-around"}>
               {infoPlano.tags.map((t) => (
                 <Flex direction={"column"} width={"fit-content"}>
-                  <Text bg={"green.300"} padding="2px" borderRadius={"5px"} fontSize={"18px"}>{t}</Text>
+                  <Text
+                    bg={"green.300"}
+                    padding="2px"
+                    borderRadius={"5px"}
+                    fontSize={"18px"}
+                  >
+                    {t}
+                  </Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Text>
+        </Flex>
+        <Flex
+          h={"80%"}
+          w={"30%"}
+          marginRight={"1%"}
+          marginBottom={"0.5%"}
+          direction={"column"}
+          borderRadius={"25px"}
+          borderWidth={"2px"}
+          borderColor={"gray.400"}
+          boxShadow={"10px"}
+          padding={"7px"}
+          justifyContent={"space-around"}
+        >
+          <Text fontSize={"36px"} fontWeight="bold">
+            {infoPlano.titulo}
+          </Text>
+          <Text fontSize={"18px"}>{infoPlano.subTitulo}</Text>
+          <hr></hr>
+          <Text fontSize={"24px"}>Principais Agentes</Text>
+          <Text>
+            <Flex direction={"row"} width={"100%"}>
+              {infoPlano.principaisAgentes.map((p) => (
+                <Flex direction={"column"} width={"100%"}>
+                  <Text fontSize={"18px"}>{p.nome}</Text>
+                  <Text fontSize={"12px"}>{p.telefone}</Text>
+                </Flex>
+              ))}
+            </Flex>
+            <hr></hr>
+            <Text> Tags </Text>
+            <Flex w={"100%"} justifyContent={"space-around"}>
+              {infoPlano.tags.map((t) => (
+                <Flex direction={"column"} width={"fit-content"}>
+                  <Text
+                    bg={"green.300"}
+                    padding="2px"
+                    borderRadius={"5px"}
+                    fontSize={"18px"}
+                  >
+                    {t}
+                  </Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Text>
+        </Flex>
+        <Flex
+          h={"80%"}
+          w={"30%"}
+          marginRight={"1%"}
+          marginBottom={"0.5%"}
+          direction={"column"}
+          borderRadius={"25px"}
+          borderWidth={"2px"}
+          borderColor={"gray.400"}
+          boxShadow={"10px"}
+          padding={"7px"}
+          justifyContent={"space-around"}
+        >
+          <Text fontSize={"36px"} fontWeight="bold">
+            {infoPlano.titulo}
+          </Text>
+          <Text fontSize={"18px"}>{infoPlano.subTitulo}</Text>
+          <hr></hr>
+          <Text fontSize={"24px"}>Principais Agentes</Text>
+          <Text>
+            <Flex direction={"row"} width={"100%"}>
+              {infoPlano.principaisAgentes.map((p) => (
+                <Flex direction={"column"} width={"100%"}>
+                  <Text fontSize={"18px"}>{p.nome}</Text>
+                  <Text fontSize={"12px"}>{p.telefone}</Text>
+                </Flex>
+              ))}
+            </Flex>
+            <hr></hr>
+            <Text> Tags </Text>
+            <Flex w={"100%"} justifyContent={"space-around"}>
+              {infoPlano.tags.map((t) => (
+                <Flex direction={"column"} width={"fit-content"}>
+                  <Text
+                    bg={"green.300"}
+                    padding="2px"
+                    borderRadius={"5px"}
+                    fontSize={"18px"}
+                  >
+                    {t}
+                  </Text>
+                </Flex>
+              ))}
+            </Flex>
+          </Text>
+        </Flex>
+        <Flex
+          h={"80%"}
+          w={"30%"}
+          marginRight={"1%"}
+          marginBottom={"0.5%"}
+          direction={"column"}
+          borderRadius={"25px"}
+          borderWidth={"2px"}
+          borderColor={"gray.400"}
+          boxShadow={"10px"}
+          padding={"7px"}
+          justifyContent={"space-around"}
+        >
+          <Text fontSize={"36px"} fontWeight="bold">
+            {infoPlano.titulo}
+          </Text>
+          <Text fontSize={"18px"}>{infoPlano.subTitulo}</Text>
+          <hr></hr>
+          <Text fontSize={"24px"}>Principais Agentes</Text>
+          <Text>
+            <Flex direction={"row"} width={"100%"}>
+              {infoPlano.principaisAgentes.map((p) => (
+                <Flex direction={"column"} width={"100%"}>
+                  <Text fontSize={"18px"}>{p.nome}</Text>
+                  <Text fontSize={"12px"}>{p.telefone}</Text>
+                </Flex>
+              ))}
+            </Flex>
+            <hr></hr>
+            <Text> Tags </Text>
+            <Flex w={"100%"} justifyContent={"space-around"}>
+              {infoPlano.tags.map((t) => (
+                <Flex direction={"column"} width={"fit-content"}>
+                  <Text
+                    bg={"green.300"}
+                    padding="2px"
+                    borderRadius={"5px"}
+                    fontSize={"18px"}
+                  >
+                    {t}
+                  </Text>
                 </Flex>
               ))}
             </Flex>
