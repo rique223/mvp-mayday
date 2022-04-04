@@ -1,9 +1,9 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CidadesContextProvider } from "./Context/CidadesContext";
-import HomeScreen from "./Pages/HomeScreen";
-import ContingenciaScreen from "./Pages/HomeScreen/ContingenciaScreen";
-import ModulosScreen from "./Pages/HomeScreen/ModulosScreen";
+import ContingenciaScreen from "./Pages/ContingenciasScreen/ContingenciaScreen";
+import HomeScreen from "./Pages/HomeScreen/HomeScreen";
+import ModulosScreen from "./Pages/ModulosScreen/ModulosScreen";
 
 const App = () => {
   return (
@@ -14,7 +14,6 @@ const App = () => {
           <Route path="modulos" element={<ModulosScreen />} />
           <Route path="contingencias/:idCidade" element={<ContingenciaScreen />} />
           {/* <Route path="contingencia/:idCidade" render={(props) => <ContingenciaScreen props={props} />} /> */}
-          
         </Routes>
       </BrowserRouter>
     </CidadesContextProvider>
