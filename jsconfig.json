@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "checkJs": true,
-    "jsx": "react-jsx"
-  }
+    "target": "ES6",
+    "module": "commonjs",
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["dist", "node_modules"]
 }
