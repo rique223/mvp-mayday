@@ -8,8 +8,8 @@ import {
   Heading,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { headingStyle } from "Utils/globalStyles";
-import EditableControl from "Components/EditableControl";
+import { headingStyle } from "../../Utils/globalStyles";
+import EditableControl from "../EditableControl";
 
 const DescContingencia = ({
   descricao,
@@ -45,11 +45,11 @@ const DescContingencia = ({
 
   return (
     <Flex
-      flexDir="column"
-      marginBlockEnd="4rem"
-      paddingInline="1rem"
-      maxW="101rem"
-      w="100%"
+      flexDir='column'
+      marginBlockEnd='4rem'
+      paddingInline='1rem'
+      maxW='101rem'
+      w='100%'
     >
       <Heading {...headingStyle}>Descrição</Heading>
       <Editable
@@ -59,7 +59,7 @@ const DescContingencia = ({
         defaultValue={descricao}
       >
         <EditablePreview
-          transition="background .2s ease-in-out"
+          transition='background .2s ease-in-out'
           _hover={{
             background: useColorModeValue("gray.100", "gray.700"),
           }}
@@ -68,10 +68,10 @@ const DescContingencia = ({
         <EditableInput
           as={ResizeTextarea}
           ref={editableTextInputRef}
-          w="100%"
-          minH="unset"
-          overflow="hidden"
-          resize="none"
+          w='100%'
+          minH='unset'
+          overflow='hidden'
+          resize='none'
           minRows={1}
           onChange={(e) => setDescricao(e.target.value)}
           {...descriptionStyle}

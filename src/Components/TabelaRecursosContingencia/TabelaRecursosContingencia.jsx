@@ -11,7 +11,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { headingStyle } from "Utils/globalStyles";
+import { headingStyle } from "../../Utils/globalStyles";
 import { renderRecursosTableRows } from "../../Helpers/renderRecursosTableRow";
 import InputTabela from "../InputTabela";
 
@@ -60,29 +60,29 @@ const TabelaRecursosContingencia = () => {
 
   return (
     <Flex
-      flexDirection="column"
-      marginBlockEnd="4rem"
-      paddingInline="1rem"
-      maxW="101rem"
-      w="100%"
+      flexDirection='column'
+      marginBlockEnd='4rem'
+      paddingInline='1rem'
+      maxW='101rem'
+      w='100%'
     >
       <Heading {...headingStyle}>Recursos</Heading>
-      <Center w="100%">
+      <Center w='100%'>
         <Box
-          borderRadius="15px"
-          boxShadow="lg"
-          border="1px"
-          borderColor="gray.200"
+          borderRadius='15px'
+          boxShadow='lg'
+          border='1px'
+          borderColor='gray.200'
           padding={3}
-          w="100%"
+          w='100%'
         >
-          <Table variant="simple">
+          <Table variant='simple'>
             <Thead>
               <Tr>
                 <Th {...tableHeaderStyle}>Recurso</Th>
                 <Th {...tableHeaderStyle}>Responsável</Th>
                 <Th {...tableHeaderStyle}>Principal Contato</Th>
-                <Th {...tableHeaderStyle} textAlign="center">
+                <Th {...tableHeaderStyle} textAlign='center'>
                   Qtd.
                 </Th>
               </Tr>

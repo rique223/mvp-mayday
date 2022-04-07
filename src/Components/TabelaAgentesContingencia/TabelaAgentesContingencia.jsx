@@ -11,7 +11,7 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import { headingStyle } from "Utils/globalStyles";
+import { headingStyle } from "../../Utils/globalStyles";
 import { renderAgentesTableRows } from "../../Helpers/renderAgentesTableRows";
 import InputTabela from "../InputTabela";
 
@@ -42,16 +42,16 @@ const TabelaAgentesContingencia = () => {
   };
 
   return (
-    <Flex flexDirection="column" w="58%" marginInlineEnd="40px">
+    <Flex flexDirection='column' w='58%' marginInlineEnd='40px'>
       <Heading {...headingStyle}>Agentes</Heading>
       <Box
-        borderRadius="15px"
-        boxShadow="lg"
-        border="1px"
-        borderColor="gray.200"
+        borderRadius='15px'
+        boxShadow='lg'
+        border='1px'
+        borderColor='gray.200'
         padding={3}
       >
-        <Table variant="simple">
+        <Table variant='simple'>
           <Thead>
             <Tr>
               <Th {...tableHeaderStyle}>Pessoas</Th>
@@ -65,12 +65,12 @@ const TabelaAgentesContingencia = () => {
               <Td colSpan={2}>
                 <InputTabela />
               </Td>
-              <Td colSpan={1} textAlign="center">
+              <Td colSpan={1} textAlign='center'>
                 <Text
-                  fontWeight="400"
-                  fontSize="2.25rem"
-                  lineHeight="42px"
-                  color="#000"
+                  fontWeight='400'
+                  fontSize='2.25rem'
+                  lineHeight='42px'
+                  color='#000'
                 >
                   0/20
                 </Text>

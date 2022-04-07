@@ -1,5 +1,3 @@
-import ReactDOM from "react-dom";
-
 import {
   Box,
   Button,
@@ -15,7 +13,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { inputStyle } from "Utils/globalStyles";
+import { inputStyle } from "../../Utils/globalStyles";
 
 const ModalCadastroAgente = ({ setCadastraNovoAgente }) => {
   const modalButtonStyle = {
@@ -36,106 +34,106 @@ const ModalCadastroAgente = ({ setCadastraNovoAgente }) => {
 
   return (
     <Portal>
-      <Flex alignItems="center" justifyContent="center">
+      <Flex alignItems='center' justifyContent='center'>
         <Box
-          bg="#000"
-          opacity="0.5"
-          w="100%"
-          h="100vh"
-          position="fixed"
-          top="0px"
-          background-color="black"
+          bg='#000'
+          opacity='0.5'
+          w='100%'
+          h='100vh'
+          position='fixed'
+          top='0px'
+          background-color='black'
           onClick={() => setCadastraNovoAgente(false)}
         />
         <Flex
-          flexDir="column"
-          position="fixed"
-          top="50%"
-          transform="translateY(-50%)"
-          borderRadius="25px"
+          flexDir='column'
+          position='fixed'
+          top='50%'
+          transform='translateY(-50%)'
+          borderRadius='25px'
           align
-          bg="#ffffff"
-          maxW="62rem"
-          w="100%"
-          h="auto"
-          padding="2rem"
-          zIndex="4"
+          bg='#ffffff'
+          maxW='62rem'
+          w='100%'
+          h='auto'
+          padding='2rem'
+          zIndex='4'
         >
           <Heading
-            fontWeight="400"
-            fontSize="4.5rem"
-            lineHeight="5.25rem"
-            display="flex"
-            alignSelf="center"
-            marginBlockEnd="3rem"
-            color="#000000"
-            opacity=".4"
+            fontWeight='400'
+            fontSize='4.5rem'
+            lineHeight='5.25rem'
+            display='flex'
+            alignSelf='center'
+            marginBlockEnd='3rem'
+            color='#000000'
+            opacity='.4'
           >
             Novo Agente
           </Heading>
-          <VStack spacing="2rem">
-            <HStack spacing="2rem" w="100%">
+          <VStack spacing='2rem'>
+            <HStack spacing='2rem' w='100%'>
               <FormControl>
-                <FormLabel htmlFor="nome">Nome</FormLabel>
+                <FormLabel htmlFor='nome'>Nome</FormLabel>
                 <Input
-                  id="nome"
-                  type="text"
+                  id='nome'
+                  type='text'
                   {...inputStyle}
-                  placeholder="Escreva seu primeiro nome"
+                  placeholder='Escreva seu primeiro nome'
                 />
               </FormControl>
 
               <FormControl>
-                <FormLabel htmlFor="sobrenome">Sobrenome</FormLabel>
+                <FormLabel htmlFor='sobrenome'>Sobrenome</FormLabel>
                 <Input
-                  id="sobrenome"
-                  type="text"
+                  id='sobrenome'
+                  type='text'
                   {...inputStyle}
-                  placeholder="Escreva seu sobrenome"
+                  placeholder='Escreva seu sobrenome'
                 />
               </FormControl>
             </HStack>
 
             <FormControl>
-              <FormLabel htmlFor="instituicao">Instituição</FormLabel>
+              <FormLabel htmlFor='instituicao'>Instituição</FormLabel>
               <Select
-                id="instituicao"
-                placeholder="Selecione uma instituição"
+                id='instituicao'
+                placeholder='Selecione uma instituição'
                 {...inputStyle}
               />
             </FormControl>
 
             <FormControl>
-              <FormLabel htmlFor="cargo">Cargo</FormLabel>
+              <FormLabel htmlFor='cargo'>Cargo</FormLabel>
               <Select
-                id="cargo"
-                placeholder="Selecione um cargo"
+                id='cargo'
+                placeholder='Selecione um cargo'
                 {...inputStyle}
               />
             </FormControl>
 
             <FormControl>
-              <FormLabel htmlFor="contato">Principal contato</FormLabel>
+              <FormLabel htmlFor='contato'>Principal contato</FormLabel>
               <Input
-                id="contato"
-                type="number"
-                placeholder="Principal Contato"
+                id='contato'
+                type='number'
+                placeholder='Principal Contato'
                 {...inputStyle}
               />
               <FormHelperText>Exemplo: (62) 91234-5678</FormHelperText>
             </FormControl>
           </VStack>
 
-          <HStack spacing="1rem" w="100%" justifyContent="flex-end">
+          <HStack spacing='1rem' w='100%' justifyContent='flex-end'>
             <Button
-              bg="#95AE23"
+              bg='#95AE23'
               onClick={() => setCadastraNovoAgente(false)}
               {...modalButtonStyle}
             >
               Salvar
             </Button>
             <Button
-              bg="red"
+              bg='red'
               onClick={() => setCadastraNovoAgente(false)}
               {...modalButtonStyle}
             >

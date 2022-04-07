@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CidadesContextProvider } from "./Context/CidadesContext";
 import ContingenciaScreen from "./Pages/ContingenciasScreen/ContingenciaScreen";
 import ContingenciaInterna from "./Pages/ContingenciaInterna";
-import HomeScreen from "./Pages/HomeScreen/HomeScreen";
+import HomeScreen from "./Pages/HomeScreen";
 import ModulosScreen from "./Pages/ModulosScreen";
 
 const App = () => {
@@ -18,7 +18,8 @@ const App = () => {
             element={<ContingenciaScreen />}
           />
           <Route
-            path='/contingenciaInterna'
+            index
+            path='/contingenciaInterna/:idPlano'
             element={<ContingenciaInterna />}
           />
         </Routes>
