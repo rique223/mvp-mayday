@@ -2,4 +2,8 @@
   "emmet.includeLanguages": {
     "javascript": "javascriptreact"
   },
+  "conventionalCommits.scopes": [
+    "Plano de Contingencia",
+    "Ajustes CSS"
+  ],
 }

@@ -3,7 +3,13 @@ import apiMunicipios from "../Utils/apiMunicipios";
 const fetchMunicipios = async () => {
   try {
     const { data } = await apiMunicipios.get();
-    return data;
+    const municipiosMapeados = data.map((municipio) => {
+      return {
+        value: municipio.id,
+        label: municipio.nome,
+      };
+    });
+    return municipiosMapeados;
   } catch (error) {
     console.log(error);
   }
