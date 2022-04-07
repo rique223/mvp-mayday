@@ -32,6 +32,7 @@ const ModulosScreen = () => {
           const link = "/contingencias/" + cidade.value;
           return (
             <Flex
+              key={cidade.value}
               height='250px'
               boxShadow='xl'
               alignItems='center'

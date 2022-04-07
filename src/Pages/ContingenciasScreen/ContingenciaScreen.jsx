@@ -2,7 +2,7 @@ import { Input, Heading, Container, SimpleGrid } from "@chakra-ui/react";
 
 import "../../App.scss";
 import { useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
 import CallsContingencia from "../../Components/CallsContingencia/CallsContingencia";
 import BotaoNovoPlano from "../../Components/BotaoNovoPlano";
@@ -15,6 +15,7 @@ const ContingenciaScreen = () => {
 
   const infoPlanos = [
     {
+      id: 1,
       titulo: "Incêndio/Bombeiros",
       subTitulo: "Corpo de bombeiros do estado de Goiás",
       principaisAgentes: [
@@ -56,6 +57,7 @@ const ContingenciaScreen = () => {
       ],
     },
     {
+      id: 2,
       titulo: "Enchente",
       subTitulo: "Corpo de bombeiros do estado de Goiás",
       principaisAgentes: [
@@ -97,6 +99,7 @@ const ContingenciaScreen = () => {
       ],
     },
     {
+      id: 3,
       titulo: "Enchente",
       subTitulo: "Corpo de bombeiros do estado de Goiás",
       principaisAgentes: [
@@ -138,6 +141,7 @@ const ContingenciaScreen = () => {
       ],
     },
     {
+      id: 4,
       titulo: "Enchente",
       subTitulo: "Corpo de bombeiros do estado de Goiás",
       principaisAgentes: [
@@ -217,7 +221,19 @@ const ContingenciaScreen = () => {
         <BotaoNovoPlano />
         {infoPlanos &&
           infoPlanos.map((infoPlano) => (
-            <CallsContingencia infoPlano={infoPlano} />
+            <Link
+              to={`/contingenciaInterna/${infoPlano.id}`}
+              key={infoPlano.id}
+              style={{
+                width: "100%",
+                height: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <CallsContingencia infoPlano={infoPlano} />
+            </Link>
           ))}
       </SimpleGrid>
     </Container>

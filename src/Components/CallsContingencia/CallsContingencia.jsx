@@ -37,9 +37,9 @@ export default function CallsContingencia({ infoPlano }) {
             {infoPlano.titulo}
           </Heading>
           <Text
-            font-weight='300'
-            font-size='1.125rem'
-            line-height='21px'
+            fontWeight='300'
+            fontSize='1.125rem'
+            lineHeight='21px'
             color='#808080'
           >
             {infoPlano.subTitulo}
@@ -60,7 +60,7 @@ export default function CallsContingencia({ infoPlano }) {
         <HStack spacing='20px'>
           {infoPlano &&
             infoPlano.principaisAgentes.map((agente) => (
-              <HStack spacing='5px'>
+              <HStack key={agente.id} spacing='5px'>
                 <Image
                   fallbackSrc='https://via.placeholder.com/32'
                   borderRadius='full'
@@ -102,6 +102,7 @@ export default function CallsContingencia({ infoPlano }) {
           {infoPlano &&
             infoPlano.tags.map((tag) => (
               <Tag
+                key={tag.id}
                 bg={tag.cor}
                 borderRadius='50px'
                 fontWeight='400'
