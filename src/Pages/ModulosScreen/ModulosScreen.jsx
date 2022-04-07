@@ -1,57 +1,69 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Input,
-  Text,
-} from "@chakra-ui/react";
-import { SearchIcon } from "@chakra-ui/icons";
+import { Flex, Heading, SimpleGrid } from "@chakra-ui/react";
 import "../../App.scss";
-import { useContext, useEffect, useState } from "react";
-import fetchMunicipios from "../../Helpers/fetchMunicipios";
-import { CUIAutoComplete } from "chakra-ui-autocomplete";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
-import TextCidadeModulo from "../../Components/TextCidadeModulo/TextCidadeModulo";
-import TitleModulos from "../../Components/TitleModulos/TitleModulos";
-import BodyModulos from "../../Components/BodyModulos/BodyModulos";
 
 const ModulosScreen = () => {
-  const { cidades, setCidades } = useContext(CidadesContext);
-
-  useEffect(() => {
-    console.log(cidades);
-  }, []);
+  const { cidades } = useContext(CidadesContext);
 
   return (
-    <Flex w="100%" h="100%" flexDir="column" bg={"white"}>
-      <TitleModulos titulo={"Módulos"}></TitleModulos>
-      <BodyModulos>
-        {cidades.map((c) => {
-          const link = "/contingencias/" + c.value;
+    <Flex w='100%' h='100%' justifyContent='center' flexDir='column' bg='white'>
+      <Heading
+        as='h1'
+        alignSelf='center'
+        justifySelf='center'
+        fontSize='4.5rem'
+        fontWeight='400'
+        lineHeight='84px'
+        color='rgba(0, 0, 0, 0.4)'
+        marginBlockEnd='2rem'
+      >
+        Módulos
+      </Heading>
+      <SimpleGrid
+        spacing='1.25rem'
+        columns={5}
+        maxH='80%'
+        marginInline='2rem'
+        marginBlockEnd='2rem'
+      >
+        {cidades.map((cidade) => {
+          const link = "/contingencias/" + cidade.value;
           return (
-            <>
+            <Flex
+              height='250px'
+              boxShadow='xl'
+              alignItems='center'
+              justifyContent='center'
+              background='green.500'
+              fontSize='1.5rem'
+              color='white'
+              cursor='pointer'
+              borderRadius='25px'
+              padding='10px'
+              transition='filter .2s ease, boxShadow .2s ease'
+              _hover={{
+                filter: "brightness(120%)",
+                boxShadow: "none",
+              }}
+            >
               <Link
                 to={link}
                 style={{
+                  width: "100%",
+                  height: "100%",
                   display: "flex",
-                  flex: 1,
-                  textAlign: "center",
-                  maxHeight: "40%",
-                  maxWidth: "20%",
-                  width: "20%",
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <TextCidadeModulo titulo={`Contingência - ${c.label}`} />
+                Contingência - {cidade.label}
               </Link>
-            </>
+            </Flex>
           );
         })}
-      </BodyModulos>
+      </SimpleGrid>
     </Flex>
   );
 };

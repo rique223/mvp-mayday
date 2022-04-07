@@ -3,21 +3,23 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CidadesContextProvider } from "./Context/CidadesContext";
 import ContingenciaScreen from "./Pages/ContingenciasScreen/ContingenciaScreen";
 import HomeScreen from "./Pages/HomeScreen/HomeScreen";
-import ModulosScreen from "./Pages/ModulosScreen/ModulosScreen";
+import ModulosScreen from "./Pages/ModulosScreen";
 
 const App = () => {
   return (
     <CidadesContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<HomeScreen />} />
-          <Route path="modulos" element={<ModulosScreen />} />
-          <Route path="contingencias/:idCidade" element={<ContingenciaScreen />} />
-          {/* <Route path="contingencia/:idCidade" render={(props) => <ContingenciaScreen props={props} />} /> */}
+          <Route path='/' element={<HomeScreen />} />
+          <Route path='modulos' element={<ModulosScreen />} />
+          <Route
+            path='contingencias/:idCidade'
+            element={<ContingenciaScreen />}
+          />
         </Routes>
       </BrowserRouter>
     </CidadesContextProvider>
   );
 };
- 
+
 export default App;

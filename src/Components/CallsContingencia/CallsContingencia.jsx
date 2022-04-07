@@ -1,68 +1,142 @@
-import { Flex, Text } from "@chakra-ui/layout";
-import React from "react";
+import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
+import {
+  Image,
+  Heading,
+  Text,
+  HStack,
+  VStack,
+  Tag,
+  Button,
+} from "@chakra-ui/react";
 
 export default function CallsContingencia({ infoPlano }) {
-  const cssValue = {
-    // w:"30%",
-    h: "100%",
-    maxW: "50vw",
-    // minW: "fit-content",
-    marginRight: "1%",
-    marginBottom: "0.5%",
-    direction: "column",
-    borderRadius: "25px",
-    borderWidth: "2px",
-    borderColor: "gray.400",
-    boxShadow: "10px",
-    padding: "7px",
-    // wrap: "wrap",
-    alignContent: "center",
-    justifyContent: "space-between",
-  };
-
   return (
-    <Flex {...cssValue}>
-      <Flex h="30%" direction={"column"}>
-        <Text fontSize={"2vw"} fontWeight="bold">
-          {infoPlano.titulo}
-        </Text>
-        <Text fontSize={"1.4vw"}>{infoPlano.subTitulo}</Text>
-      </Flex>
-      <hr></hr>
-      <Flex h="50%" direction={"column"}>
-        <Text fontSize={"1.6vw"}>Principais Agentes</Text>
-        <Flex direction={"row"} width={"100%"}>
-          {infoPlano.principaisAgentes.map((p) => (
-            <Flex direction={"column"} width={"100%"}>
-              <Text fontSize={"1.4vw"}>{p.nome}</Text>
-              <Text fontSize={"1.2vw"}>{p.telefone}</Text>
-            </Flex>
-          ))}
-        </Flex>
-      </Flex>
-        <hr></hr>
-      <Flex h={"20%"} direction="column">
-        <Text fontSize={"1.2vw"}> Tags </Text>
-        <Flex
-          w={"100%"}
-          h={"20%"}
-          justifyContent={"space-around"}
-          wrap={"wrap"}
+    <VStack
+      spacing='47px'
+      padding='23px'
+      background='#FFFFFF'
+      shadow='xl'
+      borderWidth='1px'
+      borderStyle='solid'
+      borderColor='#ccc'
+      borderRadius='25px'
+      align='flex-start'
+    >
+      <HStack spacing='15px'>
+        <Image
+          fallbackSrc='https://via.placeholder.com/100'
+          borderRadius='full'
+        />
+        <VStack spacing='0'>
+          <Heading
+            fontWeight='400'
+            fontSize='2rem'
+            lineHeight='42px'
+            color='#000000'
+          >
+            {infoPlano.titulo}
+          </Heading>
+          <Text
+            font-weight='300'
+            font-size='1.125rem'
+            line-height='21px'
+            color='#808080'
+          >
+            {infoPlano.subTitulo}
+          </Text>
+        </VStack>
+      </HStack>
+
+      <VStack spacing='8px' align='flex-start'>
+        <Heading
+          as='h3'
+          fontWeight='400'
+          fontSize='1.5rem'
+          lineHeight='28px'
+          color='#000000'
         >
-          {infoPlano.tags.map((t) => (
-            <Flex direction={"column"} width={"fit-content"}>
-              <Text
-                bg={"green.300"}
-                padding="2px"
-                borderRadius={"5px"}
-                fontSize={"1.2vw"}
+          Principais Agentes
+        </Heading>
+        <HStack spacing='20px'>
+          {infoPlano &&
+            infoPlano.principaisAgentes.map((agente) => (
+              <HStack spacing='5px'>
+                <Image
+                  fallbackSrc='https://via.placeholder.com/32'
+                  borderRadius='full'
+                />
+                <VStack spacing='0' align='flex-start'>
+                  <Text
+                    fontWeight='400'
+                    fontSize='1.125rem'
+                    lineHeight='21px'
+                    color='#303030'
+                  >
+                    {agente.nome}
+                  </Text>
+                  <Text
+                    fontWeight='400'
+                    fontSize='0.75rem'
+                    lineHeight='14px'
+                    color='#808080'
+                  >
+                    {agente.cargo}
+                  </Text>
+                </VStack>
+              </HStack>
+            ))}
+        </HStack>
+      </VStack>
+
+      <VStack align='flex-start'>
+        <Heading
+          as='h3'
+          fontWeight='400'
+          fontSize='1.5rem'
+          lineHeight='28px'
+          color='#000000'
+        >
+          Tags
+        </Heading>
+        <HStack>
+          {infoPlano &&
+            infoPlano.tags.map((tag) => (
+              <Tag
+                bg={tag.cor}
+                borderRadius='50px'
+                fontWeight='400'
+                fontSize='12px'
+                lineHeight='14px'
+                color='#FFFFFF'
               >
-                {t}
-              </Text>
-            </Flex>
-          ))}
-        </Flex>
-      </Flex>
-    </Flex>
+                {tag.titulo}
+              </Tag>
+            ))}
+        </HStack>
+      </VStack>
+
+      <HStack w='100%' justify='flex-end'>
+        <Button
+          w='60px'
+          h='60px'
+          borderRadius='50%'
+          padding='0'
+          boxShadow='lg'
+          bg='#fff'
+        >
+          <AddIcon w='20px' h='20px' color='#007B2F' />
+        </Button>
+        <Button
+          w='60px'
+          h='60px'
+          borderRadius='50%'
+          padding='0'
+          boxShadow='lg'
+          bg='#fff'
+        >
+          <HamburgerIcon w='20px' h='20px' color='#007B2F' />
+        </Button>
+      </HStack>
+    </VStack>
   );
 }

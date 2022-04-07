@@ -1,78 +1,226 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Container,
-  Flex,
-  Grid,
-  GridItem,
-  Heading,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Input, Heading, Container, SimpleGrid } from "@chakra-ui/react";
 
-import { AddIcon, SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
-import { useContext, useEffect, useState } from "react";
-import fetchMunicipios from "../../Helpers/fetchMunicipios";
-import { CUIAutoComplete } from "chakra-ui-autocomplete";
-import { Link, useParams } from "react-router-dom";
-// import * from '.'
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
-import { BodyListaContingencias } from "../../Components/BodyListaContingencias/BodyListaContingencias";
-import { HeaderListaContingencias } from "../../Components/HeaderListaContingencias/HeaderListaContingencias";
-import CallsAddContingenciaDefault from "../../Components/CallsAddContingenciaDefault/CallsAddContingenciaDefault";
-import { TitleListaContingencias } from "../../Components/TitleListaContingencias/TitleListaContingencias";
 import CallsContingencia from "../../Components/CallsContingencia/CallsContingencia";
+import BotaoNovoPlano from "../../Components/BotaoNovoPlano";
 
-const ContingenciaScreen = (props) => {
-  const { cidades, setCidades, findCidadeById } = useContext(CidadesContext);
+const ContingenciaScreen = () => {
+  const { cidades, findCidadeById } = useContext(CidadesContext);
   let { idCidade } = useParams();
 
-  const infoPlano = {
-    titulo: "Incêndio",
-    subTitulo: "Bombeiros",
-    principaisAgentes: [
-      {
-        id: 1,
-        nome: "João Jordan",
-        telefone: "(62)98565-2412",
-      },
-      {
-        id: 2,
-        nome: "Cap. Abreu",
-        telefone: "(62)98565-2412",
-      },
-      {
-        id: 2,
-        nome: "Cap. Abreu",
-        telefone: "(62)98565-2412",
-      },
-    ],
-    tags: ["Incêndio", "Fogo", "EmergÊncia", "Bombeiros"],
-  };
+  const titulo = `${findCidadeById(cidades, idCidade)} - Planos de Ativação`;
 
-  useEffect(() => {
-    console.log("props", cidades, idCidade);
-  }, []);
+  const infoPlanos = [
+    {
+      titulo: "Incêndio/Bombeiros",
+      subTitulo: "Corpo de bombeiros do estado de Goiás",
+      principaisAgentes: [
+        {
+          id: 1,
+          nome: "João Jordan",
+          cargo: "CEO",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+      ],
+      tags: [
+        {
+          id: 1,
+          titulo: "Enchente",
+          cor: "#007B2F",
+        },
+        {
+          id: 2,
+          titulo: "Enchente",
+          cor: "#F73718",
+        },
+        {
+          id: 3,
+          titulo: "Enchente",
+          cor: "#FF7900",
+        },
+      ],
+    },
+    {
+      titulo: "Enchente",
+      subTitulo: "Corpo de bombeiros do estado de Goiás",
+      principaisAgentes: [
+        {
+          id: 1,
+          nome: "João Jordan",
+          cargo: "CEO",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+      ],
+      tags: [
+        {
+          id: 1,
+          titulo: "Enchente",
+          cor: "#007B2F",
+        },
+        {
+          id: 2,
+          titulo: "Enchente",
+          cor: "#F73718",
+        },
+        {
+          id: 3,
+          titulo: "Enchente",
+          cor: "#FF7900",
+        },
+      ],
+    },
+    {
+      titulo: "Enchente",
+      subTitulo: "Corpo de bombeiros do estado de Goiás",
+      principaisAgentes: [
+        {
+          id: 1,
+          nome: "João Jordan",
+          cargo: "CEO",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+      ],
+      tags: [
+        {
+          id: 1,
+          titulo: "Enchente",
+          cor: "#007B2F",
+        },
+        {
+          id: 2,
+          titulo: "Enchente",
+          cor: "#F73718",
+        },
+        {
+          id: 3,
+          titulo: "Enchente",
+          cor: "#FF7900",
+        },
+      ],
+    },
+    {
+      titulo: "Enchente",
+      subTitulo: "Corpo de bombeiros do estado de Goiás",
+      principaisAgentes: [
+        {
+          id: 1,
+          nome: "João Jordan",
+          cargo: "CEO",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+        {
+          id: 2,
+          nome: "Cap. Abreu",
+          cargo: "Capitão",
+          telefone: "(62)98565-2412",
+        },
+      ],
+      tags: [
+        {
+          id: 1,
+          titulo: "Enchente",
+          cor: "#007B2F",
+        },
+        {
+          id: 2,
+          titulo: "Enchente",
+          cor: "#F73718",
+        },
+        {
+          id: 3,
+          titulo: "Enchente",
+          cor: "#FF7900",
+        },
+      ],
+    },
+  ];
 
   return (
-    <Flex w="100%" h="100%" flexDir="column" alignItems="center">
-      <HeaderListaContingencias>
-        <TitleListaContingencias titulo={`${findCidadeById(cidades, idCidade)} - Planos de Contingência`}/>
-        <Input placeholder="Buscar planos de contingência" fontSize={"3vw"} h="fit-content"/>
-      </HeaderListaContingencias>
-      <BodyListaContingencias>
-        <CallsAddContingenciaDefault> 
-          <AddIcon w={58} h={58}/>
-        </CallsAddContingenciaDefault>
+    <Container
+      display='flex'
+      flexDir='column'
+      w='100%'
+      h='100%'
+      maxW='101rem'
+      alignItems='center'
+      marginBlockEnd='2rem'
+    >
+      <Heading
+        as='h1'
+        fontWeight='400'
+        fontSize='4.5rem'
+        lineHeight='84px'
+        marginBlockEnd='2rem'
+        color='rgba(0, 0, 0, 0.4)'
+      >
+        {titulo}
+      </Heading>
 
-        <CallsContingencia infoPlano={infoPlano}/>
-        <CallsContingencia infoPlano={infoPlano}/>
-        <CallsContingencia infoPlano={infoPlano}/>
-        <CallsContingencia infoPlano={infoPlano}/>
-      </BodyListaContingencias>
-    </Flex>
+      <Input
+        placeholder='Buscar planos de contingência'
+        background='#FFFFFF'
+        border='1px solid #000000'
+        borderRadius='25px'
+        h='3rem'
+        w='100%'
+        maxW='101rem'
+        fontSize='1.75rem'
+        marginBlockEnd='2rem'
+      />
+
+      <SimpleGrid w='100%' spacing='30px' columns={3}>
+        <BotaoNovoPlano />
+        {infoPlanos &&
+          infoPlanos.map((infoPlano) => (
+            <CallsContingencia infoPlano={infoPlano} />
+          ))}
+      </SimpleGrid>
+    </Container>
   );
 };
 
