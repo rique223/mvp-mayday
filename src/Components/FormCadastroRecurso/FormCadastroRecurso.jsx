@@ -73,7 +73,7 @@ const FormCadastroRecurso = ({ setCadastraNovoRecurso }) => {
             id='quantidade_inicial'
             placeholder='Insira a quantidade de recursos inicial'
             defaultValue={0}
-            min={0}
+            min={1}
             max={999}
           >
             <NumberInputField {...inputStyle} />

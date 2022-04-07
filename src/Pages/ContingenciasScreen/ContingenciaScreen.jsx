@@ -4,7 +4,7 @@ import "../../App.scss";
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
-import CallsContingencia from "../../Components/CallsContingencia/CallsContingencia";
+import CardPlano from "../../Components/CardPlano";
 import BotaoNovoPlano from "../../Components/BotaoNovoPlano";
 
 const ContingenciaScreen = () => {
@@ -232,7 +232,7 @@ const ContingenciaScreen = () => {
                 justifyContent: "center",
               }}
             >
-              <CallsContingencia infoPlano={infoPlano} />
+              <CardPlano infoPlano={infoPlano} />
             </Link>
           ))}
       </SimpleGrid>

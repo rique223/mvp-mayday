@@ -17,14 +17,14 @@ const EditableControl = ({ setPointerType }) => {
 
   return (
     isEditing && (
-      <ButtonGroup justifyContent="end" size="sm" w="full" spacing={2} mt={2}>
+      <ButtonGroup justifyContent='end' size='sm' w='full' spacing={2} mt={2}>
         <IconButton
-          colorScheme="green"
+          colorScheme='green'
           icon={<CheckIcon />}
           {...getSubmitButtonProps()}
         />
         <IconButton
-          colorScheme="red"
+          colorScheme='red'
           icon={<CloseIcon boxSize={3} />}
           {...getCancelButtonProps()}
         />

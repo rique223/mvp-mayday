@@ -24,7 +24,7 @@ const TagsContingencia = () => {
   };
 
   return (
-    <Flex flexDirection='column' maxW='42%'>
+    <Flex flexDirection='column' maxW='100%' marginBlockEnd='2rem'>
       <Flex flexDirection='column'>
         <Heading {...headingStyle}>Tags</Heading>
         <Flex flexDirection='row' flexWrap='wrap'>

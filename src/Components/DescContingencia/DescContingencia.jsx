@@ -1,44 +1,20 @@
-import ResizeTextarea from "react-textarea-autosize";
-import { useEffect, useRef, useState } from "react";
-import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Flex,
-  Heading,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { useState } from "react";
+import { Flex, Heading } from "@chakra-ui/react";
 import { headingStyle } from "../../Utils/globalStyles";
-import EditableControl from "../EditableControl";
+import Editavel from "../Editavel";
 
-const DescContingencia = ({
-  descricao,
-  setDescricao,
-  descricaoOriginal,
-  setDescricaoOriginal,
-}) => {
-  const editableTextInputRef = useRef(null);
-
-  useEffect(() => {
-    console.log(descricao);
-  }, [descricao]);
-
-  const handleCursorFimDaDescricao = () => {
-    const fimDaDescricao = editableTextInputRef.current.value.length;
-
-    editableTextInputRef.current.setSelectionRange(
-      fimDaDescricao,
-      fimDaDescricao
-    );
-  };
-
-  const [pointerType, setPointerType] = useState("pointer");
+const DescContingencia = () => {
+  const [descricao, setDescricao] = useState(
+    "- Ocorrência de fatos pontuais podendo acontecer isoladas ou ao mesmo tempo. - A retirada emergencial das pessoas que estiverem nas áreas de risco ou afetada, nas classificações de risco Alto e Muito Alto, conforme levantamento prévio da prefeitura. - As vias urbanas e vicinais do município que poderão ser comprometidas pelos deslizamentos. - Os locais escolhidos como abrigo, escola municipais, terão as aulas paralisadas para acomodação da população que terá que ser retirada de suas residências. - Se houverem mais de 28 vítimas, será necessário apoio para transporte e recebimento delas em outras localidades para atendimento médico. - Necessidade de resposta especializada para o salvamento das vítimas em caso de soterramento."
+  );
+  const [descricaoOriginal, setDescricaoOriginal] = useState(
+    "- Ocorrência de fatos pontuais podendo acontecer isoladas ou ao mesmo tempo. - A retirada emergencial das pessoas que estiverem nas áreas de risco ou afetada, nas classificações de risco Alto e Muito Alto, conforme levantamento prévio da prefeitura. - As vias urbanas e vicinais do município que poderão ser comprometidas pelos deslizamentos. - Os locais escolhidos como abrigo, escola municipais, terão as aulas paralisadas para acomodação da população que terá que ser retirada de suas residências. - Se houverem mais de 28 vítimas, será necessário apoio para transporte e recebimento delas em outras localidades para atendimento médico. - Necessidade de resposta especializada para o salvamento das vítimas em caso de soterramento."
+  );
 
   const descriptionStyle = {
     fontWeight: "300",
     fontSize: "1.5rem",
     lineHeight: "2rem",
-    cursor: pointerType,
     py: 2,
     px: 4,
   };
@@ -52,36 +28,13 @@ const DescContingencia = ({
       w='100%'
     >
       <Heading {...headingStyle}>Descrição</Heading>
-      <Editable
+      <Editavel
         onSubmit={() => setDescricaoOriginal(descricao)}
         onCancel={() => setDescricao(descricaoOriginal)}
-        onEdit={handleCursorFimDaDescricao}
-        defaultValue={descricao}
-      >
-        <EditablePreview
-          transition='background .2s ease-in-out'
-          _hover={{
-            background: useColorModeValue("gray.100", "gray.700"),
-          }}
-          {...descriptionStyle}
-        />
-        <EditableInput
-          as={ResizeTextarea}
-          ref={editableTextInputRef}
-          w='100%'
-          minH='unset'
-          overflow='hidden'
-          resize='none'
-          minRows={1}
-          onChange={(e) => setDescricao(e.target.value)}
-          {...descriptionStyle}
-        />
-        <EditableControl
-          setPointerType={setPointerType}
-          original={descricaoOriginal}
-          setDescricao={setDescricao}
-        />
-      </Editable>
+        onChange={(e) => setDescricao(e.target.value)}
+        texto={descricao}
+        estiloInput={descriptionStyle}
+      />
     </Flex>
   );
 };

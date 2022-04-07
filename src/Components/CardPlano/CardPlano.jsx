@@ -9,7 +9,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-export default function CallsContingencia({ infoPlano }) {
+const CardPlano = ({ infoPlano }) => {
   return (
     <VStack
       spacing='47px'
@@ -140,4 +140,6 @@ export default function CallsContingencia({ infoPlano }) {
       </HStack>
     </VStack>
   );
-}
+};
+
+export default CardPlano;

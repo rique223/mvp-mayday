@@ -1,4 +1,5 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, Textarea } from "@chakra-ui/react";
+import ResizeTextarea from "react-textarea-autosize";
 import BotoesAct from "../../Components/BotoesAct";
 import Modal from "../../Components/Modal";
 import { useState } from "react";
@@ -15,26 +16,14 @@ import FormCadastroRecurso from "../../Components/FormCadastroRecurso";
 
 const ContingenciaInterna = () => {
   const { idPlano } = useParams();
-  console.log(idPlano);
+
   const [cadastraNovoAgente, setCadastraNovoAgente] = useState(false);
   const [cadastraNovoRecurso, setCadastraNovoRecurso] = useState(false);
-  const [descricao, setDescricao] = useState(
-    "- Ocorrência de fatos pontuais podendo acontecer isoladas ou ao mesmo tempo. - A retirada emergencial das pessoas que estiverem nas áreas de risco ou afetada, nas classificações de risco Alto e Muito Alto, conforme levantamento prévio da prefeitura. - As vias urbanas e vicinais do município que poderão ser comprometidas pelos deslizamentos. - Os locais escolhidos como abrigo, escola municipais, terão as aulas paralisadas para acomodação da população que terá que ser retirada de suas residências. - Se houverem mais de 28 vítimas, será necessário apoio para transporte e recebimento delas em outras localidades para atendimento médico. - Necessidade de resposta especializada para o salvamento das vítimas em caso de soterramento."
-  );
-
-  const [descricaoOriginal, setDescricaoOriginal] = useState(
-    "- Ocorrência de fatos pontuais podendo acontecer isoladas ou ao mesmo tempo. - A retirada emergencial das pessoas que estiverem nas áreas de risco ou afetada, nas classificações de risco Alto e Muito Alto, conforme levantamento prévio da prefeitura. - As vias urbanas e vicinais do município que poderão ser comprometidas pelos deslizamentos. - Os locais escolhidos como abrigo, escola municipais, terão as aulas paralisadas para acomodação da população que terá que ser retirada de suas residências. - Se houverem mais de 28 vítimas, será necessário apoio para transporte e recebimento delas em outras localidades para atendimento médico. - Necessidade de resposta especializada para o salvamento das vítimas em caso de soterramento."
-  );
 
   return (
     <Flex flexDir='column' alignItems='center' marginBlock='5rem' padding='0'>
       <HeaderContingencia />
-      <DescContingencia
-        descricao={descricao}
-        setDescricao={setDescricao}
-        descricaoOriginal={descricaoOriginal}
-        setDescricaoOriginal={setDescricaoOriginal}
-      />
+      <DescContingencia />
       <Flex
         flexDir='row'
         marginBlockEnd='4rem'
@@ -43,7 +32,14 @@ const ContingenciaInterna = () => {
         w='100%'
       >
         <TabelaAgentesContingencia />
-        <TagsContingencia />
+        <Flex flexDir='column'>
+          <TagsContingencia />
+          <Textarea
+            as={ResizeTextarea}
+            placeholder='Digite aqui a mensagem a ser enviada aos agentes.'
+            maxH='415px'
+          />
+        </Flex>
       </Flex>
       <TabelaRecursosContingencia />
       <MapaContingencia />
