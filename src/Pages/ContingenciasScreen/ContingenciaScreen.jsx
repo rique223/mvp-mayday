@@ -1,19 +1,21 @@
 import { Input, Heading, Container, SimpleGrid } from "@chakra-ui/react";
 
 import "../../App.scss";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
 import CardPlano from "../../Components/CardPlano";
 import BotaoNovoPlano from "../../Components/BotaoNovoPlano";
+import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacao";
 
 const ContingenciaScreen = () => {
   const { cidades, findCidadeById } = useContext(CidadesContext);
   let { idCidade } = useParams();
+  const [infoPlanos, setInfoPlanos] = useState();
 
   const titulo = `${findCidadeById(cidades, idCidade)} - Planos de Ativação`;
 
-  const infoPlanos = [
+  const infoPlanosMock = [
     {
       id: 1,
       titulo: "Incêndio/Bombeiros",
@@ -183,6 +185,15 @@ const ContingenciaScreen = () => {
       ],
     },
   ];
+
+  useEffect(() => {
+    const getInfoPlanos = async () => {
+      const respMunicipios = await fetchPlanoAtivacao();
+      setInfoPlanos(respMunicipios);
+    };
+
+    getInfoPlanos();
+  }, []);
 
   return (
     <Container

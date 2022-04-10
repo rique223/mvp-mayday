@@ -2,7 +2,7 @@ import { Badge, Button, Flex, Heading, Image } from "@chakra-ui/react";
 import { headingStyle } from "../../Utils/globalStyles";
 import Plus from "../../Media/plus.svg";
 
-const TagsContingencia = () => {
+const TagsContingencia = ({tags}) => {
   const BadgeStyle = {
     variant: "solid",
     marginInlineEnd: "16px",
@@ -28,24 +28,11 @@ const TagsContingencia = () => {
       <Flex flexDirection='column'>
         <Heading {...headingStyle}>Tags</Heading>
         <Flex flexDirection='row' flexWrap='wrap'>
-          <Badge colorScheme='green' {...BadgeStyle}>
-            Fogo
-          </Badge>
-          <Badge colorScheme='red' {...BadgeStyle}>
-            Bombeiros
-          </Badge>
-          <Badge colorScheme='orange' {...BadgeStyle}>
-            Emergência
-          </Badge>
-          <Badge colorScheme='purple' {...BadgeStyle}>
-            Lorem
-          </Badge>
-          <Badge colorScheme='yellow' {...BadgeStyle}>
-            Ipsum
-          </Badge>
-          <Badge colorScheme='blue' {...BadgeStyle}>
-            Dolor
-          </Badge>
+          {tags.map((t) => (
+            <Badge colorScheme='green' {...BadgeStyle}>
+              {t.descTags}
+            </Badge>
+          ))}
           <Button
             variant='solid'
             borderRadius='50px'
