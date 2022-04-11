@@ -3,17 +3,15 @@ import { Flex, Heading } from "@chakra-ui/react";
 import { headingStyle } from "../../Utils/globalStyles";
 import Editavel from "../Editavel";
 
-const DescContingencia = ({ descricao }) => {
+const DescContingencia = ({ prop }) => {
   const [descricaoAux, setDescricaoAux] = useState("a");
-  const [descricaoOriginal, setDescricaoOriginal] = useState("");
   const [mostrarValor, setMostrarValor] = useState(false);
 
   useEffect(() => {
     const setarValores = () => {
-      console.log(descricao);
       setMostrarValor(false);
-      setDescricaoAux(descricao);
-      setDescricaoOriginal(descricao);
+      setDescricaoAux(prop.descricao);
+      prop.setarDescricaoOriginal(prop.descricao);
       setMostrarValor(true);
     };
 
@@ -39,8 +37,8 @@ const DescContingencia = ({ descricao }) => {
       <Heading {...headingStyle}>Descrição</Heading>
       {mostrarValor && (
         <Editavel
-          onSubmit={() => setDescricaoOriginal(descricaoAux)}
-          onCancel={() => setDescricaoAux(descricaoOriginal)}
+          onSubmit={() => prop.setarDescricaoOriginal(descricaoAux)}
+          onCancel={() => setDescricaoAux(prop.descricaoOriginal)}
           onChange={(e) => setDescricaoAux(e.target.value)}
           texto={descricaoAux}
           estiloInput={descriptionStyle}

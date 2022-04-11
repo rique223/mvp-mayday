@@ -6,22 +6,30 @@ import {
   Image,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { handleCursorFim } from "../../Helpers/handleCursorFim";
 import ProfilePic from "../../Media/ProfilePic.svg";
 import EditableControl from "../EditableControl";
 import Editavel from "../Editavel";
 
-const HeaderContingencia = () => {
-  const [titulo, setTitulo] = useState("Incêndio/Bombeiros");
-  const [tituloOriginal, setTituloOriginal] = useState("Incêndio/Bombeiros");
+const HeaderContingencia = ({ prop }) => {
+  const [tituloAux, setTituloAux] = useState("");
 
-  const [subTitulo, setSubTitulo] = useState(
-    "Corpo de bombeiros do estado de Goiás"
-  );
-  const [subTituloOriginal, setSubTituloOriginal] = useState(
-    "Corpo de bombeiros do estado de Goiás"
-  );
+  const [subTituloAux, setSubTituloAux] = useState("");
+  const [mostrarValor, setMostrarValor] = useState(false);
+
+  useEffect(() => {
+    const setarValores = () => {
+      setMostrarValor(false);
+      setSubTituloAux(prop.subTitulo);
+      prop.setarSubTituloOriginal(prop.subTitulo);
+      setTituloAux(prop.titulo);
+      prop.setarTituloOriginal(prop.titulo);
+      setMostrarValor(true);
+    };
+
+    setarValores();
+  }, []);
 
   const estiloTituloPlano = {
     fontWeight: "400",
@@ -37,37 +45,41 @@ const HeaderContingencia = () => {
 
   return (
     <Flex
-      flexDir='row'
-      alignItems='center'
-      marginBlockEnd='4rem'
-      paddingInline='1rem'
-      maxW='101rem'
-      w='100%'
+      flexDir="row"
+      alignItems="center"
+      marginBlockEnd="4rem"
+      paddingInline="1rem"
+      maxW="101rem"
+      w="100%"
     >
-      <Image
-        borderRadius='full'
-        boxSize='190px'
-        src={ProfilePic}
-        alt='Foto de perfil da contingência'
-        marginInlineEnd='28px'
-      />
-      <Flex flexDir='column'>
-        <Editavel
-          onSubmit={() => setTituloOriginal(titulo)}
-          onCancel={() => setTitulo(tituloOriginal)}
-          onChange={(e) => setTitulo(e.target.value)}
-          texto={titulo}
-          estiloInput={estiloTituloPlano}
-        />
+      {mostrarValor && (
+        <>
+          <Image
+            borderRadius="full"
+            boxSize="190px"
+            src={ProfilePic}
+            alt="Foto de perfil da contingência"
+            marginInlineEnd="28px"
+          />
+          <Flex flexDir="column">
+            <Editavel
+              onSubmit={() => prop.setarTituloOriginal(tituloAux)}
+              onCancel={() => setTituloAux(prop.tituloOriginal)}
+              onChange={(e) => setTituloAux(e.target.value)}
+              texto={tituloAux}
+              estiloInput={estiloTituloPlano}
+            />
 
-        <Editavel
-          onSubmit={() => setSubTituloOriginal(subTitulo)}
-          onCancel={() => setSubTitulo(subTituloOriginal)}
-          onChange={(e) => setSubTitulo(e.target.value)}
-          texto={subTitulo}
-          estiloInput={estiloSubTituloPlano}
-        />
-      </Flex>
+            <Editavel
+              onSubmit={() => prop.setarSubTituloOriginal(subTituloAux)}
+              onCancel={() => setSubTituloAux(prop.subTituloOriginal)}
+              onChange={(e) => setSubTituloAux(e.target.value)}
+              texto={subTituloAux}
+              estiloInput={estiloSubTituloPlano}
+            />
+          </Flex>
+        </>
+      )}
     </Flex>
   );
 };

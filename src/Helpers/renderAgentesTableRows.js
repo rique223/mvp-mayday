@@ -4,7 +4,7 @@ import BotoesAct from "../Components/BotoesAct";
 
 export const renderAgentesTableRows = (perfis) =>
   perfis.map((perfil) => (
-    <Tr key={perfil.contato}>
+    <Tr key={perfil.cpf}>
       <Td display="flex" flexDirection="row" alignItems="center">
         <Agente dadosAgente={perfil} />
       </Td>

@@ -21,10 +21,22 @@ const ContingenciaInterna = () => {
   const { idPlano } = useParams();
   const [planoContingencia, setPlanoContingencia] = useState({});
 
+  const [cadastraNovoAgente, setCadastraNovoAgente] = useState(false);
+  const [cadastraNovoRecurso, setCadastraNovoRecurso] = useState(false);
+  const [tituloOriginal, setTituloOriginal] = useState("");
+  const [subTituloOriginal, setSubTituloOriginal] = useState("");
+  const setarSubTituloOriginal = (valor) => setSubTituloOriginal(valor);
+  const setarTituloOriginal = (valor) => setTituloOriginal(valor);
+  const [descricaoOriginal, setDescricaoOriginal] = useState("");
+  const setarDescricaoOriginal = (valor) => setDescricaoOriginal(valor);
+  const [perfis, setPerfis] = useState();
+  const setarPerfis = (valor) => setPerfis(valor);
+  const [danosOriginal, setDanosOriginal] = useState("");
+  const setarDanosOriginal = (valor) => setDanosOriginal(valor);
+
   useEffect(() => {
     const buscaContingenciaInterna = async () => {
       try {
-        console.log(Object.keys(planoContingencia).length > 0);
         const data = await fetchPlanoAtivacaoById(idPlano);
         console.log("dataById", data);
         setPlanoContingencia(data);
@@ -36,14 +48,26 @@ const ContingenciaInterna = () => {
     buscaContingenciaInterna();
   }, []);
 
-  const [cadastraNovoAgente, setCadastraNovoAgente] = useState(false);
-  const [cadastraNovoRecurso, setCadastraNovoRecurso] = useState(false);
-
   return (
     Object.keys(planoContingencia).length > 0 && (
       <Flex flexDir="column" alignItems="center" marginBlock="5rem" padding="0">
-        <HeaderContingencia />
-        <DescContingencia descricao={planoContingencia.descricao} />
+        <HeaderContingencia
+          prop={{
+            titulo: planoContingencia.titulo,
+            subTitulo: planoContingencia.subtitulo,
+            subTituloOriginal,
+            tituloOriginal,
+            setarTituloOriginal,
+            setarSubTituloOriginal,
+          }}
+        />
+        <DescContingencia
+          prop={{
+            descricao: planoContingencia.descricao,
+            descricaoOriginal,
+            setarDescricaoOriginal,
+          }}
+        />
         <Flex
           flexDir="row"
           marginBlockEnd="4rem"
@@ -51,9 +75,15 @@ const ContingenciaInterna = () => {
           maxW="101rem"
           w="100%"
         >
-          <TabelaAgentesContingencia agentes={planoContingencia.agentes}/>
+          <TabelaAgentesContingencia
+            prop={{
+              perfis,
+              setarPerfis,
+              agentes: planoContingencia.agentes,
+            }}
+          />
           <Flex flexDir="column">
-            <TagsContingencia tags={planoContingencia.tags}/>
+            <TagsContingencia tags={planoContingencia.tags} />
             <Textarea
               as={ResizeTextarea}
               placeholder="Digite aqui a mensagem a ser enviada aos agentes."
@@ -61,7 +91,9 @@ const ContingenciaInterna = () => {
             />
           </Flex>
         </Flex>
-        <TabelaRecursosContingencia planoRecursos={planoContingencia.recursos}/>
+        <TabelaRecursosContingencia
+          planoRecursos={planoContingencia.recursos}
+        />
         <MapaContingencia />
         <AccordionsContingencia />
         <BotoesAct
