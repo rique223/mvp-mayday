@@ -1,8 +1,11 @@
 import { Flex } from "@chakra-ui/layout";
-import React from "react";
+import React, { useState } from "react";
 import { AddIcon } from "@chakra-ui/icons";
+import fetchPlanoAtivacaoById from "../../Helpers/fetchPlanoAtivacaoById";
+import fetchDefaultPlanoCidade from "../../Helpers/fetchDefaultPlanoCidade";
+import { Link, useNavigate } from "react-router-dom";
 
-const BotaoNovoPlano = ({ children }) => {
+const BotaoNovoPlano = ({ children, idCidade }) => {
   const cssValue = {
     display: "flex",
     alignItems: "center",
@@ -20,8 +23,19 @@ const BotaoNovoPlano = ({ children }) => {
     },
   };
 
+  const navigate = useNavigate();
+
+  const criarDefault = async (idCidade) => {
+    try {
+      const data = await fetchDefaultPlanoCidade(idCidade);
+      return navigate("/contingenciaInterna/" + data.id)
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <Flex {...cssValue}>
+    <Flex {...cssValue} onClick={() => criarDefault(idCidade)}>
       <AddIcon w={100} h={100} />
     </Flex>
   );

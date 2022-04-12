@@ -188,7 +188,7 @@ const ContingenciaScreen = () => {
 
   useEffect(() => {
     const getInfoPlanos = async () => {
-      const respMunicipios = await fetchPlanoAtivacao();
+      const respMunicipios = await fetchPlanoAtivacao(idCidade);
       setInfoPlanos(respMunicipios);
     };
 
@@ -229,7 +229,7 @@ const ContingenciaScreen = () => {
       />
 
       <SimpleGrid w='100%' spacing='30px' columns={3}>
-        <BotaoNovoPlano />
+        <BotaoNovoPlano idCidade={idCidade}/>
         {infoPlanos &&
           infoPlanos.map((infoPlano) => (
             <Link

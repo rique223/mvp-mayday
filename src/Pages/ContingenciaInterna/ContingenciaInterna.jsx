@@ -33,6 +33,10 @@ const ContingenciaInterna = () => {
   const setarPerfis = (valor) => setPerfis(valor);
   const [danosOriginal, setDanosOriginal] = useState("");
   const setarDanosOriginal = (valor) => setDanosOriginal(valor);
+  const [historicoOriginal, setHistoricoOriginal] = useState("");
+  const setarHistoricoOriginal = (valor) => setHistoricoOriginal(valor);
+  const [comAlternativaOriginal, setComAlternativaOriginal] = useState("");
+  const setarComAlternativaOriginal = (valor) => setComAlternativaOriginal(valor);
 
   useEffect(() => {
     const buscaContingenciaInterna = async () => {
@@ -95,7 +99,17 @@ const ContingenciaInterna = () => {
           planoRecursos={planoContingencia.recursos}
         />
         <MapaContingencia />
-        <AccordionsContingencia />
+        <AccordionsContingencia prop={{
+          danosOriginal,
+          setarDanosOriginal,
+          danos: planoContingencia.danos,
+          historicoOriginal,
+          setarHistoricoOriginal,
+          historicoEventos: planoContingencia.historicoEventos,
+          comAlternativaOriginal,
+          setarComAlternativaOriginal,
+          comunicacaoAlternativa: planoContingencia.comunicacaoAlternativa
+        }} />
         <BotoesAct
           isPortal={true}
           setCadastraNovoAgente={setCadastraNovoAgente}
