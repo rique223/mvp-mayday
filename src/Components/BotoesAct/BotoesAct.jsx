@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import Play from "../../Media/play.svg";
+import Save from "../../Media/Save.svg";
 import ThreeDots from "../../Media/three_dots.svg";
 import { AddIcon } from "@chakra-ui/icons";
 
@@ -18,6 +19,7 @@ const BotoesAct = ({
   isPortal = false,
   setCadastraNovoAgente,
   setCadastraNovoRecurso,
+  postPlanoAtivacao
 }) => {
   const bigButtonStyle = {
     w: "114px",
@@ -44,6 +46,18 @@ const BotoesAct = ({
         right='1%'
         bottom='2rem'
       >
+      <Button
+          {...bigButtonStyle}
+          background='#007B2F'
+          _hover={{ background: "#95AE23" }}
+          _active={{
+            filter: "brightness(120%)",
+          }}
+          onClick={postPlanoAtivacao}
+          transition='background .2s ease-in-out, filter .2s ease-in-out'
+        >
+          <Image src={Save} boxSize='57px' color={'white'} bgColor={'white'}/>
+        </Button>
         <Button
           {...bigButtonStyle}
           background='#007B2F'
@@ -80,6 +94,14 @@ const BotoesAct = ({
     </Portal>
   ) : (
     <>
+      <Button
+        {...smallButtonStyle}
+        background='#007B2F'
+        _hover={{ background: "#95AE23" }}
+        marginInlineEnd='8px'
+      >
+        <Image src={Play} boxSize='32px' />
+      </Button>
       <Button
         {...smallButtonStyle}
         background='#007B2F'

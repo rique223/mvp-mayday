@@ -14,8 +14,11 @@ import { useParams } from "react-router-dom";
 import FormCadastroAgente from "../../Components/FormCadastroAgente";
 import FormCadastroRecurso from "../../Components/FormCadastroRecurso";
 import apiPlanoById from "../../Utils/apiPlanoAtivacaoById";
+import montarPlanoContingencia from "../../Utils/montarPlanoContingencia";
+import compararPlanoContingencia from "../../Utils/compararPlanoContingencia";
 import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPlanoAtivacaoById from "../../Helpers/fetchPlanoAtivacaoById";
+import fetchPostPlanoContingencia from "../../Helpers/fetchPostPlanoContingencia";
 
 const ContingenciaInterna = () => {
   const { idPlano } = useParams();
@@ -37,6 +40,8 @@ const ContingenciaInterna = () => {
   const setarHistoricoOriginal = (valor) => setHistoricoOriginal(valor);
   const [comAlternativaOriginal, setComAlternativaOriginal] = useState("");
   const setarComAlternativaOriginal = (valor) => setComAlternativaOriginal(valor);
+  const [recursos, setRecursos] = useState([]);
+  const setarRecursos= (valor) => setRecursos(valor);
 
   useEffect(() => {
     const buscaContingenciaInterna = async () => {
@@ -51,6 +56,18 @@ const ContingenciaInterna = () => {
 
     buscaContingenciaInterna();
   }, []);
+
+  const postPlanoAtivacao = async () => {
+    try{
+        const plano = montarPlanoContingencia(idPlano, tituloOriginal, subTituloOriginal, 
+          descricaoOriginal, comAlternativaOriginal, historicoOriginal, danosOriginal, 
+          [], perfis, recursos, planoContingencia.cidade);
+        const resposta = await fetchPostPlanoContingencia(plano); 
+        console.log(resposta)
+    } catch(err){
+      console.log(err);
+  }
+}
 
   return (
     Object.keys(planoContingencia).length > 0 && (
@@ -95,8 +112,11 @@ const ContingenciaInterna = () => {
             />
           </Flex>
         </Flex>
-        <TabelaRecursosContingencia
-          planoRecursos={planoContingencia.recursos}
+        <TabelaRecursosContingencia prop={{
+          recursos,
+          setarRecursos,
+          planoRecursos: planoContingencia.recursos
+        }}
         />
         <MapaContingencia />
         <AccordionsContingencia prop={{
@@ -114,6 +134,7 @@ const ContingenciaInterna = () => {
           isPortal={true}
           setCadastraNovoAgente={setCadastraNovoAgente}
           setCadastraNovoRecurso={setCadastraNovoRecurso}
+          postPlanoAtivacao={postPlanoAtivacao}
         />
 
         {cadastraNovoAgente && (

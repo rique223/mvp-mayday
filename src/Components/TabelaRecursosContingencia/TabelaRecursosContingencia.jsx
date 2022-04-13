@@ -16,50 +16,15 @@ import { renderRecursosTableRows } from "../../Helpers/renderRecursosTableRow";
 import InputTabela from "../InputTabela";
 import { useEffect, useState } from "react";
 
-const TabelaRecursosContingencia = ({planoRecursos}) => {
-  // const recursos = [
-  //   {
-  //     id: 1,
-  //     nome: "Moto Niveladora",
-  //     responsavel: "Henrique Guimarães",
-  //     cargo: "Desenvolvedor",
-  //     contato: 62999499739,
-  //     qtd: 1,
-  //   },
-  //   {
-  //     id: 2,
-  //     nome: "Retro escavadeira",
-  //     responsavel: "Matheus Braz de Aquino",
-  //     cargo: "Desenvolvedor",
-  //     contato: 62999499739,
-  //     qtd: 1,
-  //   },
-  //   {
-  //     id: 3,
-  //     nome: "Caminhão pipa",
-  //     responsavel: "Matheus Diniz de Alencar",
-  //     cargo: "Desenvolvedor",
-  //     contato: 62999499739,
-  //     qtd: 1,
-  //   },
-  //   {
-  //     id: 4,
-  //     nome: "Caminhão báscula",
-  //     responsavel: "Capitão Ricardo",
-  //     cargo: "Capitão",
-  //     contato: 62999499739,
-  //     qtd: 1,
-  //   },
-  // ];
+const TabelaRecursosContingencia = ({prop}) => {
 
-  const [recursos, setRecursos] = useState([]);
   const [mostrarValor, setMostrarValor] = useState(false);
 
   useEffect(() => {
     const setarAgentes = () => {
       setMostrarValor(false);
       let auxRecurso = [];
-      planoRecursos.map((r) => {
+      prop.planoRecursos.map((r) => {
         auxRecurso.push({
           id: r.idRecurso,
           nome: r.descRecurso,
@@ -69,7 +34,7 @@ const TabelaRecursosContingencia = ({planoRecursos}) => {
           contato: r.responsavel.telefone
         });
       });
-      setRecursos(auxRecurso);
+      prop.setarRecursos(auxRecurso);
       setMostrarValor(true);
     };
 
@@ -112,7 +77,7 @@ const TabelaRecursosContingencia = ({planoRecursos}) => {
                 </Th>
               </Tr>
             </Thead>
-            <Tbody>{renderRecursosTableRows(recursos)}</Tbody>
+            <Tbody>{renderRecursosTableRows(prop.recursos)}</Tbody>
             <Tfoot>
               <Tr>
                 <Td colSpan={4}>
