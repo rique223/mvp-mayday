@@ -12,16 +12,14 @@ const HomeScreen = () => {
 
   const [pickerItems, setPickerItems] = useState([]);
 
-  const { cidades, setCidades } = useContext(CidadesContext);
+  const { setCidades } = useContext(CidadesContext);
 
   const handleCreateItem = (item) => {
-    console.log("item", item);
     setPickerItems((curr) => [...curr, item]);
     setCidades((curr) => [...curr, item]);
   };
 
   const handleSelectedItemsChange = (selectedItems) => {
-    console.log(selectedItems);
     setCidades(selectedItems);
   };
 
@@ -40,6 +38,46 @@ const HomeScreen = () => {
     localizar();
     getDistritos();
   }, []);
+
+  const autoCompleteListStyle = {
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    maxWidth: "584px",
+    maxHeight: "300px",
+    overflowY: "scroll",
+    css: {
+      "&::-webkit-scrollbar": {
+        width: "10px",
+        height: "50px",
+        marginInlineEnd: "20px",
+      },
+      "&::-webkit-scrollbar-track": {
+        borderRadius: "10px",
+        background: "#CCCCCC",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "rgba(0, 0, 0, .5)",
+        borderRadius: "10px",
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "#000",
+      },
+    },
+  };
+
+  const autoCompleteInputStyle = {
+    borderRadius: "25px",
+    placeholder: "DIGITE O NOME DE UMA CIDADE GOIANA",
+    size: "lg",
+    borderWidth: "1px",
+    borderColor: "#D0D0D0",
+    _hover: {
+      bg: "#fff",
+      boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
+      borderColor: "rgba(223,225,229,0)",
+    },
+  };
 
   return (
     <Flex
@@ -76,44 +114,8 @@ const HomeScreen = () => {
             }}
             disableCreateItem={true}
             hideToggleButton={true}
-            listStyleProps={{
-              position: "absolute",
-              zIndex: 1,
-              width: "100%",
-              maxWidth: "584px",
-              maxHeight: "300px",
-              overflowY: "scroll",
-              css: {
-                "&::-webkit-scrollbar": {
-                  width: "10px",
-                  height: "50px",
-                  marginInlineEnd: "20px",
-                },
-                "&::-webkit-scrollbar-track": {
-                  borderRadius: "10px",
-                  background: "#CCCCCC",
-                },
-                "&::-webkit-scrollbar-thumb": {
-                  background: "rgba(0, 0, 0, .5)",
-                  borderRadius: "10px",
-                },
-                "&::-webkit-scrollbar-thumb:hover": {
-                  background: "#000",
-                },
-              },
-            }}
-            inputStyleProps={{
-              borderRadius: "25px",
-              placeholder: "DIGITE O NOME DE UMA CIDADE GOIANA",
-              size: "lg",
-              borderWidth: "1px",
-              borderColor: "#D0D0D0",
-              _hover: {
-                bg: "#fff",
-                boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
-                borderColor: "rgba(223,225,229,0)",
-              },
-            }}
+            listStyleProps={autoCompleteListStyle}
+            inputStyleProps={autoCompleteInputStyle}
           />
         </Box>
         <Link to='/modulos'>
@@ -125,7 +127,6 @@ const HomeScreen = () => {
               bg: "#007B2F",
               boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
             }}
-            onClick={() => console.log("cidades", cidades)}
           >
             <SearchIcon w='24px' h='24px' color='white' marginInlineEnd='4px' />
           </Button>

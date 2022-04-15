@@ -34,7 +34,7 @@ const ContingenciaScreen = () => {
           telefone: "(62)98565-2412",
         },
         {
-          id: 2,
+          id: 3,
           nome: "Cap. Abreu",
           cargo: "Capitão",
           telefone: "(62)98565-2412",
@@ -76,7 +76,7 @@ const ContingenciaScreen = () => {
           telefone: "(62)98565-2412",
         },
         {
-          id: 2,
+          id: 3,
           nome: "Cap. Abreu",
           cargo: "Capitão",
           telefone: "(62)98565-2412",
@@ -118,7 +118,7 @@ const ContingenciaScreen = () => {
           telefone: "(62)98565-2412",
         },
         {
-          id: 2,
+          id: 3,
           nome: "Cap. Abreu",
           cargo: "Capitão",
           telefone: "(62)98565-2412",
@@ -160,7 +160,7 @@ const ContingenciaScreen = () => {
           telefone: "(62)98565-2412",
         },
         {
-          id: 2,
+          id: 3,
           nome: "Cap. Abreu",
           cargo: "Capitão",
           telefone: "(62)98565-2412",
@@ -228,12 +228,12 @@ const ContingenciaScreen = () => {
         marginBlockEnd='2rem'
       />
 
-      <SimpleGrid w='100%' spacing='30px' columns={3}>
         <BotaoNovoPlano idCidade={idCidade}/>
+      <SimpleGrid w='100%' spacing='16px' columns={3}>
         {infoPlanos &&
           infoPlanos.map((infoPlano) => (
             <Link
-              to={`/contingenciaInterna/${infoPlano.id}`}
+              to={`/contingenciaInterna/cidade=${idCidade}/plano=${infoPlano.id}`}
               key={infoPlano.id}
               style={{
                 width: "100%",

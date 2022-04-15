@@ -2,7 +2,7 @@ import { Flex, Textarea } from "@chakra-ui/react";
 import ResizeTextarea from "react-textarea-autosize";
 import BotoesAct from "../../Components/BotoesAct";
 import Modal from "../../Components/Modal";
-import { useEffect, useState } from "react";
+import { useContext, useState, useContext } from "react";
 import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
@@ -10,7 +10,6 @@ import MapaContingencia from "../../Components/MapaContingencia";
 import TabelaAgentesContingencia from "../../Components/TabelaAgentesContingencia";
 import TabelaRecursosContingencia from "../../Components/TabelaRecursosContingencia";
 import TagsContingencia from "../../Components/TagsContingencia";
-import { useParams } from "react-router-dom";
 import FormCadastroAgente from "../../Components/FormCadastroAgente";
 import FormCadastroRecurso from "../../Components/FormCadastroRecurso";
 import apiPlanoById from "../../Utils/apiPlanoAtivacaoById";
@@ -19,6 +18,8 @@ import compararPlanoContingencia from "../../Utils/compararPlanoContingencia";
 import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPlanoAtivacaoById from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPostPlanoContingencia from "../../Helpers/fetchPostPlanoContingencia";
+import { useParams } from "react-router-dom";
+import { CidadesContext } from "../../Context/CidadesContext";
 
 const ContingenciaInterna = () => {
   const { idPlano } = useParams();
@@ -69,6 +70,12 @@ const ContingenciaInterna = () => {
   }
 }
 
+  const { cidades, findCidadeById } = useContext(CidadesContext);
+
+  let { idCidade } = useParams();
+
+  const cidadeAtual = findCidadeById(cidades, idCidade);
+
   return (
     Object.keys(planoContingencia).length > 0 && (
       <Flex flexDir="column" alignItems="center" marginBlock="5rem" padding="0">
@@ -118,7 +125,6 @@ const ContingenciaInterna = () => {
           planoRecursos: planoContingencia.recursos
         }}
         />
-        <MapaContingencia />
         <AccordionsContingencia prop={{
           danosOriginal,
           setarDanosOriginal,
@@ -136,6 +142,7 @@ const ContingenciaInterna = () => {
           setCadastraNovoRecurso={setCadastraNovoRecurso}
           postPlanoAtivacao={postPlanoAtivacao}
         />
+      <MapaContingencia cidadeAtual={cidadeAtual} />
 
         {cadastraNovoAgente && (
           <Modal onOverlayClick={() => setCadastraNovoAgente(false)}>

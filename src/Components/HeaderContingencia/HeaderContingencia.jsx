@@ -9,7 +9,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { handleCursorFim } from "../../Helpers/handleCursorFim";
 import ProfilePic from "../../Media/ProfilePic.svg";
-import EditableControl from "../EditableControl";
 import Editavel from "../Editavel";
 
 const HeaderContingencia = ({ prop }) => {
