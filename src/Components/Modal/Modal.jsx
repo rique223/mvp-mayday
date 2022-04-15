@@ -13,6 +13,7 @@ const Modal = ({ onOverlayClick, children }) => {
           top='0px'
           background-color='black'
           onClick={() => onOverlayClick()}
+          zIndex='9999'
         />
         <Flex
           flexDir='column'
@@ -26,7 +27,7 @@ const Modal = ({ onOverlayClick, children }) => {
           w='100%'
           h='auto'
           padding='2rem'
-          zIndex='4'
+          zIndex='9999'
         >
           {children}
         </Flex>

@@ -43,6 +43,7 @@ const BotoesAct = ({
         position='fixed'
         right='1%'
         bottom='2rem'
+        zIndex='9999'
       >
         <Button
           {...bigButtonStyle}

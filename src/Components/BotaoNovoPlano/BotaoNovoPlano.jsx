@@ -11,18 +11,21 @@ const BotaoNovoPlano = ({ children }) => {
     border: "2px dashed #A0A0A0",
     borderRadius: "25px",
     w: "100%",
+    maxW: "530px",
     h: "100%",
+    minH: "473px",
     shadow: "xl",
-    transition: "filter .2s ease",
+    transition: "opacity .2s ease",
+    opacity: 1,
     _hover: {
       cursor: "pointer",
-      filter: "brightness(120%)",
+      opacity: ".5",
     },
   };
 
   return (
     <Flex {...cssValue}>
-      <AddIcon w={100} h={100} />
+      <AddIcon w={100} h={100} color="#A0A0A0" />
     </Flex>
   );
 };

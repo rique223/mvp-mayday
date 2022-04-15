@@ -19,7 +19,7 @@ const App = () => {
           />
           <Route
             index
-            path='/contingenciaInterna/:idPlano'
+            path='contingenciaInterna/cidade=:idCidade/plano=:idPlano'
             element={<ContingenciaInterna />}
           />
         </Routes>

@@ -1,15 +1,6 @@
-import {
-  Editable,
-  EditableInput,
-  EditablePreview,
-  Flex,
-  Image,
-  useColorModeValue,
-} from "@chakra-ui/react";
-import { useRef, useState } from "react";
-import { handleCursorFim } from "../../Helpers/handleCursorFim";
+import { Flex, Image } from "@chakra-ui/react";
+import { useState } from "react";
 import ProfilePic from "../../Media/ProfilePic.svg";
-import EditableControl from "../EditableControl";
 import Editavel from "../Editavel";
 
 const HeaderContingencia = () => {
