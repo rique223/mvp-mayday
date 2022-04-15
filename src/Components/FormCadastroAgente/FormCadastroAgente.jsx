@@ -9,6 +9,7 @@ import {
   Select,
   VStack,
 } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { inputStyle } from "../../Utils/globalStyles";
 
 const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
@@ -28,79 +29,101 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
     },
   };
 
+  const [novoAgente, setNovoAgente] = useState({
+    cpf: "",
+    nome: "",
+    telefone: "",
+    cargo: {
+      idCargo: null,
+      descCargo: "",
+      departamento: {
+        idDepartamento: null,
+        descDepartamento: "",
+      },
+    },
+    cidade: null,
+  });
+
+  useEffect(() => {
+
+  }, [])
+
   return (
     <>
       <Heading
-        fontWeight='400'
-        fontSize='4.5rem'
-        lineHeight='5.25rem'
-        display='flex'
-        alignSelf='center'
-        marginBlockEnd='3rem'
-        color='#000000'
-        opacity='.4'
+        fontWeight="400"
+        fontSize="4.5rem"
+        lineHeight="5.25rem"
+        display="flex"
+        alignSelf="center"
+        marginBlockEnd="3rem"
+        color="#000000"
+        opacity=".4"
       >
         Novo Agente
       </Heading>
-      <VStack spacing='2rem'>
-        <HStack spacing='2rem' w='100%'>
-          <FormControl>
-            <FormLabel htmlFor='nome'>Nome</FormLabel>
-            <Input
-              id='nome'
-              type='text'
-              {...inputStyle}
-              placeholder='Escreva seu primeiro nome'
-            />
-          </FormControl>
+      <VStack spacing="2rem">
+        <FormControl>
+          <FormLabel htmlFor="cpf">CPF</FormLabel>
+          <Input
+            id="cpf"
+            type="number"
+            maxLength={11}
+            {...inputStyle}
+            value={novoAgente.cpf}
+            onBlur={() => console.log}
+            placeholder="Escreva o CPF"
+          />
+        </FormControl>
 
+        <HStack spacing="2rem" w="100%">
           <FormControl>
-            <FormLabel htmlFor='sobrenome'>Sobrenome</FormLabel>
+            <FormLabel htmlFor="nome">Nome</FormLabel>
             <Input
-              id='sobrenome'
-              type='text'
+              id="nome"
+              type="text"
               {...inputStyle}
-              placeholder='Escreva seu sobrenome'
+              placeholder="Escreva seu nome"
             />
           </FormControl>
         </HStack>
 
         <FormControl>
-          <FormLabel htmlFor='instituicao'>Instituição</FormLabel>
+          <FormLabel htmlFor="instituicao">Instituição</FormLabel>
           <Select
-            id='instituicao'
-            placeholder='Selecione uma instituição'
+            id="instituicao"
+            placeholder="Selecione uma instituição"
             {...inputStyle}
           />
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor='cargo'>Cargo</FormLabel>
-          <Select id='cargo' placeholder='Selecione um cargo' {...inputStyle} />
+          <FormLabel htmlFor="cargo">Cargo</FormLabel>
+          <Select id="cargo" placeholder="Selecione um cargo" {...inputStyle} />
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor='contato'>Principal contato</FormLabel>
+          <FormLabel htmlFor="contato">Principal contato</FormLabel>
           <Input
-            id='contato'
-            type='number'
-            placeholder='Principal Contato'
+            id="contato"
+            type="number"
+            placeholder="Principal Contato"
             {...inputStyle}
           />
           <FormHelperText>Exemplo: (62) 91234-5678</FormHelperText>
         </FormControl>
       </VStack>
 
-      <HStack spacing='1rem' w='100%' justifyContent='flex-end'>
+      <HStack spacing="1rem" w="100%" justifyContent="flex-end">
         <Button
-          bg='#95AE23'
+          bg="#95AE23"
           onClick={() => setCadastraNovoAgente(false)}
           {...modalButtonStyle}
         >
           Salvar
         </Button>
         <Button
-          bg='red'
+          bg="red"
           onClick={() => setCadastraNovoAgente(false)}
           {...modalButtonStyle}
         >
