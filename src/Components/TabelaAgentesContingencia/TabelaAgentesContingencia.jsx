@@ -16,27 +16,18 @@ import { renderAgentesTableRows } from "../../Helpers/renderAgentesTableRows";
 import InputTabela from "../InputTabela";
 import { useEffect, useState } from "react";
 
-const TabelaAgentesContingencia = ({ prop }) => {
-
+const TabelaAgentesContingencia = ({ perfis, setarPerfis, agentes }) => {
   const [mostrarValor, setMostrarValor] = useState(false);
 
   useEffect(() => {
     const setarAgentes = () => {
       setMostrarValor(false);
-      let auxAgentes = [];
-      prop.agentes.map((a) => {
-        auxAgentes.push({
-          cargo: a.cargo.descCargo,
-          nome: a.nome,
-          contato: a.telefone,
-        });
-      });
-      prop.setarPerfis(auxAgentes);
+      setarPerfis(agentes);
       setMostrarValor(true);
     };
 
     setarAgentes();
-  }, []);
+  }, [agentes, agentes.length]);
 
   const tableHeaderStyle = {
     fontWeight: "400",
@@ -64,7 +55,7 @@ const TabelaAgentesContingencia = ({ prop }) => {
                 <Th {...tableHeaderStyle}>Funções</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderAgentesTableRows(prop.perfis)}</Tbody>
+            <Tbody>{renderAgentesTableRows(perfis)}</Tbody>
             <Tfoot>
               <Tr>
                 <Td colSpan={2}>

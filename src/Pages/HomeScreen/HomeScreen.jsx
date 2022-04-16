@@ -81,34 +81,34 @@ const HomeScreen = () => {
 
   return (
     <Flex
-      w='100%'
-      h='100%'
-      flexDir='column'
-      alignItems='center'
-      paddingBlockStart='12rem'
+      w="100%"
+      h="100%"
+      flexDir="column"
+      alignItems="center"
+      paddingBlockStart="12rem"
     >
       <Heading
-        as='h1'
-        fontSize='92px'
-        fontWeight='100'
-        color='rgba(0, 0, 0, 0.4)'
-        textTransform='uppercase'
-        marginBlockEnd='20px'
+        as="h1"
+        fontSize="92px"
+        fontWeight="100"
+        color="rgba(0, 0, 0, 0.4)"
+        textTransform="uppercase"
+        marginBlockEnd="20px"
       >
         Mayday
       </Heading>
       <Flex
-        flexDir='column'
-        maxW='584px'
-        maxH='46px'
-        height='100%'
-        width='100%'
+        flexDir="column"
+        maxW="584px"
+        maxH="46px"
+        height="100%"
+        width="100%"
       >
-        <Box width='100%'>
+        <Box width="100%">
           <CUIAutoComplete
             items={municipios}
             onCreateItem={handleCreateItem}
-            placeholder='DIGITE O NOME DE UMA CIDADE GOIANA'
+            placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
             onSelectedItemsChange={(changes) => {
               handleSelectedItemsChange(changes.selectedItems);
             }}
@@ -118,17 +118,17 @@ const HomeScreen = () => {
             inputStyleProps={autoCompleteInputStyle}
           />
         </Box>
-        <Link to='/modulos'>
+        <Link to="/modulos">
           <Button
-            bg='#95AE23'
-            height='48px'
-            w='100%'
+            bg="#95AE23"
+            height="48px"
+            w="100%"
             _hover={{
               bg: "#007B2F",
               boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
             }}
           >
-            <SearchIcon w='24px' h='24px' color='white' marginInlineEnd='4px' />
+            <SearchIcon w="24px" h="24px" color="white" marginInlineEnd="4px" />
           </Button>
         </Link>
       </Flex>

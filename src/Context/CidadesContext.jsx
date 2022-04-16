@@ -5,8 +5,10 @@ export const CidadesContext = createContext();
 export function CidadesContextProvider({ children }) {
   const [cidades, setCidades] = useState([]);
 
-  const findCidadeById = (listaCidades, idCidade) =>
-    listaCidades.find((cidade) => cidade.value === idCidade).label;
+  const findCidadeById = (listaCidades, idCidade) => {
+    console.log("listaCidades, idCidade", listaCidades, idCidade);
+    return listaCidades.find((cidade) => cidade.value == idCidade).label;
+  };
 
   return (
     <CidadesContext.Provider value={{ cidades, setCidades, findCidadeById }}>

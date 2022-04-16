@@ -8,11 +8,24 @@ import {
   Input,
   Select,
   VStack,
+  Flex,
+  NumberDecrementStepper,
+  NumberIncrementStepper,
+  NumberInputStepper,
+  NumberInputField,
+  NumberInput,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { inputStyle } from "../../Utils/globalStyles";
+import fetchBuscaPessoaByCpf from "../../Helpers/fetchBuscaPessoaByCpf";
+import fetchApiBuscaTodosDepartamentos from "../../Helpers/fetchApiBuscaTodosDepartamentos";
+import fetchApiBuscaTodosCargosByIdDepartamento from "../../Helpers/fetchApiBuscaTodosCargosByIdDepartamento";
 
-const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
+const FormCadastroAgente = ({
+  setCadastraNovoAgente,
+  addPerfis,
+  tipoCadastro,
+}) => {
   const modalButtonStyle = {
     boxShadow: "md",
     borderRadius: "50px",
@@ -29,24 +42,140 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
     },
   };
 
-  const [novoAgente, setNovoAgente] = useState({
+  const valorInicial = {
     cpf: "",
     nome: "",
     telefone: "",
     cargo: {
-      idCargo: null,
-      descCargo: "",
+      id: null,
+      descricao: "",
       departamento: {
         idDepartamento: null,
-        descDepartamento: "",
+        descricao: "",
       },
     },
     cidade: null,
+  };
+
+  const [novaPessoa, setNovaPessoa] = useState(valorInicial);
+
+  const [cpfJaExiste, setCpfJaExiste] = useState(false);
+
+  const [listaDepartamentos, setListaDepartamentos] = useState([]);
+
+  const [listaCargos, setListaCargos] = useState([]);
+
+  const [auxIdCargo, setAuxIdCargo] = useState();
+
+  const [recursoInfo, setRecursoInfo] = useState({
+    descRecurso: "",
+    quantidade: 0,
   });
 
   useEffect(() => {
+    buscaListaDepartamentos();
+  }, []);
 
-  }, [])
+  const verificaCpf = async () => {
+    try {
+      const resp = await fetchBuscaPessoaByCpf(novaPessoa.cpf);
+      if (resp !== null) {
+        setNovaPessoa(resp);
+        setAuxIdCargo(resp.cargo.id);
+        setCpfJaExiste(true);
+        return;
+      }
+      setCpfJaExiste(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const resetar = () => {
+    setCpfJaExiste(false);
+    setNovaPessoa(valorInicial);
+  };
+
+  const setarCpf = (valor) => {
+    let copiaPessoa = { ...novaPessoa };
+    copiaPessoa.cpf = valor;
+    setNovaPessoa(copiaPessoa);
+  };
+
+  const setarNome = (valor) => {
+    let copiaPessoa = { ...novaPessoa };
+    copiaPessoa.nome = valor;
+    setNovaPessoa(copiaPessoa);
+  };
+
+  const setarTelefone = (valor) => {
+    let copiaPessoa = { ...novaPessoa };
+    copiaPessoa.telefone = valor;
+    setNovaPessoa(copiaPessoa);
+  };
+
+  const setarNomeRecurso = (valor) => {
+    let copiaRecurso = { ...recursoInfo };
+    copiaRecurso.descRecurso = valor;
+    setRecursoInfo(copiaRecurso);
+  };
+
+  const setarQtdRecurso = (valor) => {
+    let copiaRecurso = { ...recursoInfo };
+    copiaRecurso.quantidade = valor;
+    setRecursoInfo(copiaRecurso);
+  };
+
+  const setarDepartamento = async (e) => {
+    try {
+      const resp = await fetchApiBuscaTodosCargosByIdDepartamento(
+        e.target.value
+      );
+      setListaCargos(resp);
+      setAuxIdCargo(e.target.value);
+    } catch (error) {}
+  };
+
+  const buscaListaDepartamentos = async () => {
+    try {
+      const resp = await fetchApiBuscaTodosDepartamentos();
+      setListaDepartamentos(resp);
+    } catch (error) {}
+  };
+
+  function cadastrarAgente() {
+    const cargoValor = listaCargos.find((f) => f.id == auxIdCargo);
+    const valor = {
+      cpf: novaPessoa.cpf,
+      telefone: novaPessoa.telefone,
+      nome: novaPessoa.nome,
+      cargo: cargoValor,
+      cidade: cargoValor.departamento.cidade,
+    };
+    console.log(valor);
+    addPerfis(valor);
+    setCadastraNovoAgente(false);
+  }
+
+  function cadastrarRecursos() {
+    const cargoValor =
+      listaCargos.find((f) => f.id == auxIdCargo) || novaPessoa.cargo;
+    console.log(listaCargos);
+    const valor = {
+      descRecurso: recursoInfo.descRecurso,
+      quantidade: recursoInfo.quantidade,
+      responsavel: {
+        cpf: novaPessoa.cpf,
+        telefone: novaPessoa.telefone,
+        nome: novaPessoa.nome,
+        cargo: cargoValor,
+        cidade: cargoValor.departamento.cidade,
+      },
+    };
+    console.log(valor);
+    addPerfis(valor);
+    setCadastraNovoAgente(false);
+  }
 
   return (
     <>
@@ -65,15 +194,25 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
       <VStack spacing="2rem">
         <FormControl>
           <FormLabel htmlFor="cpf">CPF</FormLabel>
-          <Input
-            id="cpf"
-            type="number"
-            maxLength={11}
-            {...inputStyle}
-            value={novoAgente.cpf}
-            onBlur={() => console.log}
-            placeholder="Escreva o CPF"
-          />
+          {cpfJaExiste ? (
+            <Flex direction={"row"} justifyContent={"space-between"}>
+              <div>{novaPessoa.cpf}</div>
+              <Button onClick={() => resetar()} color={"white"} bg={"green"}>
+                pesquisar novamente
+              </Button>
+            </Flex>
+          ) : (
+            <Input
+              id="cpf"
+              type="number"
+              maxLength={11}
+              {...inputStyle}
+              value={novaPessoa.cpf}
+              onChange={(e) => setarCpf(e.target.value)}
+              onBlur={() => verificaCpf()}
+              placeholder="Escreva o CPF"
+            />
+          )}
         </FormControl>
 
         <HStack spacing="2rem" w="100%">
@@ -83,6 +222,8 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
               id="nome"
               type="text"
               {...inputStyle}
+              value={novaPessoa.nome}
+              onChange={(e) => setarNome(e.target.value)}
               placeholder="Escreva seu nome"
             />
           </FormControl>
@@ -93,14 +234,74 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
           <Select
             id="instituicao"
             placeholder="Selecione uma instituição"
+            onChange={(e) => setarDepartamento(e)}
             {...inputStyle}
-          />
+          >
+            {cpfJaExiste ? (
+              <option selected value={novaPessoa.cargo.departamento.id}>
+                {novaPessoa.cargo.departamento.descricao}
+              </option>
+            ) : (
+              listaDepartamentos &&
+              listaDepartamentos.map((d) => (
+                <option value={d.id}>{d.descricao}</option>
+              ))
+            )}
+          </Select>
         </FormControl>
 
         <FormControl>
           <FormLabel htmlFor="cargo">Cargo</FormLabel>
-          <Select id="cargo" placeholder="Selecione um cargo" {...inputStyle} />
+          <Select id="cargo" placeholder="Selecione um cargo" {...inputStyle}>
+            {cpfJaExiste ? (
+              <option selected value="option1">
+                {novaPessoa.cargo.descricao}
+              </option>
+            ) : (
+              listaCargos &&
+              listaCargos.map((c) => (
+                <option value={c.id}>{c.descricao}</option>
+              ))
+            )}
+          </Select>
         </FormControl>
+
+        {tipoCadastro === "recurso" && (
+          <>
+            <FormControl>
+              <FormLabel htmlFor="nome">Nome</FormLabel>
+              <Input
+                id="nome"
+                type="text"
+                {...inputStyle}
+                value={recursoInfo.descRecurso}
+                onChange={(e) => setarNomeRecurso(e.target.value)}
+                placeholder="Escreva o nome do recurso"
+              />
+            </FormControl>
+            <FormControl>
+              <FormLabel htmlFor="quantidade_inicial">
+                Quantidade inicial
+              </FormLabel>
+
+              <NumberInput
+                id="quantidade_inicial"
+                placeholder="Insira a quantidade de recursos inicial"
+                defaultValue={0}
+                min={1}
+                max={999}
+                value={recursoInfo.quantidade}
+                onChange={(e) => setarQtdRecurso(e)}
+              >
+                <NumberInputField {...inputStyle} />
+                <NumberInputStepper>
+                  <NumberIncrementStepper />
+                  <NumberDecrementStepper />
+                </NumberInputStepper>
+              </NumberInput>
+            </FormControl>
+          </>
+        )}
 
         <FormControl>
           <FormLabel htmlFor="contato">Principal contato</FormLabel>
@@ -108,6 +309,8 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
             id="contato"
             type="number"
             placeholder="Principal Contato"
+            value={novaPessoa.telefone}
+            onChange={(e) => setarTelefone(e.target.value)}
             {...inputStyle}
           />
           <FormHelperText>Exemplo: (62) 91234-5678</FormHelperText>
@@ -117,7 +320,9 @@ const FormCadastroAgente = ({ setCadastraNovoAgente }) => {
       <HStack spacing="1rem" w="100%" justifyContent="flex-end">
         <Button
           bg="#95AE23"
-          onClick={() => setCadastraNovoAgente(false)}
+          onClick={() =>
+            tipoCadastro === "recurso" ? cadastrarRecursos() : cadastrarAgente()
+          }
           {...modalButtonStyle}
         >
           Salvar

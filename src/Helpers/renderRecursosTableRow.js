@@ -2,8 +2,8 @@ import { Td, Text, Tr } from "@chakra-ui/react";
 import Agente from "../Components/Agente";
 
 export const renderRecursosTableRows = (recursos) =>
-  recursos.map((recurso) => (
-    <Tr key={recurso.id}>
+  recursos.length > 0 && recursos.map((recurso) => (
+    <Tr key={recurso.idRecurso}>
       <Td>
         <Text
           fontWeight="400"
@@ -11,15 +11,15 @@ export const renderRecursosTableRows = (recursos) =>
           lineHeight="28px"
           color="#303030"
         >
-          {recurso.nome}
+          {recurso.descRecurso}
         </Text>
       </Td>
       <Td display="flex" flexDirection="row" alignItems="center">
         <Agente
           dadosAgente={{
-            cargo: recurso.cargo,
-            nome: recurso.responsavel,
-            contato: recurso.contato,
+            cargo: recurso.responsavel.cargo.descricao,
+            nome: recurso.responsavel.nome,
+            contato: recurso.responsavel.telefone,
           }}
         />
       </Td>
@@ -30,11 +30,11 @@ export const renderRecursosTableRows = (recursos) =>
           lineHeight="21px"
           color="#303030"
         >
-          {recurso.contato}
+          {recurso.responsavel.telefone}
         </Text>
       </Td>
       <Td textAlign="center" fontWeight="400">
-        {recurso.qtd}
+        {Number(recurso.quantidadeRecurso)}
       </Td>
     </Tr>
   ));

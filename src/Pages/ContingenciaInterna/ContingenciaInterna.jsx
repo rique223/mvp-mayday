@@ -2,7 +2,7 @@ import { Flex, Textarea } from "@chakra-ui/react";
 import ResizeTextarea from "react-textarea-autosize";
 import BotoesAct from "../../Components/BotoesAct";
 import Modal from "../../Components/Modal";
-import { useContext, useState, useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
@@ -33,42 +33,68 @@ const ContingenciaInterna = () => {
   const setarTituloOriginal = (valor) => setTituloOriginal(valor);
   const [descricaoOriginal, setDescricaoOriginal] = useState("");
   const setarDescricaoOriginal = (valor) => setDescricaoOriginal(valor);
-  const [perfis, setPerfis] = useState();
+  const [perfis, setPerfis] = useState([]);
   const setarPerfis = (valor) => setPerfis(valor);
   const [danosOriginal, setDanosOriginal] = useState("");
   const setarDanosOriginal = (valor) => setDanosOriginal(valor);
   const [historicoOriginal, setHistoricoOriginal] = useState("");
   const setarHistoricoOriginal = (valor) => setHistoricoOriginal(valor);
   const [comAlternativaOriginal, setComAlternativaOriginal] = useState("");
-  const setarComAlternativaOriginal = (valor) => setComAlternativaOriginal(valor);
+  const setarComAlternativaOriginal = (valor) =>
+    setComAlternativaOriginal(valor);
   const [recursos, setRecursos] = useState([]);
-  const setarRecursos= (valor) => setRecursos(valor);
+  const setarRecursos = (valor) => setRecursos(valor);
 
   useEffect(() => {
-    const buscaContingenciaInterna = async () => {
-      try {
-        const data = await fetchPlanoAtivacaoById(idPlano);
-        console.log("dataById", data);
-        setPlanoContingencia(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
     buscaContingenciaInterna();
   }, []);
 
-  const postPlanoAtivacao = async () => {
-    try{
-        const plano = montarPlanoContingencia(idPlano, tituloOriginal, subTituloOriginal, 
-          descricaoOriginal, comAlternativaOriginal, historicoOriginal, danosOriginal, 
-          [], perfis, recursos, planoContingencia.cidade);
-        const resposta = await fetchPostPlanoContingencia(plano); 
-        console.log(resposta)
-    } catch(err){
+  const buscaContingenciaInterna = async () => {
+    try {
+      const data = await fetchPlanoAtivacaoById(idPlano);
+      console.log("dataById", data);
+      setPlanoContingencia(data);
+    } catch (err) {
       console.log(err);
-  }
-}
+    }
+  };
+
+  const addPerfisAgente = (valor) => {
+    const auxPlanos = { ...planoContingencia };
+    auxPlanos.agentes.push(valor);
+    setPlanoContingencia(auxPlanos);
+    setPerfis(auxPlanos);
+  };
+
+  const addPerfisRecurso = (valor) => {
+    const auxPlanos = { ...planoContingencia };
+    auxPlanos.recursos.push(valor);
+    setPlanoContingencia(auxPlanos);
+    setRecursos(auxPlanos);
+  };
+
+  const postPlanoAtivacao = async () => {
+    try {
+      const plano = montarPlanoContingencia(
+        idPlano,
+        tituloOriginal,
+        subTituloOriginal,
+        descricaoOriginal,
+        comAlternativaOriginal,
+        historicoOriginal,
+        danosOriginal,
+        [],
+        perfis,
+        recursos,
+        planoContingencia.cidade
+      );
+      console.log(JSON.stringify(plano));
+      const resposta = await fetchPostPlanoContingencia(plano);
+      console.log(resposta);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const { cidades, findCidadeById } = useContext(CidadesContext);
 
@@ -104,11 +130,9 @@ const ContingenciaInterna = () => {
           w="100%"
         >
           <TabelaAgentesContingencia
-            prop={{
-              perfis,
-              setarPerfis,
-              agentes: planoContingencia.agentes,
-            }}
+            perfis={perfis}
+            setarPerfis={setarPerfis}
+            agentes={planoContingencia.agentes}
           />
           <Flex flexDir="column">
             <TagsContingencia tags={planoContingencia.tags} />
@@ -119,41 +143,48 @@ const ContingenciaInterna = () => {
             />
           </Flex>
         </Flex>
-        <TabelaRecursosContingencia prop={{
-          recursos,
-          setarRecursos,
-          planoRecursos: planoContingencia.recursos
-        }}
+        <TabelaRecursosContingencia
+          recursos={recursos}
+          setarRecursos={setarRecursos}
+          planoRecursos={planoContingencia.recursos}
         />
-        <AccordionsContingencia prop={{
-          danosOriginal,
-          setarDanosOriginal,
-          danos: planoContingencia.danos,
-          historicoOriginal,
-          setarHistoricoOriginal,
-          historicoEventos: planoContingencia.historicoEventos,
-          comAlternativaOriginal,
-          setarComAlternativaOriginal,
-          comunicacaoAlternativa: planoContingencia.comunicacaoAlternativa
-        }} />
+        <AccordionsContingencia
+          prop={{
+            danosOriginal,
+            setarDanosOriginal,
+            danos: planoContingencia.danos,
+            historicoOriginal,
+            setarHistoricoOriginal,
+            historicoEventos: planoContingencia.historicoEventos,
+            comAlternativaOriginal,
+            setarComAlternativaOriginal,
+            comunicacaoAlternativa: planoContingencia.comunicacaoAlternativa,
+          }}
+        />
         <BotoesAct
           isPortal={true}
           setCadastraNovoAgente={setCadastraNovoAgente}
           setCadastraNovoRecurso={setCadastraNovoRecurso}
           postPlanoAtivacao={postPlanoAtivacao}
         />
-      <MapaContingencia cidadeAtual={cidadeAtual} />
+        <MapaContingencia cidadeAtual={cidadeAtual} />
 
         {cadastraNovoAgente && (
           <Modal onOverlayClick={() => setCadastraNovoAgente(false)}>
-            <FormCadastroAgente setCadastraNovoAgente={setCadastraNovoAgente} />
+            <FormCadastroAgente
+              setCadastraNovoAgente={setCadastraNovoAgente}
+              addPerfis={addPerfisAgente}
+              tipoCadastro="agente"
+            />
           </Modal>
         )}
 
         {cadastraNovoRecurso && (
           <Modal onOverlayClick={() => setCadastraNovoRecurso(false)}>
-            <FormCadastroRecurso
-              setCadastraNovoRecurso={setCadastraNovoRecurso}
+            <FormCadastroAgente
+              setCadastraNovoAgente={setCadastraNovoRecurso}
+              addPerfis={addPerfisRecurso}
+              tipoCadastro="recurso"
             />
           </Modal>
         )}

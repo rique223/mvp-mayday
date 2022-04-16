@@ -3,7 +3,7 @@ import Agente from "../Components/Agente";
 import BotoesAct from "../Components/BotoesAct";
 
 export const renderAgentesTableRows = (perfis) =>
-  perfis.map((perfil) => (
+  perfis.length > 0 && perfis.map((perfil) => (
     <Tr key={perfil.cpf}>
       <Td display="flex" flexDirection="row" alignItems="center">
         <Agente dadosAgente={perfil} />
