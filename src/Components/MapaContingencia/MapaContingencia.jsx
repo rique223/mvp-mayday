@@ -39,15 +39,27 @@ const MapaContingencia = ({
           });
         });
       }
+      console.log("auxFiltro42", auxFiltro);
       setFiltros(auxFiltro);
+      setarFiltrosSelecionados(auxFiltro);
     };
 
     setarFiltro();
   }, [tipoPontoInteresse, tipoPontoInteresse.length]);
 
-  const filtrosSelecionados = filtros
-    .filter((filtro) => filtro.checked)
-    .map((filtro) => filtro.descricao);
+  const [filtrosSelecionados, setFiltrosSelecionados] = useState([]);
+
+  const setarFiltrosSelecionados = (auxFiltro) => {
+    console.log("auxFiltro45", auxFiltro);
+    const filtroFilter = auxFiltro
+      .filter((filtro) => filtro.checked)
+      .map((filtro) => filtro.descricao);
+    setFiltrosSelecionados(filtroFilter);
+  };
+
+  // useEffect(() => {
+  //   setarFiltrosSelecionados();
+  // }, [filtros]);
 
   const onColorSelect = useLeafletIcons();
 
@@ -58,6 +70,7 @@ const MapaContingencia = ({
   useEffect(() => {
     const setarMarcadoresFiltrados = () => {
       console.log("pontoInteresse", pontoInteresse);
+      // setarFiltrosSelecionados();
       let auxMarcadores = [...marcadoresFiltrados];
       const arrFiltro = valorFiltroMarkers;
       console.log("arrFiltro", arrFiltro);
