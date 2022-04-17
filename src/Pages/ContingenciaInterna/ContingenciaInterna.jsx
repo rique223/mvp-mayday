@@ -18,8 +18,11 @@ import compararPlanoContingencia from "../../Utils/compararPlanoContingencia";
 import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPlanoAtivacaoById from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPostPlanoContingencia from "../../Helpers/fetchPostPlanoContingencia";
+import fetchBuscaTiposPontoInteresse from "../../Helpers/fetchBuscaTiposPontoInteresse";
 import { useParams } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
+import FormCadastroPontoInteresse from "../../Components/FormCadastroPontoInteresse";
+import fetchBuscaPontoInteresseByIdPlano from "../../Helpers/fetchBuscaPontoInteresseByIdPlano";
 
 const ContingenciaInterna = () => {
   const { idPlano } = useParams();
@@ -27,6 +30,8 @@ const ContingenciaInterna = () => {
 
   const [cadastraNovoAgente, setCadastraNovoAgente] = useState(false);
   const [cadastraNovoRecurso, setCadastraNovoRecurso] = useState(false);
+  const [cadastroNovoPontoInteresse, setCadastroNovoPontoInteresse] =
+    useState(false);
   const [tituloOriginal, setTituloOriginal] = useState("");
   const [subTituloOriginal, setSubTituloOriginal] = useState("");
   const setarSubTituloOriginal = (valor) => setSubTituloOriginal(valor);
@@ -44,16 +49,53 @@ const ContingenciaInterna = () => {
     setComAlternativaOriginal(valor);
   const [recursos, setRecursos] = useState([]);
   const setarRecursos = (valor) => setRecursos(valor);
+  const [tipoPontoInteresse, setTipoPontoInteresse] = useState([]);
+  const [pontoInteresse, setPontoInteresse] = useState([]);
+  const setarPontoInteresse = (valor) => {
+    let auxPonto = [...pontoInteresse];
+    auxPonto.push(valor);
+    setPontoInteresse(auxPonto);
+  };
 
   useEffect(() => {
-    buscaContingenciaInterna();
+    buscas();
   }, []);
+
+  async function buscas() {
+    await buscaTiposPlanoInteresse();
+    await buscaContingenciaInterna();
+    await buscaPontoInteresse();
+    setMostrarValores(true);
+  }
 
   const buscaContingenciaInterna = async () => {
     try {
       const data = await fetchPlanoAtivacaoById(idPlano);
       console.log("dataById", data);
       setPlanoContingencia(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const buscaPontoInteresse = async () => {
+    try {
+      const data = await fetchBuscaPontoInteresseByIdPlano(idPlano);
+      console.log("pontos1", data);
+      let auxPonto = [...pontoInteresse];
+      const concatenar = auxPonto.concat(data);
+      console.log("pontos2", concatenar);
+      setPontoInteresse(concatenar);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const buscaTiposPlanoInteresse = async () => {
+    try {
+      const data = await fetchBuscaTiposPontoInteresse();
+      console.log("buscaTiposPlanoInteresse", data);
+      setTipoPontoInteresse(data);
     } catch (err) {
       console.log(err);
     }
@@ -84,6 +126,7 @@ const ContingenciaInterna = () => {
         historicoOriginal,
         danosOriginal,
         [],
+        pontoInteresse,
         perfis,
         recursos,
         planoContingencia.cidade
@@ -102,8 +145,10 @@ const ContingenciaInterna = () => {
 
   const cidadeAtual = findCidadeById(cidades, idCidade);
 
+  const [mostrarValores, setMostrarValores] = useState(false);
+
   return (
-    Object.keys(planoContingencia).length > 0 && (
+    mostrarValores && (
       <Flex flexDir="column" alignItems="center" marginBlock="5rem" padding="0">
         <HeaderContingencia
           prop={{
@@ -148,6 +193,11 @@ const ContingenciaInterna = () => {
           setarRecursos={setarRecursos}
           planoRecursos={planoContingencia.recursos}
         />
+        <MapaContingencia
+          tipoPontoInteresse={tipoPontoInteresse}
+          cidadeAtual={cidadeAtual}
+          pontoInteresse={pontoInteresse}
+        />
         <AccordionsContingencia
           prop={{
             danosOriginal,
@@ -165,9 +215,9 @@ const ContingenciaInterna = () => {
           isPortal={true}
           setCadastraNovoAgente={setCadastraNovoAgente}
           setCadastraNovoRecurso={setCadastraNovoRecurso}
+          setCadastroNovoPontoInteresse={setCadastroNovoPontoInteresse}
           postPlanoAtivacao={postPlanoAtivacao}
         />
-        <MapaContingencia cidadeAtual={cidadeAtual} />
 
         {cadastraNovoAgente && (
           <Modal onOverlayClick={() => setCadastraNovoAgente(false)}>
@@ -183,6 +233,18 @@ const ContingenciaInterna = () => {
           <Modal onOverlayClick={() => setCadastraNovoRecurso(false)}>
             <FormCadastroAgente
               setCadastraNovoAgente={setCadastraNovoRecurso}
+              addPerfis={addPerfisRecurso}
+              tipoCadastro="recurso"
+            />
+          </Modal>
+        )}
+
+        {cadastroNovoPontoInteresse && (
+          <Modal onOverlayClick={() => setCadastroNovoPontoInteresse(false)}>
+            <FormCadastroPontoInteresse
+              setCadastroNovoPontoInteresse={setCadastroNovoPontoInteresse}
+              setarPontoInteresse={setarPontoInteresse}
+              tipoPontoInteresse={tipoPontoInteresse}
               addPerfis={addPerfisRecurso}
               tipoCadastro="recurso"
             />

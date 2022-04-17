@@ -1,17 +1,28 @@
 export const useFilteredMarkers = (filtrosSelecionados, marcadores) => {
+  console.log(filtrosSelecionados, marcadores);
   let marcadoresFiltrados = [];
 
   const filtrosSelecionadosSemTudo = filtrosSelecionados.filter(
-    (filtro) => filtro.titulo !== "Tudo"
+    (filtro) => filtro.descricao !== "Tudo"
   );
 
   const existemFiltrosSelecionados = Boolean(filtrosSelecionadosSemTudo.length);
   if (existemFiltrosSelecionados) {
     marcadoresFiltrados = marcadores;
-    marcadoresFiltrados = marcadoresFiltrados.filter((marcador) =>
-      filtrosSelecionados.includes(marcador.tipoPontoInteresse.descricao)
-    );
+    if(marcadoresFiltrados.length > 0){
+      marcadoresFiltrados = marcadoresFiltrados.filter((marcador) =>
+        filtrosSelecionados.includes(marcador.tipoPontoInteresse.descricao)
+      );
+    }
   }
+
+  if(typeof marcadoresFiltrados === 'object' &&
+    !Array.isArray(marcadoresFiltrados) &&
+    marcadoresFiltrados !== null){
+      marcadoresFiltrados = [marcadoresFiltrados]
+  }
+
+console.log(marcadoresFiltrados)
 
   return marcadoresFiltrados;
 };

@@ -1,5 +1,5 @@
 const montarPlanoContingencia = (idPlano, tituloOriginal, subTituloOriginal, 
-    descricaoOriginal, comAlternativaOriginal, historicoOriginal, danosOriginal, tag, agentes, recursos, cidade) => {
+    descricaoOriginal, comAlternativaOriginal, historicoOriginal, danosOriginal, tag, pontoInteresse, agentes, recursos, cidade) => {
     return {
       id: Number(idPlano),
       titulo: tituloOriginal,
@@ -9,6 +9,7 @@ const montarPlanoContingencia = (idPlano, tituloOriginal, subTituloOriginal,
       historicoEventos: historicoOriginal,
       danos: danosOriginal,
       tags: tag,
+      pontoInteresse: pontoInteresse,
       agentes: agentes,
       recursos: recursos,
       cidade
