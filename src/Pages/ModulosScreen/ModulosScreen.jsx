@@ -1,4 +1,4 @@
-import { Flex, Heading, SimpleGrid } from "@chakra-ui/react";
+import { Flex, Heading, SimpleGrid, Spinner } from "@chakra-ui/react";
 import "../../App.scss";
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -98,6 +98,18 @@ const ModulosScreen = () => {
             })}
           </SimpleGrid>
         </>
+      ) : (
+        <Flex
+          w={"100%"}
+          h={"100%"}
+          bg={"red"}
+          flex={1}
+          justifyContent={"center"}
+          alignContent={"center"}
+          position={"absolute"}
+        >
+          <Spinner size="xl"></Spinner>
+        </Flex>
       )}
     </Flex>
   );
