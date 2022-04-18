@@ -1,4 +1,12 @@
-import { Input, Heading, Container, SimpleGrid } from "@chakra-ui/react";
+import {
+  Input,
+  Heading,
+  Container,
+  SimpleGrid,
+  Modal,
+  Flex,
+  Spinner,
+} from "@chakra-ui/react";
 
 import "../../App.scss";
 import { useContext, useEffect, useState } from "react";
@@ -12,8 +20,9 @@ import fetchMunicipios from "../../Helpers/fetchMunicipios";
 const ContingenciaScreen = () => {
   let { idCidade } = useParams();
   const [infoPlanos, setInfoPlanos] = useState();
-
+  const [mostrarValores, setMostrarValores] = useState(false);
   const [titulo, setTitulo] = useState("");
+  const [mensagemComunicacao, setMensagemComunicacao] = useState("");
 
   useEffect(() => {
     const buscaInfoCidade = async () => {
@@ -24,14 +33,21 @@ const ContingenciaScreen = () => {
           (m) => `${m.value}` == idCidade
         ).label;
         setTitulo(nomeCidade + " - Planos Ativação");
+        setMostrarValores(true);
       } catch (err) {
+        setMostrarValores(false);
         console.log(err);
       }
     };
 
     const getInfoPlanos = async () => {
-      const respMunicipios = await fetchPlanoAtivacao(idCidade);
-      setInfoPlanos(respMunicipios);
+      try {
+        const respMunicipios = await fetchPlanoAtivacao(idCidade);
+        setInfoPlanos(respMunicipios);
+        setMostrarValores(true);
+      } catch (err) {
+        setMostrarValores(false);
+      }
     };
 
     getInfoPlanos();
@@ -40,56 +56,74 @@ const ContingenciaScreen = () => {
 
   return (
     <Container
-      display='flex'
-      flexDir='column'
-      w='100%'
-      h='100%'
-      maxW='101rem'
-      alignItems='center'
-      marginBlockEnd='2rem'
+      display="flex"
+      flexDir="column"
+      w="100%"
+      h="100%"
+      maxW="101rem"
+      alignItems="center"
+      marginBlockEnd="2rem"
     >
-      <Heading
-        as='h1'
-        fontWeight='400'
-        fontSize='4.5rem'
-        lineHeight='84px'
-        marginBlockEnd='2rem'
-        color='rgba(0, 0, 0, 0.4)'
-      >
-        {titulo}
-      </Heading>
+      {mostrarValores ? (
+        <>
+          <Heading
+            as="h1"
+            fontWeight="400"
+            fontSize="4.5rem"
+            lineHeight="84px"
+            marginBlockEnd="2rem"
+            color="rgba(0, 0, 0, 0.4)"
+          >
+            {titulo}
+          </Heading>
 
-      <Input
-        placeholder='Buscar planos de contingência'
-        background='#FFFFFF'
-        border='1px solid #000000'
-        borderRadius='25px'
-        h='3rem'
-        w='100%'
-        maxW='101rem'
-        fontSize='1.75rem'
-        marginBlockEnd='2rem'
-      />
+          <Input
+            placeholder="Buscar planos de contingência"
+            background="#FFFFFF"
+            border="1px solid #000000"
+            borderRadius="25px"
+            h="3rem"
+            w="100%"
+            maxW="101rem"
+            fontSize="1.75rem"
+            marginBlockEnd="2rem"
+          />
 
-      <SimpleGrid w='100%' spacing='16px' columns={3}>
-        <BotaoNovoPlano idCidade={idCidade} />
-        {infoPlanos &&
-          infoPlanos.map((infoPlano) => (
-            <Link
-              to={`/contingenciaInterna/cidade=${idCidade}/plano=${infoPlano.id}`}
-              key={infoPlano.id}
-              style={{
-                width: "100%",
-                height: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <CardPlano infoPlano={infoPlano} />
-            </Link>
-          ))}
-      </SimpleGrid>
+          <SimpleGrid w="100%" spacing="16px" columns={3}>
+            <BotaoNovoPlano idCidade={idCidade} />
+            {infoPlanos &&
+              infoPlanos.map((infoPlano) => (
+                <Link
+                  to={`/contingenciaInterna/cidade=${idCidade}/plano=${infoPlano.id}`}
+                  key={infoPlano.id}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <CardPlano infoPlano={infoPlano} />
+                </Link>
+              ))}
+          </SimpleGrid>
+        </>
+      ) : (
+        <Flex
+          w={"100vw"}
+          h={"100vh"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Spinner size="xl"></Spinner>
+        </Flex>
+      )}
+      {mensagemComunicacao && mensagemComunicacao.length > 0 && (
+        <Modal onOverlayClick={() => setMensagemComunicacao("")}>
+          {mensagemComunicacao}
+        </Modal>
+      )}
     </Container>
   );
 };
