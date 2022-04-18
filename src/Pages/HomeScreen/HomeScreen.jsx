@@ -12,7 +12,9 @@ const HomeScreen = () => {
 
   const [pickerItems, setPickerItems] = useState([]);
 
-  const { setCidades } = useContext(CidadesContext);
+  const { cidades, setCidades } = useContext(CidadesContext);
+
+  const [urlCidades, setUrlCidades] = useState("");
 
   const handleCreateItem = (item) => {
     setPickerItems((curr) => [...curr, item]);
@@ -22,6 +24,19 @@ const HomeScreen = () => {
   const handleSelectedItemsChange = (selectedItems) => {
     setCidades(selectedItems);
   };
+
+  useEffect(() => {
+    const setarUrlCidades = () => {
+      let valorAux = "";
+      for (let c in cidades) {
+        valorAux += cidades[c].value;
+        valorAux += c < cidades.length - 1 ? "+" : "";
+      }
+      setUrlCidades(valorAux);
+    };
+
+    setarUrlCidades();
+  }, [cidades]);
 
   useEffect(() => {
     const getDistritos = async () => {
@@ -118,7 +133,7 @@ const HomeScreen = () => {
             inputStyleProps={autoCompleteInputStyle}
           />
         </Box>
-        <Link to="/modulos">
+        <Link to={"modulos/" + urlCidades}>
           <Button
             bg="#95AE23"
             height="48px"

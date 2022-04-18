@@ -15,7 +15,7 @@ export const renderAgentesTableRows = (perfis) =>
           lineHeight="21px"
           color="#303030"
         >
-          {perfil.contato}
+          {perfil.telefone}
         </Text>
       </Td>
       <Td>

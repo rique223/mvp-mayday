@@ -21,6 +21,7 @@ const BotoesAct = ({
   setCadastraNovoRecurso,
   setCadastroNovoPontoInteresse,
   postPlanoAtivacao,
+  postEnvioSMS,
 }) => {
   const bigButtonStyle = {
     w: "114px",
@@ -68,6 +69,7 @@ const BotoesAct = ({
             filter: "brightness(120%)",
           }}
           transition="background .2s ease-in-out, filter .2s ease-in-out"
+          onClick={postEnvioSMS}
         >
           <Image src={Play} boxSize="57px" />
         </Button>

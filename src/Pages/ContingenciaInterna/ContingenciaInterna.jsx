@@ -19,7 +19,9 @@ import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPlanoAtivacaoById from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPostPlanoContingencia from "../../Helpers/fetchPostPlanoContingencia";
 import fetchBuscaTiposPontoInteresse from "../../Helpers/fetchBuscaTiposPontoInteresse";
+import fetchPostEnviaSMS from "../../Helpers/fetchPostEnviaSMS";
 import { useParams } from "react-router-dom";
+import fetchMunicipios from "../../Helpers/fetchMunicipios";
 import { CidadesContext } from "../../Context/CidadesContext";
 import FormCadastroPontoInteresse from "../../Components/FormCadastroPontoInteresse";
 import fetchBuscaPontoInteresseByIdPlano from "../../Helpers/fetchBuscaPontoInteresseByIdPlano";
@@ -56,6 +58,15 @@ const ContingenciaInterna = () => {
     auxPonto.push(valor);
     setPontoInteresse(auxPonto);
   };
+  const [mensagemSMS, setMensagemSMS] = useState("");
+
+  const { cidades, findCidadeById } = useContext(CidadesContext);
+
+  let { idCidade } = useParams();
+
+  const [cidadeAtual, setCidadeAtual] = useState({});
+
+  const [mostrarValores, setMostrarValores] = useState(false);
 
   useEffect(() => {
     buscas();
@@ -65,6 +76,7 @@ const ContingenciaInterna = () => {
     await buscaTiposPlanoInteresse();
     await buscaContingenciaInterna();
     await buscaPontoInteresse();
+    await buscaInfoCidade();
     setMostrarValores(true);
   }
 
@@ -73,6 +85,17 @@ const ContingenciaInterna = () => {
       const data = await fetchPlanoAtivacaoById(idPlano);
       console.log("dataById", data);
       setPlanoContingencia(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const buscaInfoCidade = async () => {
+    try {
+      const respMunicipios = await fetchMunicipios();
+      const nomeCidade = respMunicipios.find((m) => m.id == idCidade);
+      console.log(respMunicipios);
+      setCidadeAtual(nomeCidade);
     } catch (err) {
       console.log(err);
     }
@@ -115,6 +138,25 @@ const ContingenciaInterna = () => {
     setRecursos(auxPlanos);
   };
 
+  const postEnvioSMS = async () => {
+    try {
+      let dados = [];
+      for (let i of perfis) {
+        const aux = {
+          number: i.telefone,
+          type: null,
+          key: null,
+          msg: mensagemSMS,
+        };
+        dados.push(aux);
+      }
+      console.log(dados);
+      const resp = await fetchPostEnviaSMS(dados);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const postPlanoAtivacao = async () => {
     try {
       const plano = montarPlanoContingencia(
@@ -131,21 +173,11 @@ const ContingenciaInterna = () => {
         recursos,
         planoContingencia.cidade
       );
-      console.log(JSON.stringify(plano));
       const resposta = await fetchPostPlanoContingencia(plano);
-      console.log(resposta);
     } catch (err) {
       console.log(err);
     }
   };
-
-  const { cidades, findCidadeById } = useContext(CidadesContext);
-
-  let { idCidade } = useParams();
-
-  const cidadeAtual = findCidadeById(cidades, idCidade);
-
-  const [mostrarValores, setMostrarValores] = useState(false);
 
   return (
     mostrarValores && (
@@ -185,6 +217,8 @@ const ContingenciaInterna = () => {
               as={ResizeTextarea}
               placeholder="Digite aqui a mensagem a ser enviada aos agentes."
               maxH="415px"
+              value={mensagemSMS}
+              onChange={(e) => setMensagemSMS(e.target.value)}
             />
           </Flex>
         </Flex>
@@ -217,6 +251,7 @@ const ContingenciaInterna = () => {
           setCadastraNovoRecurso={setCadastraNovoRecurso}
           setCadastroNovoPontoInteresse={setCadastroNovoPontoInteresse}
           postPlanoAtivacao={postPlanoAtivacao}
+          postEnvioSMS={postEnvioSMS}
         />
 
         {cadastraNovoAgente && (

@@ -113,7 +113,7 @@ const FormCadastroPontoInteresse = ({
         color="#000000"
         opacity=".4"
       >
-        Novo Recurso
+        Novo Ponto Interesse
       </Heading>
       <VStack spacing="2rem">
         <FormControl>

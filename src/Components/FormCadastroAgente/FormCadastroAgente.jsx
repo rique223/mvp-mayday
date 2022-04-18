@@ -144,7 +144,9 @@ const FormCadastroAgente = ({
   };
 
   function cadastrarAgente() {
-    const cargoValor = listaCargos.find((f) => f.id == auxIdCargo);
+    const cargoValor =
+      listaCargos.find((f) => f.id == auxIdCargo) || novaPessoa.cargo;
+    console.log(cargoValor, novaPessoa);
     const valor = {
       cpf: novaPessoa.cpf,
       telefone: novaPessoa.telefone,
@@ -189,7 +191,7 @@ const FormCadastroAgente = ({
         color="#000000"
         opacity=".4"
       >
-        Novo Agente
+        Novo {tipoCadastro}
       </Heading>
       <VStack spacing="2rem">
         <FormControl>

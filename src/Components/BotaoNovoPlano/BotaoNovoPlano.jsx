@@ -31,7 +31,9 @@ const BotaoNovoPlano = ({ children, idCidade }) => {
   const criarDefault = async (idCidade) => {
     try {
       const data = await fetchDefaultPlanoCidade(idCidade);
-      return navigate("/contingenciaInterna/" + data.id)
+      return navigate(
+        `/contingenciaInterna/cidade=${idCidade}/plano=${data.id}`
+      );
     } catch (err) {
       console.log(err);
     }
