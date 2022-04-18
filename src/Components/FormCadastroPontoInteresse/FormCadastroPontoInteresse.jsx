@@ -5,11 +5,6 @@ import {
   Heading,
   HStack,
   Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Select,
   VStack,
 } from "@chakra-ui/react";
@@ -37,19 +32,7 @@ const FormCadastroPontoInteresse = ({
     },
   };
 
-  const valorInicial = {
-    latitude: 0,
-    longitude: 0,
-    tipoPontoInteresse: {
-      id: 0,
-      descricao: "",
-      cor: "",
-    },
-    mensagem: "",
-    cor: "",
-  };
-
-  const [cores, setCores] = useState([
+  const cores = [
     "blue",
     "gold",
     "red",
@@ -59,33 +42,50 @@ const FormCadastroPontoInteresse = ({
     "violet",
     "grey",
     "black",
-  ]);
+  ];
+
   const [pontoInteresse, setPontoInteresse] = useState([]);
 
   const [tipoSelecionado, setTipoSelecionado] = useState({});
 
-  const setarLatitude = (valor) => {
-    let auxPonto = { ...pontoInteresse };
-    auxPonto.latitude = valor;
-    setPontoInteresse(auxPonto);
+  const setarLatitude = (novaLatitude) => {
+    setPontoInteresse((prevPontoInteresse) => {
+      const novoPonto = prevPontoInteresse;
+
+      novoPonto.latitude = novaLatitude;
+
+      return novoPonto;
+    });
   };
 
-  const setarLongitude = (valor) => {
-    let auxPonto = { ...pontoInteresse };
-    auxPonto.longitude = valor;
-    setPontoInteresse(auxPonto);
+  const setarLongitude = (novaLongitude) => {
+    setPontoInteresse((prevPontoInteresse) => {
+      const novoPonto = prevPontoInteresse;
+
+      novoPonto.longitude = novaLongitude;
+
+      return novoPonto;
+    });
   };
 
-  const setarMensagem = (valor) => {
-    let auxPonto = { ...pontoInteresse };
-    auxPonto.mensagem = valor;
-    setPontoInteresse(auxPonto);
+  const setarMensagem = (novaMensagem) => {
+    setPontoInteresse((prevPontoInteresse) => {
+      const novoPonto = prevPontoInteresse;
+
+      novoPonto.mensagem = novaMensagem;
+
+      return novoPonto;
+    });
   };
 
-  const setarCor = (valor) => {
-    let auxPonto = { ...pontoInteresse };
-    auxPonto.cor = cores[valor];
-    setPontoInteresse(auxPonto);
+  const setarCor = (novaCor) => {
+    setPontoInteresse((prevPontoInteresse) => {
+      const novoPonto = prevPontoInteresse;
+
+      novoPonto.cor = cores[novaCor];
+
+      return novoPonto;
+    });
   };
 
   const setarTipo = (index) => setTipoSelecionado(tipoPontoInteresse[index]);
@@ -99,52 +99,53 @@ const FormCadastroPontoInteresse = ({
       cor: pontoInteresse.cor,
     };
     setarPontoInteresse(valor);
+    setCadastroNovoPontoInteresse(false);
   };
 
   return (
     <>
       <Heading
-        fontWeight="400"
-        fontSize="4.5rem"
-        lineHeight="5.25rem"
-        display="flex"
-        alignSelf="center"
-        marginBlockEnd="3rem"
-        color="#000000"
-        opacity=".4"
+        fontWeight='400'
+        fontSize='4.5rem'
+        lineHeight='5.25rem'
+        display='flex'
+        alignSelf='center'
+        marginBlockEnd='3rem'
+        color='#000000'
+        opacity='.4'
       >
         Novo Ponto Interesse
       </Heading>
-      <VStack spacing="2rem">
+      <VStack spacing='2rem'>
         <FormControl>
-          <FormLabel htmlFor="nome">Latitude</FormLabel>
+          <FormLabel htmlFor='nome'>Latitude</FormLabel>
           <Input
-            id="nome"
-            type="text"
+            id='nome'
+            type='text'
             {...inputStyle}
-            placeholder="Escreva a latitude"
+            placeholder='Escreva a latitude'
             value={pontoInteresse.latitude}
             onChange={(e) => setarLatitude(e.target.value)}
           />
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="nome">Longitude</FormLabel>
+          <FormLabel htmlFor='nome'>Longitude</FormLabel>
           <Input
-            id="nome"
-            type="text"
+            id='nome'
+            type='text'
             {...inputStyle}
-            placeholder="Escreva a longitude"
+            placeholder='Escreva a longitude'
             value={pontoInteresse.longitude}
             onChange={(e) => setarLongitude(e.target.value)}
           />
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="instituicao">Instituição</FormLabel>
+          <FormLabel htmlFor='instituicao'>Tipo (Classificação)</FormLabel>
           <Select
-            id="instituicao"
-            placeholder="Selecione uma instituição"
+            id='tipo'
+            placeholder='Selecione o tipo do ponto de interesse'
             onChange={(e) => setarTipo(e.target.value)}
             {...inputStyle}
           >
@@ -155,22 +156,22 @@ const FormCadastroPontoInteresse = ({
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="nome">Mensagem</FormLabel>
+          <FormLabel htmlFor='nome'>Mensagem</FormLabel>
           <Input
-            id="nome"
-            type="text"
+            id='nome'
+            type='text'
             {...inputStyle}
-            placeholder="Escreva a mensagem"
+            placeholder='Escreva a mensagem'
             value={pontoInteresse.mensagem}
             onChange={(e) => setarMensagem(e.target.value)}
           />
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="cor">Cor</FormLabel>
+          <FormLabel htmlFor='cor'>Cor</FormLabel>
           <Select
-            id="cor"
-            placeholder="Selecione uma Cor"
+            id='cor'
+            placeholder='Selecione uma Cor'
             onChange={(e) => setarCor(e.target.value)}
             {...inputStyle}
           >
@@ -182,20 +183,20 @@ const FormCadastroPontoInteresse = ({
       </VStack>
 
       <HStack
-        spacing="1rem"
-        w="100%"
-        justifyContent="flex-end"
-        marginBlockStart="20px"
+        spacing='1rem'
+        w='100%'
+        justifyContent='flex-end'
+        marginBlockStart='20px'
       >
         <Button
-          bg="#95AE23"
-          onClick={() => criarPontoInteresse()}
+          bg='#95AE23'
+          onClick={criarPontoInteresse}
           {...modalButtonStyle}
         >
           Salvar
         </Button>
         <Button
-          bg="red"
+          bg='red'
           onClick={() => setCadastroNovoPontoInteresse(false)}
           {...modalButtonStyle}
         >

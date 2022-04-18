@@ -16,7 +16,7 @@ const DescContingencia = ({ prop }) => {
     };
 
     setarValores();
-  }, []);
+  }, [prop]);
 
   const descriptionStyle = {
     fontWeight: "300",
@@ -28,11 +28,11 @@ const DescContingencia = ({ prop }) => {
 
   return (
     <Flex
-      flexDir="column"
-      marginBlockEnd="4rem"
-      paddingInline="1rem"
-      maxW="101rem"
-      w="100%"
+      flexDir='column'
+      marginBlockEnd='4rem'
+      paddingInline='1rem'
+      maxW='101rem'
+      w='100%'
     >
       <Heading {...headingStyle}>Descrição</Heading>
       {mostrarValor && (

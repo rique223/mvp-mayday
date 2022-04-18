@@ -145,8 +145,7 @@ const FormCadastroAgente = ({
 
   function cadastrarAgente() {
     const cargoValor =
-      listaCargos.find((f) => f.id == auxIdCargo) || novaPessoa.cargo;
-    console.log(cargoValor, novaPessoa);
+      listaCargos.find((f) => `${f.id}` === auxIdCargo) || novaPessoa.cargo;
     const valor = {
       cpf: novaPessoa.cpf,
       telefone: novaPessoa.telefone,
@@ -154,15 +153,13 @@ const FormCadastroAgente = ({
       cargo: cargoValor,
       cidade: cargoValor.departamento.cidade,
     };
-    console.log(valor);
     addPerfis(valor);
     setCadastraNovoAgente(false);
   }
 
   function cadastrarRecursos() {
     const cargoValor =
-      listaCargos.find((f) => f.id == auxIdCargo) || novaPessoa.cargo;
-    console.log(listaCargos);
+      listaCargos.find((f) => `${f.id}` === auxIdCargo) || novaPessoa.cargo;
     const valor = {
       descRecurso: recursoInfo.descRecurso,
       quantidade: recursoInfo.quantidade,
@@ -174,7 +171,6 @@ const FormCadastroAgente = ({
         cidade: cargoValor.departamento.cidade,
       },
     };
-    console.log(valor);
     addPerfis(valor);
     setCadastraNovoAgente(false);
   }
@@ -182,20 +178,20 @@ const FormCadastroAgente = ({
   return (
     <>
       <Heading
-        fontWeight="400"
-        fontSize="4.5rem"
-        lineHeight="5.25rem"
-        display="flex"
-        alignSelf="center"
-        marginBlockEnd="3rem"
-        color="#000000"
-        opacity=".4"
+        fontWeight='400'
+        fontSize='4.5rem'
+        lineHeight='5.25rem'
+        display='flex'
+        alignSelf='center'
+        marginBlockEnd='3rem'
+        color='#000000'
+        opacity='.4'
       >
         Novo {tipoCadastro}
       </Heading>
-      <VStack spacing="2rem">
+      <VStack spacing='2rem'>
         <FormControl>
-          <FormLabel htmlFor="cpf">CPF</FormLabel>
+          <FormLabel htmlFor='cpf'>CPF</FormLabel>
           {cpfJaExiste ? (
             <Flex direction={"row"} justifyContent={"space-between"}>
               <div>{novaPessoa.cpf}</div>
@@ -205,37 +201,37 @@ const FormCadastroAgente = ({
             </Flex>
           ) : (
             <Input
-              id="cpf"
-              type="number"
+              id='cpf'
+              type='number'
               maxLength={11}
               {...inputStyle}
               value={novaPessoa.cpf}
               onChange={(e) => setarCpf(e.target.value)}
               onBlur={() => verificaCpf()}
-              placeholder="Escreva o CPF"
+              placeholder='Escreva o CPF'
             />
           )}
         </FormControl>
 
-        <HStack spacing="2rem" w="100%">
+        <HStack spacing='2rem' w='100%'>
           <FormControl>
-            <FormLabel htmlFor="nome">Nome</FormLabel>
+            <FormLabel htmlFor='nome'>Nome</FormLabel>
             <Input
-              id="nome"
-              type="text"
+              id='nome'
+              type='text'
               {...inputStyle}
               value={novaPessoa.nome}
               onChange={(e) => setarNome(e.target.value)}
-              placeholder="Escreva seu nome"
+              placeholder='Escreva seu nome'
             />
           </FormControl>
         </HStack>
 
         <FormControl>
-          <FormLabel htmlFor="instituicao">Instituição</FormLabel>
+          <FormLabel htmlFor='instituicao'>Instituição</FormLabel>
           <Select
-            id="instituicao"
-            placeholder="Selecione uma instituição"
+            id='instituicao'
+            placeholder='Selecione uma instituição'
             onChange={(e) => setarDepartamento(e)}
             {...inputStyle}
           >
@@ -253,10 +249,10 @@ const FormCadastroAgente = ({
         </FormControl>
 
         <FormControl>
-          <FormLabel htmlFor="cargo">Cargo</FormLabel>
-          <Select id="cargo" placeholder="Selecione um cargo" {...inputStyle}>
+          <FormLabel htmlFor='cargo'>Cargo</FormLabel>
+          <Select id='cargo' placeholder='Selecione um cargo' {...inputStyle}>
             {cpfJaExiste ? (
-              <option selected value="option1">
+              <option selected value='option1'>
                 {novaPessoa.cargo.descricao}
               </option>
             ) : (
@@ -271,24 +267,24 @@ const FormCadastroAgente = ({
         {tipoCadastro === "recurso" && (
           <>
             <FormControl>
-              <FormLabel htmlFor="nome">Nome</FormLabel>
+              <FormLabel htmlFor='nome'>Nome</FormLabel>
               <Input
-                id="nome"
-                type="text"
+                id='nome'
+                type='text'
                 {...inputStyle}
                 value={recursoInfo.descRecurso}
                 onChange={(e) => setarNomeRecurso(e.target.value)}
-                placeholder="Escreva o nome do recurso"
+                placeholder='Escreva o nome do recurso'
               />
             </FormControl>
             <FormControl>
-              <FormLabel htmlFor="quantidade_inicial">
+              <FormLabel htmlFor='quantidade_inicial'>
                 Quantidade inicial
               </FormLabel>
 
               <NumberInput
-                id="quantidade_inicial"
-                placeholder="Insira a quantidade de recursos inicial"
+                id='quantidade_inicial'
+                placeholder='Insira a quantidade de recursos inicial'
                 defaultValue={0}
                 min={1}
                 max={999}
@@ -306,11 +302,11 @@ const FormCadastroAgente = ({
         )}
 
         <FormControl>
-          <FormLabel htmlFor="contato">Principal contato</FormLabel>
+          <FormLabel htmlFor='contato'>Principal contato</FormLabel>
           <Input
-            id="contato"
-            type="number"
-            placeholder="Principal Contato"
+            id='contato'
+            type='number'
+            placeholder='Principal Contato'
             value={novaPessoa.telefone}
             onChange={(e) => setarTelefone(e.target.value)}
             {...inputStyle}
@@ -319,9 +315,9 @@ const FormCadastroAgente = ({
         </FormControl>
       </VStack>
 
-      <HStack spacing="1rem" w="100%" justifyContent="flex-end">
+      <HStack spacing='1rem' w='100%' justifyContent='flex-end'>
         <Button
-          bg="#95AE23"
+          bg='#95AE23'
           onClick={() =>
             tipoCadastro === "recurso" ? cadastrarRecursos() : cadastrarAgente()
           }
@@ -330,7 +326,7 @@ const FormCadastroAgente = ({
           Salvar
         </Button>
         <Button
-          bg="red"
+          bg='red'
           onClick={() => setCadastraNovoAgente(false)}
           {...modalButtonStyle}
         >

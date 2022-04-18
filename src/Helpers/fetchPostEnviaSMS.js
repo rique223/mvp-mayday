@@ -1,9 +1,9 @@
 import apiEnviaSMS from "../Utils/apiEnviaSMS";
 
-const fetchPostEnviaSMS = async (plano) => {
+const fetchPostEnviaSMS = async (sms) => {
   try {
-    const {data} = await apiEnviaSMS().post("", plano);
-    console.log("fetchPostEnviaSMS", data);
+    const { data } = await apiEnviaSMS().post("", sms);
+
     return data;
   } catch (error) {
     console.log(error);

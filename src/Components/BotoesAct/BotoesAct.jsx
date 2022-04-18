@@ -13,7 +13,7 @@ import React from "react";
 import Play from "../../Media/play.svg";
 import Save from "../../Media/Save.svg";
 import ThreeDots from "../../Media/three_dots.svg";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 
 const BotoesAct = ({
   isPortal = false,
@@ -21,7 +21,9 @@ const BotoesAct = ({
   setCadastraNovoRecurso,
   setCadastroNovoPontoInteresse,
   postPlanoAtivacao,
-  postEnvioSMS,
+  postEnvioSMSGeral,
+  PostEnvioSMSIndividual,
+  deletaAgente,
 }) => {
   const bigButtonStyle = {
     w: "114px",
@@ -41,48 +43,48 @@ const BotoesAct = ({
   return isPortal ? (
     <Portal>
       <Stack
-        spacing="1.25rem"
-        direction="row"
-        justifyContent="end"
-        position="fixed"
-        right="1%"
-        bottom="2rem"
-        zIndex="9999"
+        spacing='1.25rem'
+        direction='row'
+        justifyContent='end'
+        position='fixed'
+        right='1%'
+        bottom='2rem'
+        zIndex='9999'
       >
         <Button
           {...bigButtonStyle}
-          background="#007B2F"
+          background='#007B2F'
           _hover={{ background: "#95AE23" }}
           _active={{
             filter: "brightness(120%)",
           }}
           onClick={postPlanoAtivacao}
-          transition="background .2s ease-in-out, filter .2s ease-in-out"
+          transition='background .2s ease-in-out, filter .2s ease-in-out'
         >
-          <Image src={Save} boxSize="57px" color={"white"} bgColor={"white"} />
+          <Image src={Save} boxSize='57px' color={"white"} bgColor={"white"} />
         </Button>
         <Button
           {...bigButtonStyle}
-          background="#007B2F"
+          background='#007B2F'
           _hover={{ background: "#95AE23" }}
           _active={{
             filter: "brightness(120%)",
           }}
-          transition="background .2s ease-in-out, filter .2s ease-in-out"
-          onClick={postEnvioSMS}
+          transition='background .2s ease-in-out, filter .2s ease-in-out'
+          onClick={postEnvioSMSGeral}
         >
-          <Image src={Play} boxSize="57px" />
+          <Image src={Play} boxSize='57px' />
         </Button>
-        <Menu placement="top">
+        <Menu placement='top'>
           <MenuButton
             as={IconButton}
-            background="#fff"
-            icon={<AddIcon w="2.375rem" h="2.375rem" color="#007B2F" />}
-            aria-label="Options"
-            variant="outline"
+            background='#fff'
+            icon={<AddIcon w='2.375rem' h='2.375rem' color='#007B2F' />}
+            aria-label='Options'
+            variant='outline'
             {...bigButtonStyle}
           />
-          <MenuList minW="auto" fontSize="1.5rem" zIndex={3}>
+          <MenuList minW='auto' fontSize='1.5rem' zIndex={3}>
             <MenuItem onClick={() => setCadastraNovoAgente(true)}>
               Novo Agente
             </MenuItem>
@@ -94,8 +96,8 @@ const BotoesAct = ({
             </MenuItem>
           </MenuList>
         </Menu>
-        <Button {...bigButtonStyle} background="#FFFFFF">
-          <Image src={ThreeDots} boxSize="38px" />
+        <Button {...bigButtonStyle} background='#FFFFFF'>
+          <Image src={ThreeDots} boxSize='38px' />
         </Button>
       </Stack>
     </Portal>
@@ -103,22 +105,15 @@ const BotoesAct = ({
     <>
       <Button
         {...smallButtonStyle}
-        background="#007B2F"
+        background='#007B2F'
         _hover={{ background: "#95AE23" }}
-        marginInlineEnd="8px"
+        marginInlineEnd='8px'
+        onClick={PostEnvioSMSIndividual}
       >
-        <Image src={Play} boxSize="32px" />
+        <Image src={Play} boxSize='32px' />
       </Button>
-      <Button
-        {...smallButtonStyle}
-        background="#007B2F"
-        _hover={{ background: "#95AE23" }}
-        marginInlineEnd="8px"
-      >
-        <Image src={Play} boxSize="32px" />
-      </Button>
-      <Button {...smallButtonStyle} background="#fff">
-        <Image src={ThreeDots} boxSize="25px" />
+      <Button {...smallButtonStyle} background='#fff' onClick={deletaAgente}>
+        <CloseIcon w='16px' h='16px' />
       </Button>
     </>
   );

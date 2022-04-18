@@ -10,24 +10,25 @@ import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacao";
 import fetchMunicipios from "../../Helpers/fetchMunicipios";
 
 const ContingenciaScreen = () => {
-  const { cidades, findCidadeById } = useContext(CidadesContext);
   let { idCidade } = useParams();
   const [infoPlanos, setInfoPlanos] = useState();
 
   const [titulo, setTitulo] = useState("");
 
-  const buscaInfoCidade = async () => {
-    try {
-      const respMunicipios = await fetchMunicipios();
-      console.log(respMunicipios);
-      const nomeCidade = respMunicipios.find((m) => m.value == idCidade).label;
-      setTitulo(nomeCidade + " - Planos Ativação");
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
+    const buscaInfoCidade = async () => {
+      try {
+        const respMunicipios = await fetchMunicipios();
+
+        const nomeCidade = respMunicipios.find(
+          (m) => `${m.value}` == idCidade
+        ).label;
+        setTitulo(nomeCidade + " - Planos Ativação");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
     const getInfoPlanos = async () => {
       const respMunicipios = await fetchPlanoAtivacao(idCidade);
       setInfoPlanos(respMunicipios);
@@ -35,43 +36,43 @@ const ContingenciaScreen = () => {
 
     getInfoPlanos();
     buscaInfoCidade();
-  }, []);
+  }, [idCidade]);
 
   return (
     <Container
-      display="flex"
-      flexDir="column"
-      w="100%"
-      h="100%"
-      maxW="101rem"
-      alignItems="center"
-      marginBlockEnd="2rem"
+      display='flex'
+      flexDir='column'
+      w='100%'
+      h='100%'
+      maxW='101rem'
+      alignItems='center'
+      marginBlockEnd='2rem'
     >
       <Heading
-        as="h1"
-        fontWeight="400"
-        fontSize="4.5rem"
-        lineHeight="84px"
-        marginBlockEnd="2rem"
-        color="rgba(0, 0, 0, 0.4)"
+        as='h1'
+        fontWeight='400'
+        fontSize='4.5rem'
+        lineHeight='84px'
+        marginBlockEnd='2rem'
+        color='rgba(0, 0, 0, 0.4)'
       >
         {titulo}
       </Heading>
 
       <Input
-        placeholder="Buscar planos de contingência"
-        background="#FFFFFF"
-        border="1px solid #000000"
-        borderRadius="25px"
-        h="3rem"
-        w="100%"
-        maxW="101rem"
-        fontSize="1.75rem"
-        marginBlockEnd="2rem"
+        placeholder='Buscar planos de contingência'
+        background='#FFFFFF'
+        border='1px solid #000000'
+        borderRadius='25px'
+        h='3rem'
+        w='100%'
+        maxW='101rem'
+        fontSize='1.75rem'
+        marginBlockEnd='2rem'
       />
 
-      <BotaoNovoPlano idCidade={idCidade} />
-      <SimpleGrid w="100%" spacing="16px" columns={3}>
+      <SimpleGrid w='100%' spacing='16px' columns={3}>
+        <BotaoNovoPlano idCidade={idCidade} />
         {infoPlanos &&
           infoPlanos.map((infoPlano) => (
             <Link

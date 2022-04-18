@@ -21,13 +21,9 @@ const TabelaRecursosContingencia = ({
   setarRecursos,
   planoRecursos,
 }) => {
-  const [mostrarValor, setMostrarValor] = useState(false);
-
   useEffect(() => {
     const setarAgentes = () => {
-      setMostrarValor(false);
       setarRecursos(planoRecursos);
-      setMostrarValor(true);
     };
 
     setarAgentes();
@@ -40,36 +36,47 @@ const TabelaRecursosContingencia = ({
     color: "#000000",
   };
 
+  const deletaRecurso = (recurso) => {
+    setarRecursos(
+      recursos.filter(
+        (recursoAtual) => recursoAtual.idRecurso !== recurso.idRecurso
+      )
+    );
+  };
+
   return (
     <Flex
-      flexDirection="column"
-      marginBlockEnd="4rem"
-      paddingInline="1rem"
-      maxW="101rem"
-      w="100%"
+      flexDirection='column'
+      marginBlockEnd='4rem'
+      paddingInline='1rem'
+      maxW='101rem'
+      w='100%'
     >
       <Heading {...headingStyle}>Recursos</Heading>
-      <Center w="100%">
+      <Center w='100%'>
         <Box
-          borderRadius="15px"
-          boxShadow="lg"
-          border="1px"
-          borderColor="gray.200"
+          borderRadius='15px'
+          boxShadow='lg'
+          border='1px'
+          borderColor='gray.200'
           padding={3}
-          w="100%"
+          w='100%'
         >
-          <Table variant="simple">
+          <Table variant='simple'>
             <Thead>
               <Tr>
                 <Th {...tableHeaderStyle}>Recurso</Th>
                 <Th {...tableHeaderStyle}>Responsável</Th>
                 <Th {...tableHeaderStyle}>Principal Contato</Th>
-                <Th {...tableHeaderStyle} textAlign="center">
+                <Th {...tableHeaderStyle} textAlign='center'>
                   Qtd.
+                </Th>
+                <Th {...tableHeaderStyle} textAlign='center'>
+                  Ações
                 </Th>
               </Tr>
             </Thead>
-            <Tbody>{renderRecursosTableRows(recursos)}</Tbody>
+            <Tbody>{renderRecursosTableRows(recursos, deletaRecurso)}</Tbody>
             <Tfoot>
               <Tr>
                 <Td colSpan={4}>

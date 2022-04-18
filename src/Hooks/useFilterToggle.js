@@ -7,12 +7,14 @@ export const useFilterToggle = (setData) => {
         const novosFiltros = prevFiltros;
 
         const filtrosSemTudo = novosFiltros.filter(
-          ({ titulo }) => titulo !== "Tudo"
+          ({ descricao }) => descricao !== "Tudo"
         );
-        const opcaoTudo = novosFiltros.find(({ titulo }) => titulo === "Tudo");
+        const opcaoTudo = novosFiltros.find(
+          ({ descricao }) => descricao === "Tudo"
+        );
         const filtroClicado = novosFiltros.find(({ id }) => id === item.id);
 
-        const clicouNoTudo = item.titulo === "Tudo";
+        const clicouNoTudo = item.descricao === "Tudo";
         if (clicouNoTudo) {
           filtrosSemTudo.forEach((filtroAtual) => {
             filtroAtual.checked = !item.checked;

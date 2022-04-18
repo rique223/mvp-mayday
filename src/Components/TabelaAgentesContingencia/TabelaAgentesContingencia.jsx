@@ -16,12 +16,16 @@ import { renderAgentesTableRows } from "../../Helpers/renderAgentesTableRows";
 import InputTabela from "../InputTabela";
 import { useEffect, useState } from "react";
 
-const TabelaAgentesContingencia = ({ perfis, setarPerfis, agentes }) => {
+const TabelaAgentesContingencia = ({
+  perfis,
+  setarPerfis,
+  agentes,
+  mensagemSMS,
+}) => {
   const [mostrarValor, setMostrarValor] = useState(false);
 
   useEffect(() => {
     const setarAgentes = () => {
-      setMostrarValor(false);
       setarPerfis(agentes);
       setMostrarValor(true);
     };
@@ -37,36 +41,38 @@ const TabelaAgentesContingencia = ({ perfis, setarPerfis, agentes }) => {
   };
 
   return (
-    <Flex flexDirection="column" w="58%" marginInlineEnd="40px">
+    <Flex flexDirection='column' w='58%' marginInlineEnd='40px'>
       <Heading {...headingStyle}>Agentes</Heading>
       {mostrarValor && (
         <Box
-          borderRadius="15px"
-          boxShadow="lg"
-          border="1px"
-          borderColor="gray.200"
+          borderRadius='15px'
+          boxShadow='lg'
+          border='1px'
+          borderColor='gray.200'
           padding={3}
         >
-          <Table variant="simple">
+          <Table variant='simple'>
             <Thead>
               <Tr>
                 <Th {...tableHeaderStyle}>Pessoas</Th>
                 <Th {...tableHeaderStyle}>Principal Contato</Th>
-                <Th {...tableHeaderStyle}>Funções</Th>
+                <Th {...tableHeaderStyle}>Ações</Th>
               </Tr>
             </Thead>
-            <Tbody>{renderAgentesTableRows(perfis)}</Tbody>
+            <Tbody>
+              {renderAgentesTableRows(perfis, mensagemSMS, setarPerfis)}
+            </Tbody>
             <Tfoot>
               <Tr>
                 <Td colSpan={2}>
                   <InputTabela />
                 </Td>
-                <Td colSpan={1} textAlign="center">
+                <Td colSpan={1} textAlign='center'>
                   <Text
-                    fontWeight="400"
-                    fontSize="2.25rem"
-                    lineHeight="42px"
-                    color="#000"
+                    fontWeight='400'
+                    fontSize='2.25rem'
+                    lineHeight='42px'
+                    color='#000'
                   >
                     0/20
                   </Text>
