@@ -1,4 +1,4 @@
-import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import {
   Image,
   Heading,
@@ -12,8 +12,8 @@ import {
 const CardPlano = ({ infoPlano }) => {
   return (
     <VStack
-      w="100%"
-      maxW="530px"
+      w='100%'
+      maxW='530px'
       spacing='47px'
       padding='23px'
       background='#FFFFFF'
@@ -23,14 +23,14 @@ const CardPlano = ({ infoPlano }) => {
       borderColor='#ccc'
       borderRadius='25px'
       align='flex-start'
-      minH="473px"
+      minH='473px'
     >
       <HStack spacing='15px'>
         <Image
           fallbackSrc='https://via.placeholder.com/100'
           borderRadius='full'
         />
-        <VStack spacing='0'>
+        <VStack spacing='0' align='start'>
           <Heading
             fontWeight='400'
             fontSize='2rem'
@@ -50,7 +50,7 @@ const CardPlano = ({ infoPlano }) => {
         </VStack>
       </HStack>
 
-      <VStack spacing='8px' align='flex-start'>
+      <VStack spacing='8px' align='flex-start' flexGrow={1}>
         <Heading
           as='h3'
           fontWeight='400'
@@ -91,7 +91,7 @@ const CardPlano = ({ infoPlano }) => {
         </HStack>
       </VStack>
 
-      <VStack align='flex-start'>
+      <VStack align='flex-start' flexGrow={1}>
         <Heading
           as='h3'
           fontWeight='400'
@@ -119,7 +119,7 @@ const CardPlano = ({ infoPlano }) => {
         </HStack>
       </VStack>
 
-      <HStack w='100%' justify='flex-end'>
+      <HStack w='100%' justify='flex-end' flexGrow={1}>
         <Button
           w='60px'
           h='60px'
@@ -138,7 +138,7 @@ const CardPlano = ({ infoPlano }) => {
           boxShadow='lg'
           bg='#fff'
         >
-          <HamburgerIcon w='20px' h='20px' color='#007B2F' />
+          <CloseIcon w='20px' h='20px' color='#007B2F' />
         </Button>
       </HStack>
     </VStack>

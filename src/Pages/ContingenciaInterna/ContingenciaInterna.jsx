@@ -1,8 +1,8 @@
-import { Flex, Textarea } from "@chakra-ui/react";
+import { Flex, Text, Textarea } from "@chakra-ui/react";
 import ResizeTextarea from "react-textarea-autosize";
 import BotoesAct from "../../Components/BotoesAct";
 import Modal from "../../Components/Modal";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
@@ -11,18 +11,13 @@ import TabelaAgentesContingencia from "../../Components/TabelaAgentesContingenci
 import TabelaRecursosContingencia from "../../Components/TabelaRecursosContingencia";
 import TagsContingencia from "../../Components/TagsContingencia";
 import FormCadastroAgente from "../../Components/FormCadastroAgente";
-import FormCadastroRecurso from "../../Components/FormCadastroRecurso";
-import apiPlanoById from "../../Utils/apiPlanoAtivacaoById";
 import montarPlanoContingencia from "../../Utils/montarPlanoContingencia";
-import compararPlanoContingencia from "../../Utils/compararPlanoContingencia";
-import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPlanoAtivacaoById from "../../Helpers/fetchPlanoAtivacaoById";
 import fetchPostPlanoContingencia from "../../Helpers/fetchPostPlanoContingencia";
 import fetchBuscaTiposPontoInteresse from "../../Helpers/fetchBuscaTiposPontoInteresse";
 import fetchPostEnviaSMS from "../../Helpers/fetchPostEnviaSMS";
 import { useParams } from "react-router-dom";
 import fetchMunicipios from "../../Helpers/fetchMunicipios";
-import { CidadesContext } from "../../Context/CidadesContext";
 import FormCadastroPontoInteresse from "../../Components/FormCadastroPontoInteresse";
 import fetchBuscaPontoInteresseByIdPlano from "../../Helpers/fetchBuscaPontoInteresseByIdPlano";
 
@@ -59,8 +54,6 @@ const ContingenciaInterna = () => {
     setPontoInteresse(auxPonto);
   };
   const [mensagemSMS, setMensagemSMS] = useState("");
-
-  const { cidades, findCidadeById } = useContext(CidadesContext);
 
   let { idCidade } = useParams();
 
@@ -138,9 +131,10 @@ const ContingenciaInterna = () => {
     setRecursos(auxPlanos);
   };
 
-  const postEnvioSMS = async () => {
+  const postEnvioSMSGeral = async () => {
     try {
       let dados = [];
+
       for (let i of perfis) {
         const aux = {
           number: i.telefone,
@@ -150,8 +144,8 @@ const ContingenciaInterna = () => {
         };
         dados.push(aux);
       }
-      console.log(dados);
-      const resp = await fetchPostEnviaSMS(dados);
+
+      await fetchPostEnviaSMS(dados);
     } catch (err) {
       console.log(err);
     }
@@ -181,7 +175,7 @@ const ContingenciaInterna = () => {
 
   return (
     mostrarValores && (
-      <Flex flexDir="column" alignItems="center" marginBlock="5rem" padding="0">
+      <Flex flexDir='column' alignItems='center' marginBlock='5rem' padding='0'>
         <HeaderContingencia
           prop={{
             titulo: planoContingencia.titulo,
@@ -200,26 +194,32 @@ const ContingenciaInterna = () => {
           }}
         />
         <Flex
-          flexDir="row"
-          marginBlockEnd="4rem"
-          paddingInline="1rem"
-          maxW="101rem"
-          w="100%"
+          flexDir='row'
+          marginBlockEnd='4rem'
+          paddingInline='1rem'
+          maxW='101rem'
+          w='100%'
         >
           <TabelaAgentesContingencia
             perfis={perfis}
             setarPerfis={setarPerfis}
             agentes={planoContingencia.agentes}
+            mensagemSMS={mensagemSMS}
           />
-          <Flex flexDir="column">
+          <Flex flexDir='column' flexGrow={1}>
             <TagsContingencia tags={planoContingencia.tags} />
             <Textarea
               as={ResizeTextarea}
-              placeholder="Digite aqui a mensagem a ser enviada aos agentes."
-              maxH="415px"
+              placeholder='Digite aqui a mensagem a ser enviada aos agentes.'
+              maxH='415px'
               value={mensagemSMS}
-              onChange={(e) => setMensagemSMS(e.target.value)}
+              onChange={(e) =>
+                e.target.value.length < 159
+                  ? setMensagemSMS(e.target.value)
+                  : ""
+              }
             />
+            <Text>{mensagemSMS.length}/158</Text>
           </Flex>
         </Flex>
         <TabelaRecursosContingencia
@@ -251,7 +251,7 @@ const ContingenciaInterna = () => {
           setCadastraNovoRecurso={setCadastraNovoRecurso}
           setCadastroNovoPontoInteresse={setCadastroNovoPontoInteresse}
           postPlanoAtivacao={postPlanoAtivacao}
-          postEnvioSMS={postEnvioSMS}
+          postEnvioSMSGeral={postEnvioSMSGeral}
         />
 
         {cadastraNovoAgente && (
@@ -259,7 +259,7 @@ const ContingenciaInterna = () => {
             <FormCadastroAgente
               setCadastraNovoAgente={setCadastraNovoAgente}
               addPerfis={addPerfisAgente}
-              tipoCadastro="agente"
+              tipoCadastro='agente'
             />
           </Modal>
         )}
@@ -269,7 +269,7 @@ const ContingenciaInterna = () => {
             <FormCadastroAgente
               setCadastraNovoAgente={setCadastraNovoRecurso}
               addPerfis={addPerfisRecurso}
-              tipoCadastro="recurso"
+              tipoCadastro='recurso'
             />
           </Modal>
         )}
@@ -281,7 +281,7 @@ const ContingenciaInterna = () => {
               setarPontoInteresse={setarPontoInteresse}
               tipoPontoInteresse={tipoPontoInteresse}
               addPerfis={addPerfisRecurso}
-              tipoCadastro="recurso"
+              tipoCadastro='recurso'
             />
           </Modal>
         )}
