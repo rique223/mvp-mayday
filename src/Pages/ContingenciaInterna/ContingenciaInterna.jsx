@@ -2,7 +2,7 @@ import { Flex, Text, Textarea } from "@chakra-ui/react";
 import ResizeTextarea from "react-textarea-autosize";
 import BotoesAct from "../../Components/BotoesAct";
 import Modal from "../../Components/Modal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
@@ -48,10 +48,11 @@ const ContingenciaInterna = () => {
   const setarRecursos = (valor) => setRecursos(valor);
   const [tipoPontoInteresse, setTipoPontoInteresse] = useState([]);
   const [pontoInteresse, setPontoInteresse] = useState([]);
-  const setarPontoInteresse = (valor) => {
-    let auxPonto = [...pontoInteresse];
-    auxPonto.push(valor);
-    setPontoInteresse(auxPonto);
+  const setarPontoInteresse = (novoPontoInteresse) => {
+    setPontoInteresse((prevPontoInteresse) => [
+      ...prevPontoInteresse,
+      novoPontoInteresse,
+    ]);
   };
   const [mensagemSMS, setMensagemSMS] = useState("");
 
@@ -61,61 +62,58 @@ const ContingenciaInterna = () => {
 
   const [mostrarValores, setMostrarValores] = useState(false);
 
-  useEffect(() => {
-    buscas();
-  }, []);
-
-  async function buscas() {
-    await buscaTiposPlanoInteresse();
-    await buscaContingenciaInterna();
-    await buscaPontoInteresse();
-    await buscaInfoCidade();
-    setMostrarValores(true);
-  }
-
-  const buscaContingenciaInterna = async () => {
+  const buscaContingenciaInterna = useCallback(async () => {
     try {
       const data = await fetchPlanoAtivacaoById(idPlano);
-      console.log("dataById", data);
+
       setPlanoContingencia(data);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [idPlano]);
 
-  const buscaInfoCidade = async () => {
+  const buscaInfoCidade = useCallback(async () => {
     try {
       const respMunicipios = await fetchMunicipios();
-      const nomeCidade = respMunicipios.find((m) => m.id == idCidade);
-      console.log(respMunicipios);
-      setCidadeAtual(nomeCidade);
+      const cidade = respMunicipios.find((m) => `${m.value}` === idCidade);
+
+      setCidadeAtual(cidade);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [idCidade]);
 
-  const buscaPontoInteresse = async () => {
+  const buscaPontoInteresse = useCallback(async () => {
     try {
       const data = await fetchBuscaPontoInteresseByIdPlano(idPlano);
-      console.log("pontos1", data);
-      let auxPonto = [...pontoInteresse];
-      const concatenar = auxPonto.concat(data);
-      console.log("pontos2", concatenar);
-      setPontoInteresse(concatenar);
+
+      setPontoInteresse((prevPontos) => [...prevPontos, ...data]);
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [idPlano]);
 
   const buscaTiposPlanoInteresse = async () => {
     try {
       const data = await fetchBuscaTiposPontoInteresse();
-      console.log("buscaTiposPlanoInteresse", data);
+
       setTipoPontoInteresse(data);
     } catch (err) {
       console.log(err);
     }
   };
+
+  const buscas = useCallback(async () => {
+    await buscaTiposPlanoInteresse();
+    await buscaContingenciaInterna();
+    await buscaPontoInteresse();
+    await buscaInfoCidade();
+    setMostrarValores(true);
+  }, [buscaContingenciaInterna, buscaInfoCidade, buscaPontoInteresse]);
+
+  useEffect(() => {
+    buscas();
+  }, [buscas]);
 
   const addPerfisAgente = (valor) => {
     const auxPlanos = { ...planoContingencia };
@@ -127,6 +125,7 @@ const ContingenciaInterna = () => {
   const addPerfisRecurso = (valor) => {
     const auxPlanos = { ...planoContingencia };
     auxPlanos.recursos.push(valor);
+
     setPlanoContingencia(auxPlanos);
     setRecursos(auxPlanos);
   };
@@ -167,7 +166,7 @@ const ContingenciaInterna = () => {
         recursos,
         planoContingencia.cidade
       );
-      const resposta = await fetchPostPlanoContingencia(plano);
+      await fetchPostPlanoContingencia(plano);
     } catch (err) {
       console.log(err);
     }

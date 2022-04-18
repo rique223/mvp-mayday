@@ -6,8 +6,7 @@ export function CidadesContextProvider({ children }) {
   const [cidades, setCidades] = useState([]);
 
   const findCidadeById = (listaCidades, idCidade) => {
-    console.log("listaCidades, idCidade", listaCidades, idCidade);
-    return listaCidades.find((cidade) => cidade.value == idCidade).label;
+    return listaCidades.find((cidade) => `${cidade.value}` === idCidade).label;
   };
 
   return (

@@ -19,9 +19,9 @@ const ContingenciaScreen = () => {
     const buscaInfoCidade = async () => {
       try {
         const respMunicipios = await fetchMunicipios();
-        console.log(respMunicipios);
+
         const nomeCidade = respMunicipios.find(
-          (m) => m.value == idCidade
+          (m) => `${m.value}` == idCidade
         ).label;
         setTitulo(nomeCidade + " - Planos Ativação");
       } catch (err) {
