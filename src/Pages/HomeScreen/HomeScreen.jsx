@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spinner } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
 import { useContext, useEffect, useState } from "react";
@@ -15,6 +15,8 @@ const HomeScreen = () => {
   const { cidades, setCidades } = useContext(CidadesContext);
 
   const [urlCidades, setUrlCidades] = useState("");
+
+  const [mostrarTela, setMostrarTela] = useState(false);
 
   const handleCreateItem = (item) => {
     setPickerItems((curr) => [...curr, item]);
@@ -40,9 +42,15 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const getDistritos = async () => {
-      const respMunicipios = await fetchMunicipios();
-      setMunicipios(respMunicipios);
-      setPickerItems(respMunicipios);
+      try {
+        const respMunicipios = await fetchMunicipios();
+        setMunicipios(respMunicipios);
+        setPickerItems(respMunicipios);
+        setMostrarTela(true);
+      } catch (err) {
+        setMostrarTela(true);
+        console.log(err);
+      }
     };
 
     const localizar = () =>
@@ -119,34 +127,54 @@ const HomeScreen = () => {
         height="100%"
         width="100%"
       >
-        <Box width="100%">
-          <CUIAutoComplete
-            items={municipios}
-            onCreateItem={handleCreateItem}
-            placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
-            onSelectedItemsChange={(changes) => {
-              handleSelectedItemsChange(changes.selectedItems);
-            }}
-            disableCreateItem={true}
-            hideToggleButton={true}
-            listStyleProps={autoCompleteListStyle}
-            inputStyleProps={autoCompleteInputStyle}
-          />
-        </Box>
-        <Link to={"modulos/" + urlCidades}>
-          <Button
-            bg="#95AE23"
-            height="48px"
-            w="100%"
-            _hover={{
-              bg: "#007B2F",
-              boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
-            }}
-          >
-            <SearchIcon w="24px" h="24px" color="white" marginInlineEnd="4px" />
-          </Button>
-        </Link>
+        {municipios && municipios.length > 0 && (
+          <>
+            <Box width="100%">
+              <CUIAutoComplete
+                items={municipios}
+                onCreateItem={handleCreateItem}
+                placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
+                onSelectedItemsChange={(changes) => {
+                  handleSelectedItemsChange(changes.selectedItems);
+                }}
+                disableCreateItem={true}
+                hideToggleButton={true}
+                listStyleProps={autoCompleteListStyle}
+                inputStyleProps={autoCompleteInputStyle}
+              />
+            </Box>
+            <Link to={"modulos/" + urlCidades}>
+              <Button
+                bg="#95AE23"
+                height="48px"
+                w="100%"
+                _hover={{
+                  bg: "#007B2F",
+                  boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
+                }}
+              >
+                <SearchIcon
+                  w="24px"
+                  h="24px"
+                  color="white"
+                  marginInlineEnd="4px"
+                />
+              </Button>
+            </Link>
+          </>
+        )}
+        {(!municipios || municipios.length == 0) && mostrarTela && (
+          <div style={{ fontSize: "30px" }}>
+            {" "}
+            Não foi possível trazer a lista de cidades
+          </div>
+        )}
       </Flex>
+      {(!municipios || municipios.length == 0) && !mostrarTela && (
+        <Flex width={"100%"} height={"100%"} justifyContent={"center"}>
+          <Spinner size="xl"></Spinner>
+        </Flex>
+      )}
     </Flex>
   );
 };
