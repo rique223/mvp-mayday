@@ -57,6 +57,7 @@ const ModulosScreen = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
+                  textAlign: "center",
                 }}
               >
                 Contingência - {cidade.label}

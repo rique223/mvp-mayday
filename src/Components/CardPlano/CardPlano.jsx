@@ -12,6 +12,8 @@ import {
 const CardPlano = ({ infoPlano }) => {
   return (
     <VStack
+      w="100%"
+      maxW="530px"
       spacing='47px'
       padding='23px'
       background='#FFFFFF'
@@ -21,6 +23,7 @@ const CardPlano = ({ infoPlano }) => {
       borderColor='#ccc'
       borderRadius='25px'
       align='flex-start'
+      minH="473px"
     >
       <HStack spacing='15px'>
         <Image

@@ -2,7 +2,7 @@ import { Flex, Textarea } from "@chakra-ui/react";
 import ResizeTextarea from "react-textarea-autosize";
 import BotoesAct from "../../Components/BotoesAct";
 import Modal from "../../Components/Modal";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import AccordionsContingencia from "../../Components/AccordionsContingencia";
 import DescContingencia from "../../Components/DescContingencia";
 import HeaderContingencia from "../../Components/HeaderContingencia";
@@ -10,15 +10,20 @@ import MapaContingencia from "../../Components/MapaContingencia";
 import TabelaAgentesContingencia from "../../Components/TabelaAgentesContingencia";
 import TabelaRecursosContingencia from "../../Components/TabelaRecursosContingencia";
 import TagsContingencia from "../../Components/TagsContingencia";
-import { useParams } from "react-router-dom";
 import FormCadastroAgente from "../../Components/FormCadastroAgente";
 import FormCadastroRecurso from "../../Components/FormCadastroRecurso";
+import { useParams } from "react-router-dom";
+import { CidadesContext } from "../../Context/CidadesContext";
 
 const ContingenciaInterna = () => {
-  const { idPlano } = useParams();
-
   const [cadastraNovoAgente, setCadastraNovoAgente] = useState(false);
   const [cadastraNovoRecurso, setCadastraNovoRecurso] = useState(false);
+
+  const { cidades, findCidadeById } = useContext(CidadesContext);
+
+  let { idCidade } = useParams();
+
+  const cidadeAtual = findCidadeById(cidades, idCidade);
 
   return (
     <Flex flexDir='column' alignItems='center' marginBlock='5rem' padding='0'>
@@ -42,7 +47,7 @@ const ContingenciaInterna = () => {
         </Flex>
       </Flex>
       <TabelaRecursosContingencia />
-      <MapaContingencia />
+      <MapaContingencia cidadeAtual={cidadeAtual} />
       <AccordionsContingencia />
       <BotoesAct
         isPortal={true}
