@@ -19,7 +19,7 @@ const Agente = ({ dadosAgente }) => (
         lineHeight="21px"
         color="#808080"
       >
-        {dadosAgente.cargo}
+        {dadosAgente.cargo.descricao}
       </Text>
     </Flex>
   </>

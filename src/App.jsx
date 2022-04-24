@@ -11,15 +11,15 @@ const App = () => {
     <CidadesContextProvider>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<HomeScreen />} />
-          <Route path='modulos' element={<ModulosScreen />} />
+          <Route path="/" element={<HomeScreen />} />
+          <Route path="modulos/:idCidades" element={<ModulosScreen />} />
           <Route
-            path='contingencias/:idCidade'
+            path="contingencias/:idCidade"
             element={<ContingenciaScreen />}
           />
           <Route
             index
-            path='contingenciaInterna/cidade=:idCidade/plano=:idPlano'
+            path="contingenciaInterna/cidade=:idCidade/plano=:idPlano"
             element={<ContingenciaInterna />}
           />
         </Routes>

@@ -6,7 +6,7 @@ const fetchMunicipios = async () => {
     const municipiosMapeados = data.map((municipio) => {
       return {
         value: municipio.id,
-        label: municipio.nome,
+        label: municipio.descricao,
       };
     });
     return municipiosMapeados;

@@ -14,48 +14,34 @@ import {
 import { headingStyle } from "../../Utils/globalStyles";
 import { renderRecursosTableRows } from "../../Helpers/renderRecursosTableRow";
 import InputTabela from "../InputTabela";
+import { useEffect, useState } from "react";
 
-const TabelaRecursosContingencia = () => {
-  const recursos = [
-    {
-      id: 1,
-      nome: "Moto Niveladora",
-      responsavel: "Henrique Guimarães",
-      cargo: "Desenvolvedor",
-      contato: 62999499739,
-      qtd: 1,
-    },
-    {
-      id: 2,
-      nome: "Retro escavadeira",
-      responsavel: "Matheus Braz de Aquino",
-      cargo: "Desenvolvedor",
-      contato: 62999499739,
-      qtd: 1,
-    },
-    {
-      id: 3,
-      nome: "Caminhão pipa",
-      responsavel: "Matheus Diniz de Alencar",
-      cargo: "Desenvolvedor",
-      contato: 62999499739,
-      qtd: 1,
-    },
-    {
-      id: 4,
-      nome: "Caminhão báscula",
-      responsavel: "Capitão Ricardo",
-      cargo: "Capitão",
-      contato: 62999499739,
-      qtd: 1,
-    },
-  ];
+const TabelaRecursosContingencia = ({
+  recursos,
+  setarRecursos,
+  planoRecursos,
+}) => {
+  useEffect(() => {
+    const setarAgentes = () => {
+      setarRecursos(planoRecursos);
+    };
+
+    setarAgentes();
+  }, [planoRecursos, planoRecursos.length]);
 
   const tableHeaderStyle = {
     fontWeight: "400",
     fontSize: "1.125rem",
     lineHeight: "21px",
     color: "#000000",
+  };
+
+  const deletaRecurso = (recurso) => {
+    setarRecursos(
+      recursos.filter(
+        (recursoAtual) => recursoAtual.idRecurso !== recurso.idRecurso
+      )
+    );
   };
 
   return (
@@ -85,9 +71,12 @@ const TabelaRecursosContingencia = () => {
                 <Th {...tableHeaderStyle} textAlign='center'>
                   Qtd.
                 </Th>
+                <Th {...tableHeaderStyle} textAlign='center'>
+                  Ações
+                </Th>
               </Tr>
             </Thead>
-            <Tbody>{renderRecursosTableRows(recursos)}</Tbody>
+            <Tbody>{renderRecursosTableRows(recursos, deletaRecurso)}</Tbody>
             <Tfoot>
               <Tr>
                 <Td colSpan={4}>

@@ -1,188 +1,42 @@
 import { Input, Heading, Container, SimpleGrid } from "@chakra-ui/react";
 
 import "../../App.scss";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { CidadesContext } from "../../Context/CidadesContext";
 import CardPlano from "../../Components/CardPlano";
 import BotaoNovoPlano from "../../Components/BotaoNovoPlano";
+import fetchPlanoAtivacao from "../../Helpers/fetchPlanoAtivacao";
+import fetchMunicipios from "../../Helpers/fetchMunicipios";
 
 const ContingenciaScreen = () => {
-  const { cidades, findCidadeById } = useContext(CidadesContext);
   let { idCidade } = useParams();
+  const [infoPlanos, setInfoPlanos] = useState();
 
-  const titulo = `${findCidadeById(cidades, idCidade)} - Planos de Ativação`;
+  const [titulo, setTitulo] = useState("");
 
-  const infoPlanos = [
-    {
-      id: 1,
-      titulo: "Incêndio/Bombeiros",
-      subTitulo: "Corpo de bombeiros do estado de Goiás",
-      principaisAgentes: [
-        {
-          id: 1,
-          nome: "João Jordan",
-          cargo: "CEO",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 2,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 3,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-      ],
-      tags: [
-        {
-          id: 1,
-          titulo: "Enchente",
-          cor: "#007B2F",
-        },
-        {
-          id: 2,
-          titulo: "Enchente",
-          cor: "#F73718",
-        },
-        {
-          id: 3,
-          titulo: "Enchente",
-          cor: "#FF7900",
-        },
-      ],
-    },
-    {
-      id: 2,
-      titulo: "Enchente",
-      subTitulo: "Corpo de bombeiros do estado de Goiás",
-      principaisAgentes: [
-        {
-          id: 1,
-          nome: "João Jordan",
-          cargo: "CEO",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 2,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 3,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-      ],
-      tags: [
-        {
-          id: 1,
-          titulo: "Enchente",
-          cor: "#007B2F",
-        },
-        {
-          id: 2,
-          titulo: "Enchente",
-          cor: "#F73718",
-        },
-        {
-          id: 3,
-          titulo: "Enchente",
-          cor: "#FF7900",
-        },
-      ],
-    },
-    {
-      id: 3,
-      titulo: "Enchente",
-      subTitulo: "Corpo de bombeiros do estado de Goiás",
-      principaisAgentes: [
-        {
-          id: 1,
-          nome: "João Jordan",
-          cargo: "CEO",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 2,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 3,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-      ],
-      tags: [
-        {
-          id: 1,
-          titulo: "Enchente",
-          cor: "#007B2F",
-        },
-        {
-          id: 2,
-          titulo: "Enchente",
-          cor: "#F73718",
-        },
-        {
-          id: 3,
-          titulo: "Enchente",
-          cor: "#FF7900",
-        },
-      ],
-    },
-    {
-      id: 4,
-      titulo: "Enchente",
-      subTitulo: "Corpo de bombeiros do estado de Goiás",
-      principaisAgentes: [
-        {
-          id: 1,
-          nome: "João Jordan",
-          cargo: "CEO",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 2,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-        {
-          id: 3,
-          nome: "Cap. Abreu",
-          cargo: "Capitão",
-          telefone: "(62)98565-2412",
-        },
-      ],
-      tags: [
-        {
-          id: 1,
-          titulo: "Enchente",
-          cor: "#007B2F",
-        },
-        {
-          id: 2,
-          titulo: "Enchente",
-          cor: "#F73718",
-        },
-        {
-          id: 3,
-          titulo: "Enchente",
-          cor: "#FF7900",
-        },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const buscaInfoCidade = async () => {
+      try {
+        const respMunicipios = await fetchMunicipios();
+
+        const nomeCidade = respMunicipios.find(
+          (m) => `${m.value}` == idCidade
+        ).label;
+        setTitulo(nomeCidade + " - Planos Ativação");
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    const getInfoPlanos = async () => {
+      const respMunicipios = await fetchPlanoAtivacao(idCidade);
+      setInfoPlanos(respMunicipios);
+    };
+
+    getInfoPlanos();
+    buscaInfoCidade();
+  }, [idCidade]);
 
   return (
     <Container
@@ -218,7 +72,7 @@ const ContingenciaScreen = () => {
       />
 
       <SimpleGrid w='100%' spacing='16px' columns={3}>
-        <BotaoNovoPlano />
+        <BotaoNovoPlano idCidade={idCidade} />
         {infoPlanos &&
           infoPlanos.map((infoPlano) => (
             <Link
