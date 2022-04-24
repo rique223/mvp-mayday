@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Input,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spinner } from "@chakra-ui/react";
 import { SearchIcon } from "@chakra-ui/icons";
 import "../../App.scss";
 import { useContext, useEffect, useState } from "react";
@@ -22,22 +14,43 @@ const HomeScreen = () => {
 
   const { cidades, setCidades } = useContext(CidadesContext);
 
+  const [urlCidades, setUrlCidades] = useState("");
+
+  const [mostrarTela, setMostrarTela] = useState(false);
+
   const handleCreateItem = (item) => {
-    console.log("item", item);
     setPickerItems((curr) => [...curr, item]);
     setCidades((curr) => [...curr, item]);
   };
 
   const handleSelectedItemsChange = (selectedItems) => {
-    console.log(selectedItems);
     setCidades(selectedItems);
   };
 
   useEffect(() => {
+    const setarUrlCidades = () => {
+      let valorAux = "";
+      for (let c in cidades) {
+        valorAux += cidades[c].value;
+        valorAux += c < cidades.length - 1 ? "+" : "";
+      }
+      setUrlCidades(valorAux);
+    };
+
+    setarUrlCidades();
+  }, [cidades]);
+
+  useEffect(() => {
     const getDistritos = async () => {
-      const respMunicipios = await fetchMunicipios();
-      setMunicipios(respMunicipios);
-      setPickerItems(respMunicipios);
+      try {
+        const respMunicipios = await fetchMunicipios();
+        setMunicipios(respMunicipios);
+        setPickerItems(respMunicipios);
+        setMostrarTela(true);
+      } catch (err) {
+        setMostrarTela(true);
+        console.log(err);
+      }
     };
 
     const localizar = () =>
@@ -48,6 +61,46 @@ const HomeScreen = () => {
     localizar();
     getDistritos();
   }, []);
+
+  const autoCompleteListStyle = {
+    position: "absolute",
+    zIndex: 1,
+    width: "100%",
+    maxWidth: "584px",
+    maxHeight: "300px",
+    overflowY: "scroll",
+    css: {
+      "&::-webkit-scrollbar": {
+        width: "10px",
+        height: "50px",
+        marginInlineEnd: "20px",
+      },
+      "&::-webkit-scrollbar-track": {
+        borderRadius: "10px",
+        background: "#CCCCCC",
+      },
+      "&::-webkit-scrollbar-thumb": {
+        background: "rgba(0, 0, 0, .5)",
+        borderRadius: "10px",
+      },
+      "&::-webkit-scrollbar-thumb:hover": {
+        background: "#000",
+      },
+    },
+  };
+
+  const autoCompleteInputStyle = {
+    borderRadius: "25px",
+    placeholder: "DIGITE O NOME DE UMA CIDADE GOIANA",
+    size: "lg",
+    borderWidth: "1px",
+    borderColor: "#D0D0D0",
+    _hover: {
+      bg: "#fff",
+      boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
+      borderColor: "rgba(223,225,229,0)",
+    },
+  };
 
   return (
     <Flex
@@ -67,46 +120,61 @@ const HomeScreen = () => {
       >
         Mayday
       </Heading>
-      <Flex maxW="584px" maxH="46px" height="100%" width="100%">
-        {/* <Input
-          borderRadius="24px 0 0 24px"
-          placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
-          size="lg"
-          borderWidth="1px"
-          borderColor="#5f6368"
-          _hover={{
-            bg: "#fff",
-            boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
-            borderColor: "rgba(223,225,229,0)",
-          }}
-        /> */}
-        <CUIAutoComplete
-          items={municipios}
-          onCreateItem={handleCreateItem}
-          placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
-          // itemRenderer={customRender}
-          // createItemRenderer={customCreateItemRender}
-          onSelectedItemsChange={(changes) => {
-            handleSelectedItemsChange(changes.selectedItems);
-          }}
-          disableCreateItem={true}
-        />
-        <Link to="/modulos">
-          <Button
-            bg="#95AE23"
-            height="48px"
-            borderRadius="0 50px 50px 0"
-            w="64px"
-            _hover={{
-              bg: "#007B2F",
-              boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
-            }}
-            onClick={() => console.log("cidades", cidades)}
-          >
-            <SearchIcon w="24px" h="24px" color="white" marginInlineEnd="4px" />
-          </Button>
-        </Link>
+      <Flex
+        flexDir="column"
+        maxW="584px"
+        maxH="46px"
+        height="100%"
+        width="100%"
+      >
+        {municipios && municipios.length > 0 && (
+          <>
+            <Box width="100%">
+              <CUIAutoComplete
+                items={municipios}
+                onCreateItem={handleCreateItem}
+                placeholder="DIGITE O NOME DE UMA CIDADE GOIANA"
+                onSelectedItemsChange={(changes) => {
+                  handleSelectedItemsChange(changes.selectedItems);
+                }}
+                disableCreateItem={true}
+                hideToggleButton={true}
+                listStyleProps={autoCompleteListStyle}
+                inputStyleProps={autoCompleteInputStyle}
+              />
+            </Box>
+            <Link to={"modulos/" + urlCidades}>
+              <Button
+                bg="#95AE23"
+                height="48px"
+                w="100%"
+                _hover={{
+                  bg: "#007B2F",
+                  boxShadow: "0 1px 6px rgb(32 33 36 / 28%)",
+                }}
+              >
+                <SearchIcon
+                  w="24px"
+                  h="24px"
+                  color="white"
+                  marginInlineEnd="4px"
+                />
+              </Button>
+            </Link>
+          </>
+        )}
+        {(!municipios || municipios.length == 0) && mostrarTela && (
+          <div style={{ fontSize: "30px" }}>
+            {" "}
+            Não foi possível trazer a lista de cidades
+          </div>
+        )}
       </Flex>
+      {(!municipios || municipios.length == 0) && !mostrarTela && (
+        <Flex width={"100%"} height={"100%"} justifyContent={"center"}>
+          <Spinner size="xl"></Spinner>
+        </Flex>
+      )}
     </Flex>
   );
 };
