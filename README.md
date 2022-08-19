@@ -27,7 +27,7 @@ O protótipo do mayday encontra-se no figma: https://www.figma.com/file/6wR95ooB
 # [EN-US]
 
 ### What is Mayday?
-Mayday is an MVP (Minimum Viable Product) made in React, Spring Boot, and persisted in PostgreSQL. It was coded for the Technical Residency in Information Systems subject by the informatics institute of the Federal University of Goiás and intends to solve processual problems of the Civil Defense of Goiás (DCGO).
+Mayday is an MVP (Minimum Viable Product) made in React, Spring Boot, and persisted in PostgreSQL. It was coded for the Technical Residency in Information Systems subject by the informatics institute of the Federal University of Goiás and intends to solve processual problems of the Civil Defense of Goiás (DCGO) related to some inneficiencies in their contingency plan activation which was still made analogically.
 
 ### Tech stack
 ReactJS(UI): For the development of the Mayday user interface, we choose the facebook library ReactJS since it is, at the time of development of this project (Q4-2021 -> Q1-2022) a versatile, modern and performative library that brings practicality to the front-end development process.
